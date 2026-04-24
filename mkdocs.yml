@@ -1,0 +1,27 @@
+---
+site_name: "clinical-microschemas"
+theme:
+  name: material
+  features:
+    - content.tabs.link
+
+plugins:
+  - search
+  - mknotebooks:
+      execute: false
+  - mermaid2:
+      version: 11.4.1
+
+watch:
+  - src/clinical_microschemas/schema
+
+nav:
+  - Home: index.md
+  - Schema: elements/index.md
+  - About: about.md
+
+exclude_docs: |
+  /templates-linkml/
+
+site_url: https://linkml.github.io/clinical-microschemas
+repo_url: https://github.com/linkml/clinical-microschemas

@@ -1,0 +1,38 @@
+---
+# Configuration of generators (defaults illustrated)
+excludes:
+  - markdown
+
+generator_args:
+  excel:
+    mergeimports: true
+  owl:
+    mergeimports: true
+    metaclasses: true
+    type_objects: true
+  markdown:
+    mergeimports: true
+    directory: "docs/elements"
+  graphql:
+    mergeimports: true
+  jsonld:
+    mergeimports: true
+  jsonschema:
+    mergeimports: true
+  jsonldcontext:
+    mergeimports: true
+  python:
+    mergeimports: true
+  prefixmap:
+    mergeimports: true
+  proto:
+    mergeimports: true
+  shacl:
+    mergeimports: true
+  shex:
+    mergeimports: true
+  sqlddl:
+    mergeimports: true
+  typescript:
+    mergeimports: true
+    metadata: true
