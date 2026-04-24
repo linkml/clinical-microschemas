@@ -34,7 +34,8 @@ imports:
   - linkml:types
 #  - https://w3id.org/linkml/linkml-microschema-profile
 #  - https://raw.githubusercontent.com/linkml/linkml-model/v0.3.0/linkml_model/model/schema/linkml-microschema-profile
-  - https://github.com/linkml/linkml-microschema-profile/releases#:~:text=Source%20code,(zip)
+#  - https://github.com/linkml/linkml-microschema-profile/releases#:~:text=Source%20code,(zip)
+  - https://raw.githubusercontent.com/linkml/linkml-microschema-profile/v0.3.0/src/linkml_microschema_profile/schema/linkml_microschema_profile.yaml
 
 classes:
 
