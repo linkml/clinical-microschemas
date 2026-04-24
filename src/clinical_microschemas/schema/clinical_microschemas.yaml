@@ -33,7 +33,7 @@ default_range: string
 imports:
   - linkml:types
 #  - https://w3id.org/linkml/linkml-microschema-profile
-  - https://raw.githubusercontent.com/linkml/linkml-model/v0.3.0/linkml_model/model/schema/linkml-microschema-profile.yaml
+  - https://raw.githubusercontent.com/linkml/linkml-model/v0.3.0/linkml_model/model/schema/linkml-microschema-profile
 
 classes:
 
