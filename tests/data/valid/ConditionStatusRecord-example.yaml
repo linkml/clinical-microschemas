@@ -1,0 +1,9 @@
+subject_identifier: "SUBJ-001"
+condition_type: "MONDO:0004979"
+condition_status: PRESENT
+relationship_to_participant: ONESELF
+condition_provenance: EHR_ENCOUNTER_DIAGNOSIS
+condition_severity: MILD
+age_at_condition_start:
+  quantity_value: 28
+  quantity_unit: a

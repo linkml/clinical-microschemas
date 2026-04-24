@@ -1,0 +1,11 @@
+subject_identifier: "SUBJ-001"
+measurement_type: "OBA:VT0001259"
+measurement_value:
+  quantity_value: 72.3
+  quantity_unit: kg
+unit: kg
+instrument: mechanical_beam_balance_scale
+data_type: decimal
+age_at_measurement:
+  quantity_value: 35
+  quantity_unit: a

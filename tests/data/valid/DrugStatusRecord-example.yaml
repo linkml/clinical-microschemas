@@ -1,0 +1,12 @@
+subject_identifier: "SUBJ-001"
+drug_type: "RxNorm:1049502"
+route_of_administration: oral
+dose:
+  quantity_value: 10
+  quantity_unit: mg
+frequency:
+  quantity_value: 1
+  quantity_unit: d
+age_at_drug_start:
+  quantity_value: 30
+  quantity_unit: a

@@ -1,0 +1,6 @@
+subject_identifier: "SUBJ-001"
+procedure_type: "OMOP:4301351"
+collected_by: doctor
+age_at_procedure_start:
+  quantity_value: 40
+  quantity_unit: a

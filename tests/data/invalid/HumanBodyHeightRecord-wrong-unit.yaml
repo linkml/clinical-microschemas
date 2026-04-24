@@ -1,0 +1,14 @@
+# Example ClinicalMeasurementRecord: testing rules-units
+# INVALID: height measurement with unit mL (must be cm/in/m/ft)
+---
+subject_identifier: subject001
+measurement_type: OBA:VT0001253
+measurement_value: 153.6
+unit: UCUM:mL
+instrument: wall_mounted_stadiometer
+body_position: standing
+collected_by: nurse
+data_type: decimal
+age_at_measurement:
+  quantity_value: 45.5
+  quantity_unit: UCUM:a
