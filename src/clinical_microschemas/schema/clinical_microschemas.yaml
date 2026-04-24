@@ -650,11 +650,7 @@ slots:
     range: RouteAdminEnum
     description: Routes of drug administration
   measurement_value:
-    any_of:
-      - range: Quantity
-      - range: Timepoint
-      - range: TimeInterval
-      - range: CodedValue
+    range: Quantity
     description: The "value" in the observation key/value pair
   predicted_value:
     range: decimal
