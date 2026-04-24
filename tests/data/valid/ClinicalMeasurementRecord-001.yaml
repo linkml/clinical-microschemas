@@ -1,0 +1,15 @@
+# Example ClinicalMeasurementRecord
+---
+subject_identifier: subject001
+measurement_type: LOINC:1558-6
+unit: UCUM:mg/dL
+body_position: sitting
+context: fasted_12_hrs
+collected_by: technician
+data_type: decimal
+age_at_measurement:
+  quantity_value: 45.5
+  quantity_unit: UCUM:a
+measurement_value:
+  quantity_value: 80
+  quantity_unit: UCUM:mg/L

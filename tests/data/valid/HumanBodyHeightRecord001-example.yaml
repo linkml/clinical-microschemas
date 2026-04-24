@@ -1,0 +1,12 @@
+subject_identifier: "SUBJ-001"
+measurement_type: "OBA:VT0001253"
+measurement_value:
+  quantity_value: 175.5
+  quantity_unit: cm
+unit: cm
+instrument: wall_mounted_stadiometer
+body_position: standing
+data_type: decimal
+age_at_measurement:
+  quantity_value: 35
+  quantity_unit: a

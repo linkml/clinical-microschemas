@@ -1,0 +1,993 @@
+---
+id: https://w3id.org/linkml/clinical-microschemas
+name: clinical-microschemas
+title: Clinical Microschemas
+version: "0.1.0"
+description: |-
+  Clinical microschemas for composable clinical data elements.
+  Imports and extends the LinkML Microschema Profile.
+license: MIT
+see_also:
+  - https://linkml.github.io/clinical-microschemas
+
+prefixes:
+  cms: https://w3id.org/linkml/clinical-microschemas/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  PATO: http://purl.obolibrary.org/obo/PATO_
+  bdchm: https://w3id.org/bdchm/
+  OBA: http://purl.obolibrary.org/obo/OBA_
+  OMOP: https://athena.ohdsi.org/search-terms/terms/
+  LOINC: https://loinc.org/
+  UCUM: https://units-of-measurement.org/
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  MONDO: http://purl.obolibrary.org/obo/MONDO_
+  HP: http://purl.obolibrary.org/obo/HP_
+  MMO: http://purl.obolibrary.org/obo/MMO_
+  RxNorm: http://purl.bioontology.org/ontology/RXNORM/
+  ISO11179: http://purl.org/iso11179/
+  example: http://www.example.org/rdf#
+default_prefix: cms
+default_range: string
+
+imports:
+  - linkml:types
+#  - https://w3id.org/linkml/linkml-microschema-profile
+#  - https://raw.githubusercontent.com/linkml/linkml-model/v0.3.0/linkml_model/model/schema/linkml-microschema-profile
+#  - https://github.com/linkml/linkml-microschema-profile/releases#:~:text=Source%20code,(zip)
+  - https://raw.githubusercontent.com/linkml/linkml-microschema-profile/v0.3.0/src/linkml_microschema_profile/schema/linkml_microschema_profile
+
+classes:
+
+  #────────────────────────────────────────────────────────────────
+  # RECORD MICROSCHEMAS: Domain-specific composable data elements
+  #────────────────────────────────────────────────────────────────
+
+  ClinicalMeasurementRecord:
+    instantiates:
+      - MicroschemaDefinition
+    description: >-
+      A data structure with key and value attributes that represents a single observation.
+      This can include results of clinical labs, scores and indices, socioeconomic, or
+      behavioral observations.
+    class_uri: bdchm:Observation
+    annotations:
+      domain_of_use: clinical
+    slots:
+      - subject_identifier
+      - measurement_type
+      - measurement_value
+      - unit
+      - method
+      - instrument
+      - reagent_kit
+      - calculated_from
+      - body_location
+      - body_position
+      - context
+      - collected_by
+      - data_type
+      - age_at_measurement
+    slot_usage:
+      subject_identifier:
+        required: true
+      measurement_type:
+        required: true
+      measurement_value:
+        required: true
+      age_at_measurement:
+        required: true
+
+  ConditionStatusRecord:
+    instantiates:
+      - MicroschemaDefinition
+    description: >-
+      Record suggesting the presence of a disease or medical condition stated as a diagnosis, sign, or symptom
+    class_uri: bdchm:Condition
+    annotations:
+      domain_of_use: clinical
+    slots:
+      - subject_identifier
+      - condition_type
+      - associated_evidence
+      - instrument
+      - age_at_condition_start
+      - age_at_condition_end
+      - condition_status
+      - condition_provenance
+      - condition_severity
+      - relationship_to_participant
+    slot_usage:
+      subject_identifier:
+        required: true
+      condition_type:
+        required: true
+      condition_status:
+        required: true
+      relationship_to_participant:
+        required: true
+
+  DrugStatusRecord:
+    instantiates:
+      - MicroschemaDefinition
+    description: >-
+      Record suggesting exposure to a medication
+    class_uri: bdchm:DrugExposure
+    annotations:
+      domain_of_use: clinical
+    slots:
+      - subject_identifier
+      - drug_type
+      - method
+      - collected_by
+      - age_at_drug_start
+      - age_at_drug_end
+      - route_of_administration
+      - dose
+      - frequency
+      - indication
+    slot_usage:
+      subject_identifier:
+        required: true
+      drug_type:
+        required: true
+
+  ProcedureStatusRecord:
+    instantiates:
+      - MicroschemaDefinition
+    description: >-
+      Record of activity or process ordered by or carried out by a healthcare provider for a diagnostic or therapeutic reason
+    class_uri: bdchm:Procedure
+    annotations:
+      domain_of_use: clinical
+    slots:
+      - subject_identifier
+      - procedure_type
+      - method
+      - collected_by
+      - age_at_procedure_start
+      - age_at_procedure_end
+    slot_usage:
+      subject_identifier:
+        required: true
+      procedure_type:
+        required: true
+
+#────────────────────────────────────────────────────────────────
+# EXAMPLES
+#────────────────────────────────────────────────────────────────
+
+  HumanBodyHeightRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement of linear distance of a human body from the bottom of a flat foot
+      to the top-most point of the head
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0001253
+                - equals_string: OMOP:903133
+                - equals_string: LOINC:3036277
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: cm
+                - equals_string: "[in_i]"
+                - equals_string: m
+                - equals_string: "[ft_i]"
+            instrument:
+              any_of:
+                - equals_string: wall_mounted_stadiometer
+                - equals_string: flexible_measuring_tape
+                - equals_string: portable_stadiometer
+                - equals_string: anthropometer_rod
+                - equals_string: sonar_stadiometer
+            body_position:
+              any_of:
+                - range: BodyPositionEnum
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 300
+              minimum_value: 0
+
+  HumanBodyHeightRecord001:
+    is_a: HumanBodyHeightRecord
+    description: >-
+      Measurement of linear distance of a standing human body from the bottom of a flat foot
+      to the top-most point of the head measured with a wall-mounted stadiometer
+    rules:
+      - preconditions:
+          slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: wall_mounted_stadiometer
+            unit:
+              any_of:
+                - equals_string: cm
+            body_position:
+              any_of:
+                - equals_string: standing
+      - postconditions:
+          slot_conditions:
+            measurement_value:
+              range: decimal
+              maximum_value: 220
+              minimum_value: 20
+            unit:
+              equals_string: cm
+
+  #────────────────────────────────────────────────────────────────
+  # Body Weight Microschemas
+  #────────────────────────────────────────────────────────────────
+  # Aligned CDEs from cde-harmonization:
+  #   - LOINC:29463-7 "Body weight" (PhenX/LOINC)
+  #   - LOINC:3141-9 "Body weight Measured" (PhenX/LOINC)
+  #   - LOINC:3142-7 "Body weight Stated" (PhenX/LOINC)
+  #────────────────────────────────────────────────────────────────
+
+  HumanBodyWeightRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement of the force exerted by a human body on a scale due to gravity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0001259
+                - equals_string: OMOP:903121
+                - equals_string: LOINC:29463-7
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: kg
+                - equals_string: "[lb_av]"
+                - equals_string: g
+            instrument:
+              any_of:
+                - equals_string: mechanical_beam_balance_scale
+                - equals_string: digital_scale
+                - equals_string: spring_scale
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 700
+              minimum_value: 0
+
+  HumanBodyWeightRecord001:
+    is_a: HumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body on a mechanical beam balance due
+      to gravity
+    rules:
+      - preconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: kg
+            instrument:
+              any_of:
+                - equals_string: mechanical_beam_balance_scale
+        postconditions:
+          slot_conditions:
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 550
+              minimum_value: 0
+
+  #────────────────────────────────────────────────────────────────
+  # Body Mass Index (BMI) Microschemas
+  #────────────────────────────────────────────────────────────────
+  # Aligned CDEs from cde-harmonization:
+  #   - LOINC:39156-5 "BMI" (PhenX/LOINC)
+  #   - caDSR:2006410 v3 "Person Body Mass Index Value" (NCI/NIDA)
+  #   - NINDS:C11131 v3 "Body mass index value" (NINDS)
+  #   - NHLBI ISTH:18:43:27:613 "Body Mass Index (BMI)"
+  #   - PhenX PX570101 "BMI Kilogram Per Squaremeter" / "Pound Per Squareinch"
+  #────────────────────────────────────────────────────────────────
+
+  BodyMassIndexRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      A calculated numerical quantity representing an individual's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:0002045455
+                - equals_string: OMOP:3038553
+                - equals_string: LOINC:39156-5
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: kg/m2
+            method:
+              any_of:
+                - equals_string: calculated
+            data_type: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 200
+              minimum_value: 5
+            calculated_from:
+              equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
+
+  HumanFvcRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Total amount of air a person can forcibly exhale after taking the deepest breath
+      possible
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4176265
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: L
+                - equals_string: mL
+            instrument:
+              any_of:
+                - equals_string: spirometer
+                - equals_string: vitalograph
+                - equals_string: body_plesmograph
+            body_position:
+              any_of:
+                - range: BodyPositionEnum
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 12000
+              minimum_value: 0
+            context:
+              any_of:
+                - equals_string: before_bronchodilator
+                - equals_string: after_bronchodilator
+            method:
+              any_of:
+                - equals_string: spirometry
+                - equals_string: body_plesmography
+    slot_usage:
+      predicted_value:
+        required: true
+      percent_predicted_value:
+        required: true
+
+  HumanMeasuredFvcRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Total amount of air a person can forcibly exhale after taking the deepest breath
+      possible
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4176265
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: L
+                - equals_string: mL
+            instrument:
+              any_of:
+                - equals_string: spirometer
+                - equals_string: vitalograph
+                - equals_string: body_plesmograph
+            body_position:
+              any_of:
+                - range: BodyPositionEnum
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 12000
+              minimum_value: 0
+            context:
+              any_of:
+                - equals_string: before_bronchodilator
+                - equals_string: after_bronchodilator
+            method:
+              any_of:
+                - equals_string: spirometry
+                - equals_string: body_plesmography
+
+  HumanMeasuredFvcRecord001:
+    is_a: HumanMeasuredFvcRecord
+    description: >-
+      Total amount of air a person can forcibly exhale after taking the deepest breath
+      possible
+    rules:
+      - preconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: L
+      - postconditions:
+          slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: spirometer
+            body_position:
+              any_of:
+                - equals_string: sitting
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 12
+              minimum_value: 0
+            context:
+              any_of:
+                - equals_string: before_bronchodilator
+                - equals_string: after_bronchodilator
+            method:
+              any_of:
+                - equals_string: spirometry
+
+  HumanPredictedFvcRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Predicted total amount of air a person can forcibly exhale after taking the deepest
+      breath possible. Predictions are based on a reference equation.
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4150403
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: L
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 12
+              minimum_value: 0
+            method:
+              any_of:
+                - equals_string: GLI
+                - equals_string: GLI-Global
+                - equals_string: NHANESIII
+
+  HumanPercentPredictedFvcRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percent of the predicted FVC that is achieved by the patient
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4253179
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 150
+              minimum_value: 0
+            calculated_from:
+              equals_expression: "({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord}) * 100"
+
+  HumanFev1Record:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Maximum amount of air a person can forcibly exhale in the first second of a
+      breathing test
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4241837
+      - postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: L
+                - equals_string: mL
+            instrument:
+              any_of:
+                - equals_string: spirometer
+                - equals_string: peak_flow_meter
+            body_position:
+              any_of:
+                - range: BodyPositionEnum
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 12000
+              minimum_value: 0
+            context:
+              any_of:
+                - equals_string: before_bronchodilator
+                - equals_string: after_bronchodilator
+            method:
+              any_of:
+                - equals_string: spirometry
+
+  Relativity:
+    mixin: true
+    slots:
+      - predicted_value
+      - lower_limit_normal
+      - upper_limit_normal
+      - percent_predicted_value
+
+#────────────────────────────────────────────────────────────────
+# SLOTS
+#────────────────────────────────────────────────────────────────
+
+slots:
+  dose:
+    range: Quantity
+    description: Amount of drug per administration
+  frequency:
+    range: Quantity
+    description: How often e.g. 2 per day
+  indication:
+    range: uriorcurie
+    description: Condition/reason for drug (SNOMED, ICD, Mondo, HPO, etc)
+  subject_identifier:
+    range: string
+    description: An identifier for the subject of the datum
+  measurement_type:
+    range: uriorcurie
+    slot_uri: bdchm:observation_type
+    description: A CURIE from OBA, OMOP, or LOINC
+  unit:
+    range: uriorcurie
+    slot_uri: bdchm:unit
+    description: A unit from UCUM
+  method:
+    range: MethodEnum
+    slot_uri: bdchm:method_type
+    description: The method used for the measurement
+  instrument:
+    range: InstrumentEnum
+    description: The instrument used for the measurement
+  reagent_kit:
+    range: ReagentKitEnum
+    description: The reagent kit used for the measurement
+  calculated_from:
+    description: An expression pointing at other CDE classes
+  body_location:
+    range: uriorcurie
+    slot_uri: bdchm:BodySite
+    description: A CURIE from UBERON
+  body_position:
+    range: BodyPositionEnum
+    description: The body position during measurement
+  context:
+    range: ContextEnum
+    description: The context of the measurement
+  collected_by:
+    range: CollectedByEnum
+    description: Who collected the measurement
+  condition_type:
+    range: uriorcurie
+    slot_uri: bdchm:condition_concept
+    description: A CURIE from MONDO or HPO
+  associated_evidence:
+    range: AssociatedEvidenceEnum
+    description: The method used for diagnosis
+  drug_type:
+    range: uriorcurie
+    slot_uri: bdchm:drug_concept
+    description: A CURIE from RxNorm
+  procedure_type:
+    range: uriorcurie
+    slot_uri: bdchm:procedure_concept
+    description: A CURIE from OMOP
+  data_type:
+    range: DataTypeEnum
+    description: The data type of the observation
+  age_at_measurement:
+    range: Quantity
+    description: Age of the subject at the time of measurement
+  age_at_condition_start:
+    range: Quantity
+    description: Age of the subject at the start of the condition
+  age_at_condition_end:
+    range: Quantity
+    description: Age of the subject at the end of the condition
+  condition_status:
+    range: HistoricalStatusEnum
+    description: >-
+      A value indicating whether the medical condition described in this record
+      is present, absent, historically present, or unknown for this individual patient.
+  condition_provenance:
+    range: ProvenanceEnum
+    description: A value representing the provenance of the Condition record.
+  condition_severity:
+    range: ConditionSeverityEnum
+    description: A subjective assessment of the severity of the condition.
+  relationship_to_participant:
+    range: FamilyRelationshipEnum
+    description: >-
+      A value indicating the relationship between the Participant to which the Condition
+      is attributed and the individual who had the reported Condition. If the Condition
+      is affecting the participant themselves, then 'Self' is the appropriate relationship.
+  age_at_drug_start:
+    range: Quantity
+    description: Age of the subject at the start of drug exposure
+  age_at_drug_end:
+    range: Quantity
+    description: Age of the subject at the end of drug exposure
+  age_at_procedure_start:
+    range: Quantity
+    description: Age of the subject at the start of the procedure
+  age_at_procedure_end:
+    range: Quantity
+    description: Age of the subject at the end of the procedure
+  route_of_administration:
+    range: RouteAdminEnum
+    description: Routes of drug administration
+  measurement_value:
+    range: Quantity
+    description: The "value" in the observation key/value pair
+  predicted_value:
+    range: decimal
+    description: >-
+      A predicted measurement value based on a reference population, range, equation,
+      or other relevant information. Often used to normalize a measurement based on body
+      size, age, or sex
+  lower_limit_normal:
+    range: decimal
+    description: >-
+      placeholder
+  upper_limit_normal:
+    range: decimal
+    description: >-
+      placeholder
+  percent_predicted_value:
+    range: decimal
+    description: >-
+      Ratio of the actual measured value to the predicted value
+
+#────────────────────────────────────────────────────────────────
+# ENUMS
+#────────────────────────────────────────────────────────────────
+
+enums:
+  HistoricalStatusEnum:
+    description: >-
+      Indicates whether something is present, absent, historical, or its status is unknown.
+    permissible_values:
+      PRESENT:
+        description: Was present in the patient at observation time.
+      ABSENT:
+        description: Was absent in the patient at observation time.
+      UNKNOWN:
+        description: Was of unknown status in the patient at observation time.
+      HISTORICAL:
+        description: Was present in the patient historically.
+
+  ProvenanceEnum:
+    description: A set of values indicating the source or origin of a clinical record.
+    permissible_values:
+      EHR_BILLING_DIAGNOSIS:
+        description: Diagnosis from EHR billing.
+      EHR_CHIEF_COMPLAINT:
+        description: Chief complaint from EHR.
+      EHR_ENCOUNTER_DIAGNOSIS:
+        description: Encounter diagnosis from EHR.
+      EHR_EPISODE_ENTRY:
+        description: Episode entry from EHR.
+      EHR_PROBLEM_LIST_ENTRY:
+        description: Problem list entry from EHR.
+      FIRST_POSITION_CONDITION:
+        description: First position condition.
+      PRIMARY_CONDITION:
+        description: Primary condition.
+      SECONDARY_CONDITION:
+        description: Secondary condition.
+      NLP_DERIVED:
+        description: Derived from natural language processing.
+      OBSERVATION_RECORDED_FROM_EHR:
+        description: Observation recorded from EHR.
+      PATIENT_SELF_REPORTED_CONDITION:
+        description: Patient self-reported condition.
+      REFERRAL_RECORD:
+        description: From referral record.
+      TUMOR_REGISTRY:
+        description: From tumor registry.
+      WORKING_DIAGNOSIS:
+        description: Working diagnosis.
+      CLINICAL_DIAGNOSIS:
+        description: Clinical diagnosis.
+
+  ConditionSeverityEnum:
+    description: A subjective assessment of the severity of a condition.
+    permissible_values:
+      MILD:
+        description: Lower intensity condition.
+        meaning: OMOP:4116992
+      MODERATE:
+        description: Medium intensity condition.
+        meaning: OMOP:3272197
+      SEVERE:
+        description: Higher intensity condition.
+        meaning: OMOP:4087703
+
+  FamilyRelationshipEnum:
+    description: Values describing kinship connections between individuals.
+    permissible_values:
+      ONESELF:
+        description: Self-reference.
+      NATURAL_PARENT:
+        description: Mother or father unspecified.
+        meaning: OMOP:4029630
+      NATURAL_FATHER:
+        description: Biological father.
+        meaning: OMOP:4321888
+      NATURAL_MOTHER:
+        description: Biological mother.
+        meaning: OMOP:4277283
+      NATURAL_SIBLING:
+        description: Sister or brother unspecified.
+        meaning: OMOP:4218412
+      NATURAL_BROTHER:
+        description: Biological brother.
+        meaning: OMOP:4263682
+      NATURAL_SISTER:
+        description: Biological sister.
+        meaning: OMOP:4251326
+      NATURAL_CHILD:
+        description: Biological offspring.
+        meaning: OMOP:4326600
+      BLOOD_RELATIVE:
+        description: Generic consanguineous relation.
+        meaning: OMOP:4053608
+
+  RouteAdminEnum:
+    description: Routes of drug administration
+    permissible_values:
+      oral:
+        description: Oral administration
+        meaning: OMOP:4132161
+      intravenous:
+        description: Intravenous administration
+        meaning: OMOP:4171047
+      intramuscular:
+        description: Intramuscular administration
+        meaning: OMOP:4302612
+      subcutaneous:
+        description: Subcutaneous administration
+        meaning: OMOP:4142048
+      intradermal:
+        description: Intradermal administration
+        meaning: OMOP:4156706
+      transdermal:
+        description: Transdermal administration
+        meaning: OMOP:4262099
+      rectal:
+        description: Rectal administration
+        meaning: OMOP:4290759
+      vaginal:
+        description: Vaginal administration
+        meaning: OMOP:4057765
+      nasal:
+        description: Nasal administration
+        meaning: OMOP:4262914
+      topical:
+        description: Topical administration
+        meaning: OMOP:4263689
+      sublingual:
+        description: Sublingual administration
+        meaning: OMOP:4292110
+      buccal:
+        description: Buccal administration
+        meaning: OMOP:4181897
+      intra_articular:
+        description: Intra-articular administration
+        meaning: OMOP:4006860
+      intraperitoneal:
+        description: Intraperitoneal administration
+        meaning: OMOP:4243022
+      intrathecal:
+        description: Intrathecal administration
+        meaning: OMOP:4217202
+      epidural:
+        description: Epidural administration
+        meaning: OMOP:4225555
+      intra_arterial:
+        description: Intra-arterial administration
+        meaning: OMOP:4240824
+      ophthalmic:
+        description: Ophthalmic administration
+        meaning: OMOP:4184451
+      otic:
+        description: Otic (ear) administration
+        meaning: OMOP:4023156
+      enteral:
+        description: Enteral administration
+        meaning: OMOP:4167540
+      percutaneous:
+        description: Percutaneous administration
+        meaning: OMOP:4177987
+
+  DataTypeEnum:
+    description: The data type of an observation value
+    permissible_values:
+      decimal:
+        description: Decimal number
+      integer:
+        description: Integer number
+      enum:
+        description: Enumerated value
+      boolean:
+        description: Boolean value
+
+  MethodEnum:
+    description: The method used for a measurement or observation
+    permissible_values:
+      survey:
+        description: >-
+          list of questions given to a participant for data collection purposes - the
+          survey is filled out by the participant independently
+      interview:
+        description: >-
+          series of questions posed to a participant by an interviewer for data
+          collection purposes
+      calculated:
+        description: >-
+          clinical record that results from a calculation rather than being directly
+          measured
+      spirometry:
+        description: >-
+          breathing test used to assess lung function
+      body_plesmography:
+        description: >-
+          precise pulmonary function test where the patient sits in a sealed chamber and
+          breathes into a specialized mouthpiece. This method uses Boyle's Law  and is
+          considered a "gold standard"
+      GLI:
+        description: >-
+          a standard reference range and calculator for spirometry and lung function
+          tests published by the Global Lung Function Initiative in 2012
+      GLI-Global:
+        description: >-
+          a standard reference range and calculator for spirometry and lung function
+          tests published by the Global Lung Function Initiative in 2022. This is an
+          update of the 2012 standard that is more ethnically diverse
+      NHANESIII:
+        description: >-
+          standard reference equations for spirometry published in 2005
+
+  InstrumentEnum:
+    description: The instrument used for a measurement
+    permissible_values:
+      wall_mounted_stadiometer:
+        description: >-
+          fixed, high-precision medical device used to measure human height, consisting
+          of a vertical measuring rod or tape fastened to a wall with a sliding headpiece
+        meaning: MMO:0000105
+      flexible_measuring_tape:
+        description: >-
+          flexible tape used to measure height or body circumference
+      portable_stadiometer:
+        description: >-
+          portable device used to measure height, typically used in field settings
+      anthropometer_rod:
+        description: >-
+          rigid rod-based instrument used to measure body dimensions including height
+      sonar_stadiometer:
+        description: >-
+          ultrasound-based device used to measure height without contact
+      mechanical_beam_balance_scale:
+        description: >-
+          medical device used to measure human weight
+        meaning: MMO:0000087
+      digital_scale:
+        description: >-
+          electronic device used to measure human weight using strain gauge sensors
+        meaning: MMO:0000087
+      spring_scale:
+        description: >-
+          mechanical device that measures weight by the displacement of a spring
+      spirometer:
+        description: >-
+          medical device that measures lung function by recording the amount and speed
+          of air a person can inhale and exhale
+      vitalograph:
+        description: >-
+          a portable medical device that measures lung function by recording the amount
+          and speed of air a person can inhale and exhale
+      body_plesmograph:
+        description: >-
+          sealed, clear chamber with a mouthpiece for a person to breath through
+      peak_flow_meter:
+        description: >-
+          portable, handheld device used to measure how fast and hard a person can
+          exhale
+
+  ReagentKitEnum:
+    description: The reagent kit used for a measurement
+    permissible_values:
+      placeholder:
+        description: Placeholder value
+
+  BodyPositionEnum:
+    description: The body position during a measurement
+    permissible_values:
+      supine:
+        description: Lying face up
+      standing:
+        description: Standing upright
+      sitting:
+        description: Seated position
+
+  ContextEnum:
+    description: The context in which a measurement was taken
+    permissible_values:
+      fasted_8_hrs:
+        description: Fasted for 8 hours
+      fasted_12_hrs:
+        description: Fasted for 12 hours
+      before_bronchodilator:
+        description: Before bronchodilator administration
+      after_bronchodilator:
+        description: After bronchodilator administration
+      taking_lipid_lowering_medications:
+        description: While taking lipid-lowering medications
+      before_physical_activity:
+        description: Before physical activity
+      during_physical_activity:
+        description: During physical activity
+      after_physical_activity:
+        description: After physical activity
+      during_procedure:
+        description: During a procedure
+      taking_diabetes_medication:
+        description: While taking diabetes medication
+      lowest:
+        description: Lowest recorded value
+
+  CollectedByEnum:
+    description: Who collected the measurement
+    permissible_values:
+      doctor:
+        description: Collected by a doctor
+      nurse:
+        description: Collected by a nurse
+      technician:
+        description: Collected by a technician
+      self_administered:
+        description: Self-administered by the patient
+      first_examiner:
+        description: Collected by the first examiner
+      second_examiner:
+        description: Collected by the second examiner
+
+  AssociatedEvidenceEnum:
+    description: The method used for diagnosis
+    permissible_values:
+      placeholder:
+        description: Placeholder value

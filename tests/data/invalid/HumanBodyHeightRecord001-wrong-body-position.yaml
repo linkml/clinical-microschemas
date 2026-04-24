@@ -1,0 +1,14 @@
+# Example HumanBodyHeightRecord001: testing rules-body_position
+# INVALID: HumanBodyHeightRecord001 requires standing body position
+---
+subject_identifier: subject001
+measurement_type: OBA:VT0001253
+measurement_value: 153.6
+unit: UCUM:cm
+instrument: wall_mounted_stadiometer
+body_position: sitting
+collected_by: nurse
+data_type: decimal
+age_at_measurement:
+  quantity_value: 45.5
+  quantity_unit: UCUM:a

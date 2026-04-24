@@ -1,0 +1,14 @@
+# Example ClinicalMeasurementRecord: testing rules-value
+# INVALID: height measurement with negative value (minimum is 0)
+---
+subject_identifier: subject001
+measurement_type: OBA:VT0001253
+measurement_value: -3.2
+unit: UCUM:cm
+instrument: wall_mounted_stadiometer
+body_position: standing
+collected_by: nurse
+data_type: decimal
+age_at_measurement:
+  quantity_value: 45.5
+  quantity_unit: UCUM:a
