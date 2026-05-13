@@ -162,6 +162,9 @@ classes:
     description: >-
       Measurement of linear distance of a human body from the bottom of a flat foot
       to the top-most point of the head
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity
     rules:
       - preconditions:
           slot_conditions:
@@ -190,16 +193,15 @@ classes:
                 - range: BodyPositionEnum
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 300
-              minimum_value: 0
 
   HumanBodyHeightRecord001:
     is_a: HumanBodyHeightRecord
     description: >-
       Measurement of linear distance of a standing human body from the bottom of a flat foot
       to the top-most point of the head measured with a wall-mounted stadiometer
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity001
     rules:
       - preconditions:
           slot_conditions:
@@ -214,10 +216,6 @@ classes:
                 - equals_string: standing
       - postconditions:
           slot_conditions:
-            measurement_value:
-              range: decimal
-              maximum_value: 220
-              minimum_value: 20
             unit:
               equals_string: cm
 
@@ -234,6 +232,9 @@ classes:
     is_a: ClinicalMeasurementRecord
     description: >-
       Measurement of the force exerted by a human body on a scale due to gravity
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity
     rules:
       - preconditions:
           slot_conditions:
@@ -256,16 +257,15 @@ classes:
                 - equals_string: spring_scale
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 700
-              minimum_value: 0
 
   HumanBodyWeightRecord001:
     is_a: HumanBodyWeightRecord
     description: >-
       Measurement of the force exerted by a human body on a mechanical beam balance due
       to gravity
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity001
     rules:
       - preconditions:
           slot_conditions:
@@ -279,10 +279,6 @@ classes:
           slot_conditions:
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 550
-              minimum_value: 0
 
   #────────────────────────────────────────────────────────────────
   # Body Mass Index (BMI) Microschemas
@@ -300,6 +296,9 @@ classes:
     description: >-
       A calculated numerical quantity representing an individual's weight-to-height
       ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+    slot_usage:
+      measurement_value:
+        range: BodyMassIndexQuantity
     rules:
       - preconditions:
           slot_conditions:
@@ -317,10 +316,6 @@ classes:
               any_of:
                 - equals_string: calculated
             data_type: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 200
-              minimum_value: 5
             calculated_from:
               equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
 
@@ -351,10 +346,6 @@ classes:
                 - range: BodyPositionEnum
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 12000
-              minimum_value: 0
             context:
               any_of:
                 - equals_string: before_bronchodilator
@@ -364,6 +355,8 @@ classes:
                 - equals_string: spirometry
                 - equals_string: body_plesmography
     slot_usage:
+      measurement_value:
+        range: HumanFvcQuantity
       predicted_value:
         required: true
       percent_predicted_value:
@@ -374,6 +367,9 @@ classes:
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
       possible
+    slot_usage:
+      measurement_value:
+        range: HumanMeasuredFvcQuantity
     rules:
       - preconditions:
           slot_conditions:
@@ -396,10 +392,6 @@ classes:
                 - range: BodyPositionEnum
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 12000
-              minimum_value: 0
             context:
               any_of:
                 - equals_string: before_bronchodilator
@@ -414,6 +406,9 @@ classes:
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
       possible
+    slot_usage:
+      measurement_value:
+        range: HumanMeasuredFvcQuantity001
     rules:
       - preconditions:
           slot_conditions:
@@ -430,10 +425,6 @@ classes:
                 - equals_string: sitting
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 12
-              minimum_value: 0
             context:
               any_of:
                 - equals_string: before_bronchodilator
@@ -447,6 +438,9 @@ classes:
     description: >-
       Predicted total amount of air a person can forcibly exhale after taking the deepest
       breath possible. Predictions are based on a reference equation.
+    slot_usage:
+      measurement_value:
+        range: HumanPredictedFvcQuantity
     rules:
       - preconditions:
           slot_conditions:
@@ -460,10 +454,6 @@ classes:
                 - equals_string: L
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 12
-              minimum_value: 0
             method:
               any_of:
                 - equals_string: GLI
@@ -474,6 +464,9 @@ classes:
     is_a: ClinicalMeasurementRecord
     description: >-
       Percent of the predicted FVC that is achieved by the patient
+    slot_usage:
+      measurement_value:
+        range: HumanPercentPredictedFvcQuantity
     rules:
       - preconditions:
           slot_conditions:
@@ -487,10 +480,6 @@ classes:
                 - equals_string: "%"
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 150
-              minimum_value: 0
             calculated_from:
               equals_expression: "({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord}) * 100"
 
@@ -499,6 +488,9 @@ classes:
     description: >-
       Maximum amount of air a person can forcibly exhale in the first second of a
       breathing test
+    slot_usage:
+      measurement_value:
+        range: HumanFev1Quantity
     rules:
       - preconditions:
           slot_conditions:
@@ -520,10 +512,6 @@ classes:
                 - range: BodyPositionEnum
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 12000
-              minimum_value: 0
             context:
               any_of:
                 - equals_string: before_bronchodilator
@@ -539,6 +527,102 @@ classes:
       - lower_limit_normal
       - upper_limit_normal
       - percent_predicted_value
+
+  #────────────────────────────────────────────────────────────────
+  # Typed Quantity subclasses for per-record numeric bounds
+  #────────────────────────────────────────────────────────────────
+  # measurement_value is a Quantity (an object with quantity_value and
+  # quantity_unit). Numeric bounds therefore must attach to quantity_value,
+  # not to the Quantity wrapper. Each record's measurement_value range is
+  # set to one of these typed Quantities via slot_usage.
+
+  HumanBodyHeightQuantity:
+    is_a: Quantity
+    description: Human body height, bounded 0–300.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 300
+
+  HumanBodyHeightQuantity001:
+    is_a: HumanBodyHeightQuantity
+    description: Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 220
+
+  HumanBodyWeightQuantity:
+    is_a: Quantity
+    description: Human body weight, bounded 0–700.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 700
+
+  HumanBodyWeightQuantity001:
+    is_a: HumanBodyWeightQuantity
+    description: Mechanical-beam-balance human body weight in kg, bounded 0–550.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 550
+
+  BodyMassIndexQuantity:
+    is_a: Quantity
+    description: Body mass index value in kg/m², bounded 5–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 5
+        maximum_value: 200
+
+  HumanFvcQuantity:
+    is_a: Quantity
+    description: FVC measurement, bounded 0–12000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12000
+
+  HumanMeasuredFvcQuantity:
+    is_a: Quantity
+    description: Measured FVC, bounded 0–12000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12000
+
+  HumanMeasuredFvcQuantity001:
+    is_a: HumanMeasuredFvcQuantity
+    description: Measured FVC in L, bounded 0–12.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12
+
+  HumanPredictedFvcQuantity:
+    is_a: Quantity
+    description: Predicted FVC in L, bounded 0–12.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12
+
+  HumanPercentPredictedFvcQuantity:
+    is_a: Quantity
+    description: Percent-predicted FVC, bounded 0–150.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 150
+
+  HumanFev1Quantity:
+    is_a: Quantity
+    description: FEV1 measurement, bounded 0–12000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12000
 
 #────────────────────────────────────────────────────────────────
 # SLOTS
