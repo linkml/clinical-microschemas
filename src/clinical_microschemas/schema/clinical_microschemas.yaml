@@ -170,7 +170,7 @@ classes:
                 - equals_string: OBA:VT0001253
                 - equals_string: OMOP:903133
                 - equals_string: LOINC:3036277
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -212,7 +212,7 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
-      - postconditions:
+        postconditions:
           slot_conditions:
             measurement_value:
               range: decimal
@@ -308,7 +308,7 @@ classes:
                 - equals_string: OBA:0002045455
                 - equals_string: OMOP:3038553
                 - equals_string: LOINC:39156-5
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -335,7 +335,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4176265
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -380,7 +380,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4176265
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -420,7 +420,7 @@ classes:
             unit:
               any_of:
                 - equals_string: L
-      - postconditions:
+        postconditions:
           slot_conditions:
             instrument:
               any_of:
@@ -453,7 +453,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4150403
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -480,7 +480,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4253179
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -505,7 +505,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4241837
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
