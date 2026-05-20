@@ -2083,6 +2083,8 @@ classes:
       deepest breath possible
     from_schema: https://w3id.org/linkml/clinical-microschemas
     is_a: ClinicalMeasurementRecord
+    mixins:
+    - Relativity
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
@@ -2100,6 +2102,8 @@ classes:
     - ClinicalMeasurementRecord_age_at_measurement
     - HumanFvcRecord_predicted_value
     - HumanFvcRecord_percent_predicted_value
+    - lower_limit_normal
+    - upper_limit_normal
     slot_usage:
       predicted_value:
         name: predicted_value
@@ -2542,7 +2546,7 @@ classes:
     class_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
 metamodel_version: 1.7.0
 source_file: clinical_microschemas.yaml
-source_file_date: '2026-05-20T13:46:22'
-source_file_size: 34292
-generation_date: '2026-05-20T13:46:33'
+source_file_date: '2026-05-20T13:48:21'
+source_file_size: 34323
+generation_date: '2026-05-20T13:48:37'
 

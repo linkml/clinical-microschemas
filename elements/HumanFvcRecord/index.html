@@ -282,6 +282,8 @@
 <div class="mermaid"> classDiagram
     class HumanFvcRecord
     click HumanFvcRecord href "../HumanFvcRecord/"
+      Relativity &lt;|-- HumanFvcRecord
+        click Relativity href "../Relativity/"
       ClinicalMeasurementRecord &lt;|-- HumanFvcRecord
         click ClinicalMeasurementRecord href "../ClinicalMeasurementRecord/"
 
@@ -355,6 +357,8 @@
 
 
 
+      HumanFvcRecord : lower_limit_normal
+
       HumanFvcRecord : measurement_type
 
       HumanFvcRecord : measurement_value
@@ -379,6 +383,10 @@
 
 
 
+      HumanFvcRecord : percent_predicted_value
+
+      HumanFvcRecord : predicted_value
+
       HumanFvcRecord : reagent_kit
 
 
@@ -394,12 +402,14 @@
 
       HumanFvcRecord : unit
 
+      HumanFvcRecord : upper_limit_normal
+
 
 </div>
 <h2 id="inheritance">Inheritance</h2>
 <ul>
 <li><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a><ul>
-<li><strong>HumanFvcRecord</strong></li>
+<li><strong>HumanFvcRecord</strong> [ <a href="../Relativity/">Relativity</a>]</li>
 </ul>
 </li>
 </ul>
@@ -414,6 +424,30 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><a href="../predicted_value/">predicted_value</a></td>
+<td>1 <br/> <a href="../Decimal/">Decimal</a></td>
+<td>A predicted measurement value based on a reference population, range, equatio...</td>
+<td><a href="../Relativity/">Relativity</a></td>
+</tr>
+<tr>
+<td><a href="../lower_limit_normal/">lower_limit_normal</a></td>
+<td>0..1 <br/> <a href="../Decimal/">Decimal</a></td>
+<td>placeholder</td>
+<td><a href="../Relativity/">Relativity</a></td>
+</tr>
+<tr>
+<td><a href="../upper_limit_normal/">upper_limit_normal</a></td>
+<td>0..1 <br/> <a href="../Decimal/">Decimal</a></td>
+<td>placeholder</td>
+<td><a href="../Relativity/">Relativity</a></td>
+</tr>
+<tr>
+<td><a href="../percent_predicted_value/">percent_predicted_value</a></td>
+<td>1 <br/> <a href="../Decimal/">Decimal</a></td>
+<td>Ratio of the actual measured value to the predicted value</td>
+<td><a href="../Relativity/">Relativity</a></td>
+</tr>
 <tr>
 <td><a href="../subject_identifier/">subject_identifier</a></td>
 <td>1 <br/> <a href="../String/">String</a></td>
@@ -553,6 +587,8 @@ description: Total amount of air a person can forcibly exhale after taking the d
   breath possible
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+mixins:
+- Relativity
 slot_usage:
   predicted_value:
     name: predicted_value
@@ -612,6 +648,8 @@ description: Total amount of air a person can forcibly exhale after taking the d
   breath possible
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+mixins:
+- Relativity
 slot_usage:
   predicted_value:
     name: predicted_value
@@ -620,6 +658,50 @@ slot_usage:
     name: percent_predicted_value
     required: true
 attributes:
+  predicted_value:
+    name: predicted_value
+    description: A predicted measurement value based on a reference population, range,
+      equation, or other relevant information. Often used to normalize a measurement
+      based on body size, age, or sex
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: predicted_value
+    owner: HumanFvcRecord
+    domain_of:
+    - Relativity
+    range: decimal
+    required: true
+  lower_limit_normal:
+    name: lower_limit_normal
+    description: placeholder
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: lower_limit_normal
+    owner: HumanFvcRecord
+    domain_of:
+    - Relativity
+    range: decimal
+  upper_limit_normal:
+    name: upper_limit_normal
+    description: placeholder
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: upper_limit_normal
+    owner: HumanFvcRecord
+    domain_of:
+    - Relativity
+    range: decimal
+  percent_predicted_value:
+    name: percent_predicted_value
+    description: Ratio of the actual measured value to the predicted value
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: percent_predicted_value
+    owner: HumanFvcRecord
+    domain_of:
+    - Relativity
+    range: decimal
+    required: true
   subject_identifier:
     name: subject_identifier
     description: An identifier for the subject of the datum
