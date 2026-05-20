@@ -2065,8 +2065,7 @@ classes:
             - equals_string: calculated
           data_type:
             name: data_type
-            id_prefixes:
-            - decimal
+            equals_string: decimal
           measurement_value:
             name: measurement_value
             range: decimal
@@ -2546,7 +2545,7 @@ classes:
     class_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
 metamodel_version: 1.7.0
 source_file: clinical_microschemas.yaml
-source_file_date: '2026-05-20T13:48:21'
-source_file_size: 34323
-generation_date: '2026-05-20T13:48:37'
+source_file_date: '2026-05-20T13:50:09'
+source_file_size: 34352
+generation_date: '2026-05-20T13:50:18'
 

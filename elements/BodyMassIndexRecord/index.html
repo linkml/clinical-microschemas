@@ -515,7 +515,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OBA:0002045455'}, {'equals_string': 'OMOP:3038553'}, {'equals_string': 'LOINC:39156-5'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'kg/m2'}]}, 'method': {'any_of': [{'equals_string': 'calculated'}]}, 'data_type': {'id_prefixes': ['decimal']}, 'measurement_value': {'range': 'decimal', 'minimum_value': 5, 'maximum_value': 200}, 'calculated_from': {'equals_expression': '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2'}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'kg/m2'}]}, 'method': {'any_of': [{'equals_string': 'calculated'}]}, 'data_type': {'equals_string': 'decimal'}, 'measurement_value': {'range': 'decimal', 'minimum_value': 5, 'maximum_value': 200}, 'calculated_from': {'equals_expression': '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2'}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -574,8 +574,7 @@ rules:
         - equals_string: calculated
       data_type:
         name: data_type
-        id_prefixes:
-        - decimal
+        equals_string: decimal
       measurement_value:
         name: measurement_value
         range: decimal
@@ -773,8 +772,7 @@ rules:
         - equals_string: calculated
       data_type:
         name: data_type
-        id_prefixes:
-        - decimal
+        equals_string: decimal
       measurement_value:
         name: measurement_value
         range: decimal
