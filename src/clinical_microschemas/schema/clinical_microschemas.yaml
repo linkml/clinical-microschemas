@@ -68,6 +68,8 @@ classes:
       - collected_by
       - data_type
       - age_at_measurement
+      - study_site
+      - absolute_time
     slot_usage:
       subject_identifier:
         required: true
@@ -93,6 +95,7 @@ classes:
       - instrument
       - age_at_condition_start
       - age_at_condition_end
+      - age_at_condition_record
       - condition_status
       - condition_provenance
       - condition_severity
@@ -106,6 +109,8 @@ classes:
         required: true
       relationship_to_participant:
         required: true
+      age_at_condition_record:
+        required: true
 
   DrugStatusRecord:
     instantiates:
@@ -118,10 +123,9 @@ classes:
     slots:
       - subject_identifier
       - drug_type
-      - method
-      - collected_by
       - age_at_drug_start
       - age_at_drug_end
+      - age_at_drug_record
       - route_of_administration
       - dose
       - frequency
@@ -130,6 +134,8 @@ classes:
       subject_identifier:
         required: true
       drug_type:
+        required: true
+      age_at_drug_record:
         required: true
 
   ProcedureStatusRecord:
@@ -143,14 +149,16 @@ classes:
     slots:
       - subject_identifier
       - procedure_type
-      - method
       - collected_by
       - age_at_procedure_start
       - age_at_procedure_end
+      - age_at_procedure_record
     slot_usage:
       subject_identifier:
         required: true
       procedure_type:
+        required: true
+      age_at_procedure_record:
         required: true
 
 #────────────────────────────────────────────────────────────────
@@ -188,11 +196,12 @@ classes:
                 - equals_string: portable_stadiometer
                 - equals_string: anthropometer_rod
                 - equals_string: sonar_stadiometer
-            body_position:
-              any_of:
-                - range: BodyPositionEnum
+                - equals_string: infantometer
             data_type:
               equals_string: decimal
+            method:
+              any_of:
+                - equals_string: anthropometry             
 
   HumanBodyHeightRecord001:
     is_a: HumanBodyHeightRecord
@@ -211,14 +220,42 @@ classes:
             unit:
               any_of:
                 - equals_string: cm
+        postconditions:
+          slot_conditions:
             body_position:
               any_of:
                 - equals_string: standing
+            measurement_value:
+              range: decimal
+              maximum_value: 230
+              minimum_value: 6
+              
+  HumanBodyHeightRecord002:
+    is_a: HumanBodyHeightRecord
+    description: >-
+      Measurement of linear distance of a standing human body from the bottom of a flat foot
+      to the top-most point of the head measured with a wall-mounted stadiometer
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity002
+    rules:
+      - preconditions:
+          slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: wall_mounted_stadiometer
+            unit:
+              any_of:
+                - equals_string: "[in_i]"
         postconditions:
           slot_conditions:
-            unit:
-              equals_string: cm
-
+            body_position:
+              any_of:
+                - equals_string: standing
+            measurement_value:
+              range: decimal
+              maximum_value: 90
+              minimum_value: 1.4
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
   #────────────────────────────────────────────────────────────────
@@ -255,9 +292,13 @@ classes:
                 - equals_string: mechanical_beam_balance_scale
                 - equals_string: digital_scale
                 - equals_string: spring_scale
+                - equals_string: bariatric_scale
             data_type:
               equals_string: decimal
-
+            method:
+              any_of:
+                - equals_string: anthropometry 
+                
   HumanBodyWeightRecord001:
     is_a: HumanBodyWeightRecord
     description: >-
@@ -277,9 +318,40 @@ classes:
                 - equals_string: mechanical_beam_balance_scale
         postconditions:
           slot_conditions:
-            data_type:
-              equals_string: decimal
+            body_position:
+              any_of:
+                - equals_string: standing
+            measurement_value:
+              range: decimal
+              maximum_value: 220
+              minimum_value: 0.1
 
+  HumanBodyWeightRecord002:
+    is_a: HumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body on a mechanical beam balance due
+      to gravity
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity002
+    rules:
+      - preconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "[lb_av]"
+            instrument:
+              any_of:
+                - equals_string: mechanical_beam_balance_scale
+        postconditions:
+          slot_conditions:
+            body_position:
+              any_of:
+                - equals_string: standing
+            measurement_value:
+              range: decimal
+              maximum_value: 500
+              minimum_value: 0.25
   #────────────────────────────────────────────────────────────────
   # Body Mass Index (BMI) Microschemas
   #────────────────────────────────────────────────────────────────
@@ -324,13 +396,17 @@ classes:
             calculated_from:
               equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
 
+#Need some suggestions on how to bundle a measured, predicted, and percent predicted
+#value. I suspect what I have done is not great. Open to suggestions.  
+  
   HumanFvcRecord:
     is_a: ClinicalMeasurementRecord
     mixins:
       - Relativity
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
-      possible
+      possible. This microschema uses the Relativity mixin to bundle measured, predicted,
+      and percent predicted values.
     rules:
       - preconditions:
           slot_conditions:
@@ -348,9 +424,6 @@ classes:
                 - equals_string: spirometer
                 - equals_string: vitalograph
                 - equals_string: body_plesmograph
-            body_position:
-              any_of:
-                - range: BodyPositionEnum
             data_type:
               equals_string: decimal
             context:
@@ -394,9 +467,6 @@ classes:
                 - equals_string: spirometer
                 - equals_string: vitalograph
                 - equals_string: body_plesmograph
-            body_position:
-              any_of:
-                - range: BodyPositionEnum
             data_type:
               equals_string: decimal
             context:
@@ -419,19 +489,17 @@ classes:
     rules:
       - preconditions:
           slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: spirometer
             unit:
               any_of:
                 - equals_string: L
         postconditions:
           slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: spirometer
             body_position:
               any_of:
                 - equals_string: sitting
-            data_type:
-              equals_string: decimal
             context:
               any_of:
                 - equals_string: before_bronchodilator
@@ -461,11 +529,14 @@ classes:
                 - equals_string: L
             data_type:
               equals_string: decimal
-            method:
+            instrument:
               any_of:
                 - equals_string: GLI
                 - equals_string: GLI-Global
                 - equals_string: NHANESIII
+            method:
+              any_of:
+                - equals_string: calculated
 
   HumanPercentPredictedFvcRecord:
     is_a: ClinicalMeasurementRecord
