@@ -316,7 +316,8 @@ classes:
             method:
               any_of:
                 - equals_string: calculated
-            data_type: decimal
+            data_type:
+              equals_string: decimal
             measurement_value:
               range: decimal
               maximum_value: 200
