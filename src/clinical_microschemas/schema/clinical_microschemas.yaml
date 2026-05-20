@@ -173,7 +173,7 @@ classes:
                 - equals_string: OBA:VT0001253
                 - equals_string: OMOP:903133
                 - equals_string: LOINC:3036277
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -214,7 +214,7 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               equals_string: cm
@@ -307,7 +307,7 @@ classes:
                 - equals_string: OBA:0002045455
                 - equals_string: OMOP:3038553
                 - equals_string: LOINC:39156-5
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -315,12 +315,19 @@ classes:
             method:
               any_of:
                 - equals_string: calculated
-            data_type: decimal
+            data_type:
+              equals_string: decimal
+            measurement_value:
+              range: decimal
+              maximum_value: 200
+              minimum_value: 5
             calculated_from:
               equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
 
   HumanFvcRecord:
     is_a: ClinicalMeasurementRecord
+    mixins:
+      - Relativity
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
       possible
@@ -330,7 +337,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4176265
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -376,7 +383,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4176265
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -415,7 +422,7 @@ classes:
             unit:
               any_of:
                 - equals_string: L
-      - postconditions:
+        postconditions:
           slot_conditions:
             instrument:
               any_of:
@@ -447,7 +454,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4150403
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -473,7 +480,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4253179
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
@@ -497,7 +504,7 @@ classes:
             measurement_type:
               any_of:
                 - equals_string: OMOP:4241837
-      - postconditions:
+        postconditions:
           slot_conditions:
             unit:
               any_of:
