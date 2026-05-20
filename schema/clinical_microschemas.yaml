@@ -1634,6 +1634,114 @@ slots:
     usage_slot_name: procedure_type
     range: uriorcurie
     required: true
+  HumanBodyHeightRecord_measurement_value:
+    name: HumanBodyHeightRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanBodyHeightRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyHeightRecord
+    domain_of:
+    - HumanBodyHeightRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyHeightQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyHeightRecord001_measurement_value:
+    name: HumanBodyHeightRecord001_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord_measurement_value
+    domain: HumanBodyHeightRecord001
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyHeightRecord001
+    domain_of:
+    - HumanBodyHeightRecord001
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyHeightQuantity001
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyWeightRecord_measurement_value:
+    name: HumanBodyWeightRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanBodyWeightRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyWeightRecord
+    domain_of:
+    - HumanBodyWeightRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyWeightQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyWeightRecord001_measurement_value:
+    name: HumanBodyWeightRecord001_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyWeightRecord_measurement_value
+    domain: HumanBodyWeightRecord001
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyWeightRecord001
+    domain_of:
+    - HumanBodyWeightRecord001
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyWeightQuantity001
+    required: true
+    inlined: true
+    inlined_as_list: true
+  BodyMassIndexRecord_measurement_value:
+    name: BodyMassIndexRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: BodyMassIndexRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: BodyMassIndexRecord
+    domain_of:
+    - BodyMassIndexRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: BodyMassIndexQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanFvcRecord_measurement_value:
+    name: HumanFvcRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanFvcRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanFvcRecord
+    domain_of:
+    - HumanFvcRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanFvcQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
   HumanFvcRecord_predicted_value:
     name: HumanFvcRecord_predicted_value
     definition_uri: https://w3id.org/linkml/clinical-microschemas/predicted_value
@@ -1668,6 +1776,294 @@ slots:
     usage_slot_name: percent_predicted_value
     range: decimal
     required: true
+  HumanMeasuredFvcRecord_measurement_value:
+    name: HumanMeasuredFvcRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanMeasuredFvcRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanMeasuredFvcRecord
+    domain_of:
+    - HumanMeasuredFvcRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanMeasuredFvcQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanMeasuredFvcRecord001_measurement_value:
+    name: HumanMeasuredFvcRecord001_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanMeasuredFvcRecord_measurement_value
+    domain: HumanMeasuredFvcRecord001
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanMeasuredFvcRecord001
+    domain_of:
+    - HumanMeasuredFvcRecord001
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanMeasuredFvcQuantity001
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanPredictedFvcRecord_measurement_value:
+    name: HumanPredictedFvcRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanPredictedFvcRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanPredictedFvcRecord
+    domain_of:
+    - HumanPredictedFvcRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanPredictedFvcQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanPercentPredictedFvcRecord_measurement_value:
+    name: HumanPercentPredictedFvcRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanPercentPredictedFvcRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanPercentPredictedFvcRecord
+    domain_of:
+    - HumanPercentPredictedFvcRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanPercentPredictedFvcQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanFev1Record_measurement_value:
+    name: HumanFev1Record_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord_measurement_value
+    domain: HumanFev1Record
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanFev1Record
+    domain_of:
+    - HumanFev1Record
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanFev1Quantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyHeightQuantity_quantity_value:
+    name: HumanBodyHeightQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanBodyHeightQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyHeightQuantity
+    domain_of:
+    - HumanBodyHeightQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 300
+  HumanBodyHeightQuantity001_quantity_value:
+    name: HumanBodyHeightQuantity001_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: HumanBodyHeightQuantity_quantity_value
+    domain: HumanBodyHeightQuantity001
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyHeightQuantity001
+    domain_of:
+    - HumanBodyHeightQuantity001
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 20
+    maximum_value: 220
+  HumanBodyWeightQuantity_quantity_value:
+    name: HumanBodyWeightQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanBodyWeightQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyWeightQuantity
+    domain_of:
+    - HumanBodyWeightQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 700
+  HumanBodyWeightQuantity001_quantity_value:
+    name: HumanBodyWeightQuantity001_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: HumanBodyWeightQuantity_quantity_value
+    domain: HumanBodyWeightQuantity001
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyWeightQuantity001
+    domain_of:
+    - HumanBodyWeightQuantity001
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 550
+  BodyMassIndexQuantity_quantity_value:
+    name: BodyMassIndexQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: BodyMassIndexQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: BodyMassIndexQuantity
+    domain_of:
+    - BodyMassIndexQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 5
+    maximum_value: 200
+  HumanFvcQuantity_quantity_value:
+    name: HumanFvcQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanFvcQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanFvcQuantity
+    domain_of:
+    - HumanFvcQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 12000
+  HumanMeasuredFvcQuantity_quantity_value:
+    name: HumanMeasuredFvcQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanMeasuredFvcQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanMeasuredFvcQuantity
+    domain_of:
+    - HumanMeasuredFvcQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 12000
+  HumanMeasuredFvcQuantity001_quantity_value:
+    name: HumanMeasuredFvcQuantity001_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: HumanMeasuredFvcQuantity_quantity_value
+    domain: HumanMeasuredFvcQuantity001
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanMeasuredFvcQuantity001
+    domain_of:
+    - HumanMeasuredFvcQuantity001
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 12
+  HumanPredictedFvcQuantity_quantity_value:
+    name: HumanPredictedFvcQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanPredictedFvcQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanPredictedFvcQuantity
+    domain_of:
+    - HumanPredictedFvcQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 12
+  HumanPercentPredictedFvcQuantity_quantity_value:
+    name: HumanPercentPredictedFvcQuantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanPercentPredictedFvcQuantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanPercentPredictedFvcQuantity
+    domain_of:
+    - HumanPercentPredictedFvcQuantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 150
+  HumanFev1Quantity_quantity_value:
+    name: HumanFev1Quantity_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: quantity_value
+    domain: HumanFev1Quantity
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanFev1Quantity
+    domain_of:
+    - HumanFev1Quantity
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 12000
 classes:
   ClinicalMeasurementRecord:
     name: ClinicalMeasurementRecord
@@ -1823,7 +2219,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -1835,6 +2230,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanBodyHeightRecord_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyHeightQuantity
     class_uri: cms:HumanBodyHeightRecord
     rules:
     - preconditions:
@@ -1869,11 +2269,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 300
   HumanBodyHeightRecord001:
     name: HumanBodyHeightRecord001
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord001
@@ -1885,7 +2280,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -1897,6 +2291,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanBodyHeightRecord001_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyHeightQuantity001
     class_uri: cms:HumanBodyHeightRecord001
     rules:
     - preconditions:
@@ -1915,11 +2314,6 @@ classes:
             - equals_string: standing
       postconditions:
         slot_conditions:
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 20
-            maximum_value: 220
           unit:
             name: unit
             equals_string: cm
@@ -1933,7 +2327,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -1945,6 +2338,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanBodyWeightRecord_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyWeightQuantity
     class_uri: cms:HumanBodyWeightRecord
     rules:
     - preconditions:
@@ -1972,11 +2370,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 700
   HumanBodyWeightRecord001:
     name: HumanBodyWeightRecord001
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightRecord001
@@ -1987,7 +2380,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -1999,6 +2391,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanBodyWeightRecord001_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyWeightQuantity001
     class_uri: cms:HumanBodyWeightRecord001
     rules:
     - preconditions:
@@ -2016,11 +2413,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 550
   BodyMassIndexRecord:
     name: BodyMassIndexRecord
     definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexRecord
@@ -2031,7 +2423,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2043,6 +2434,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - BodyMassIndexRecord_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: BodyMassIndexQuantity
     class_uri: cms:BodyMassIndexRecord
     rules:
     - preconditions:
@@ -2087,7 +2483,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2099,11 +2494,15 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanFvcRecord_measurement_value
     - HumanFvcRecord_predicted_value
     - HumanFvcRecord_percent_predicted_value
     - lower_limit_normal
     - upper_limit_normal
     slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanFvcQuantity
       predicted_value:
         name: predicted_value
         required: true
@@ -2138,11 +2537,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 12000
           context:
             name: context
             any_of:
@@ -2163,7 +2557,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2175,6 +2568,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanMeasuredFvcRecord_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanMeasuredFvcQuantity
     class_uri: cms:HumanMeasuredFvcRecord
     rules:
     - preconditions:
@@ -2203,11 +2601,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 12000
           context:
             name: context
             any_of:
@@ -2228,7 +2621,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2240,6 +2632,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanMeasuredFvcRecord001_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanMeasuredFvcQuantity001
     class_uri: cms:HumanMeasuredFvcRecord001
     rules:
     - preconditions:
@@ -2261,11 +2658,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 12
           context:
             name: context
             any_of:
@@ -2285,7 +2677,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2297,6 +2688,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanPredictedFvcRecord_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanPredictedFvcQuantity
     class_uri: cms:HumanPredictedFvcRecord
     rules:
     - preconditions:
@@ -2314,11 +2710,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 12
           method:
             name: method
             any_of:
@@ -2334,7 +2725,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2346,6 +2736,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanPercentPredictedFvcRecord_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanPercentPredictedFvcQuantity
     class_uri: cms:HumanPercentPredictedFvcRecord
     rules:
     - preconditions:
@@ -2363,11 +2758,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 150
           calculated_from:
             name: calculated_from
             equals_expression: ({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord})
@@ -2382,7 +2772,6 @@ classes:
     slots:
     - ClinicalMeasurementRecord_subject_identifier
     - ClinicalMeasurementRecord_measurement_type
-    - ClinicalMeasurementRecord_measurement_value
     - unit
     - method
     - instrument
@@ -2394,6 +2783,11 @@ classes:
     - collected_by
     - data_type
     - ClinicalMeasurementRecord_age_at_measurement
+    - HumanFev1Record_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanFev1Quantity
     class_uri: cms:HumanFev1Record
     rules:
     - preconditions:
@@ -2421,11 +2815,6 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          measurement_value:
-            name: measurement_value
-            range: decimal
-            minimum_value: 0
-            maximum_value: 12000
           context:
             name: context
             any_of:
@@ -2446,6 +2835,184 @@ classes:
     - upper_limit_normal
     - percent_predicted_value
     class_uri: cms:Relativity
+  HumanBodyHeightQuantity:
+    name: HumanBodyHeightQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity
+    description: "Human body height, bounded 0\u2013300."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyHeightQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 300
+    class_uri: cms:HumanBodyHeightQuantity
+  HumanBodyHeightQuantity001:
+    name: HumanBodyHeightQuantity001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity001
+    description: "Standing wall-mounted-stadiometer human body height in cm, bounded\
+      \ 20\u2013220."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightQuantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyHeightQuantity001_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 20
+        maximum_value: 220
+    class_uri: cms:HumanBodyHeightQuantity001
+  HumanBodyWeightQuantity:
+    name: HumanBodyWeightQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightQuantity
+    description: "Human body weight, bounded 0\u2013700."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyWeightQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 700
+    class_uri: cms:HumanBodyWeightQuantity
+  HumanBodyWeightQuantity001:
+    name: HumanBodyWeightQuantity001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightQuantity001
+    description: "Mechanical-beam-balance human body weight in kg, bounded 0\u2013\
+      550."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyWeightQuantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyWeightQuantity001_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 550
+    class_uri: cms:HumanBodyWeightQuantity001
+  BodyMassIndexQuantity:
+    name: BodyMassIndexQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexQuantity
+    description: "Body mass index value in kg/m\xB2, bounded 5\u2013200."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - BodyMassIndexQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 5
+        maximum_value: 200
+    class_uri: cms:BodyMassIndexQuantity
+  HumanFvcQuantity:
+    name: HumanFvcQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanFvcQuantity
+    description: "FVC measurement, bounded 0\u201312000."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanFvcQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 12000
+    class_uri: cms:HumanFvcQuantity
+  HumanMeasuredFvcQuantity:
+    name: HumanMeasuredFvcQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanMeasuredFvcQuantity
+    description: "Measured FVC, bounded 0\u201312000."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanMeasuredFvcQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 12000
+    class_uri: cms:HumanMeasuredFvcQuantity
+  HumanMeasuredFvcQuantity001:
+    name: HumanMeasuredFvcQuantity001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanMeasuredFvcQuantity001
+    description: "Measured FVC in L, bounded 0\u201312."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanMeasuredFvcQuantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanMeasuredFvcQuantity001_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 12
+    class_uri: cms:HumanMeasuredFvcQuantity001
+  HumanPredictedFvcQuantity:
+    name: HumanPredictedFvcQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanPredictedFvcQuantity
+    description: "Predicted FVC in L, bounded 0\u201312."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanPredictedFvcQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 12
+    class_uri: cms:HumanPredictedFvcQuantity
+  HumanPercentPredictedFvcQuantity:
+    name: HumanPercentPredictedFvcQuantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanPercentPredictedFvcQuantity
+    description: "Percent-predicted FVC, bounded 0\u2013150."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanPercentPredictedFvcQuantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 150
+    class_uri: cms:HumanPercentPredictedFvcQuantity
+  HumanFev1Quantity:
+    name: HumanFev1Quantity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanFev1Quantity
+    description: "FEV1 measurement, bounded 0\u201312000."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: Quantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanFev1Quantity_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 12000
+    class_uri: cms:HumanFev1Quantity
   MicroschemaDefinition:
     name: MicroschemaDefinition
     definition_uri: https://w3id.org/linkml/linkml-microschema-profile/MicroschemaDefinition
@@ -2545,7 +3112,7 @@ classes:
     class_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
 metamodel_version: 1.7.0
 source_file: clinical_microschemas.yaml
-source_file_date: '2026-05-20T13:50:09'
-source_file_size: 34352
-generation_date: '2026-05-20T13:50:18'
+source_file_date: '2026-05-20T13:55:38'
+source_file_size: 36943
+generation_date: '2026-05-20T13:55:48'
 

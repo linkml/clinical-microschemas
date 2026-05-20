@@ -368,8 +368,8 @@
 
 
 
-        HumanBodyHeightRecord --&gt; "1" Quantity : measurement_value
-        click Quantity href "../Quantity/"
+        HumanBodyHeightRecord --&gt; "1" HumanBodyHeightQuantity : measurement_value
+        click HumanBodyHeightQuantity href "../HumanBodyHeightQuantity/"
 
 
 
@@ -436,7 +436,7 @@
 </tr>
 <tr>
 <td><a href="../measurement_value/">measurement_value</a></td>
-<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
+<td>1 <br/> <a href="../HumanBodyHeightQuantity/">HumanBodyHeightQuantity</a></td>
 <td>The "value" in the observation key/value pair</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -523,7 +523,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OBA:VT0001253'}, {'equals_string': 'OMOP:903133'}, {'equals_string': 'LOINC:3036277'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'cm'}, {'equals_string': '[in_i]'}, {'equals_string': 'm'}, {'equals_string': '[ft_i]'}]}, 'instrument': {'any_of': [{'equals_string': 'wall_mounted_stadiometer'}, {'equals_string': 'flexible_measuring_tape'}, {'equals_string': 'portable_stadiometer'}, {'equals_string': 'anthropometer_rod'}, {'equals_string': 'sonar_stadiometer'}]}, 'body_position': {'any_of': [{'range': 'BodyPositionEnum'}]}, 'data_type': {'equals_string': 'decimal'}, 'measurement_value': {'range': 'decimal', 'minimum_value': 0, 'maximum_value': 300}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'cm'}, {'equals_string': '[in_i]'}, {'equals_string': 'm'}, {'equals_string': '[ft_i]'}]}, 'instrument': {'any_of': [{'equals_string': 'wall_mounted_stadiometer'}, {'equals_string': 'flexible_measuring_tape'}, {'equals_string': 'portable_stadiometer'}, {'equals_string': 'anthropometer_rod'}, {'equals_string': 'sonar_stadiometer'}]}, 'body_position': {'any_of': [{'range': 'BodyPositionEnum'}]}, 'data_type': {'equals_string': 'decimal'}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -561,6 +561,10 @@ description: Measurement of linear distance of a human body from the bottom of a
   foot to the top-most point of the head
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanBodyHeightQuantity
 rules:
 - preconditions:
     slot_conditions:
@@ -594,11 +598,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 300
 
 </code></pre>
 </details>
@@ -609,6 +608,10 @@ description: Measurement of linear distance of a human body from the bottom of a
   foot to the top-most point of the head
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanBodyHeightQuantity
 attributes:
   subject_identifier:
     name: subject_identifier
@@ -645,7 +648,7 @@ attributes:
     owner: HumanBodyHeightRecord
     domain_of:
     - ClinicalMeasurementRecord
-    range: Quantity
+    range: HumanBodyHeightQuantity
     required: true
   unit:
     name: unit
@@ -799,11 +802,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 300
 
 </code></pre>
 </details>

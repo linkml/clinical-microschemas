@@ -17,6 +17,10 @@
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/BodyMassIndexQuantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
          <loc>https://linkml.github.io/clinical-microschemas/elements/BodyMassIndexRecord/</loc>
          <lastmod>2026-05-20</lastmod>
     </url>
@@ -101,11 +105,27 @@
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanBodyHeightQuantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanBodyHeightQuantity001/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
          <loc>https://linkml.github.io/clinical-microschemas/elements/HumanBodyHeightRecord/</loc>
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
          <loc>https://linkml.github.io/clinical-microschemas/elements/HumanBodyHeightRecord001/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanBodyWeightQuantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanBodyWeightQuantity001/</loc>
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
@@ -117,11 +137,27 @@
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanFev1Quantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
          <loc>https://linkml.github.io/clinical-microschemas/elements/HumanFev1Record/</loc>
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanFvcQuantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
          <loc>https://linkml.github.io/clinical-microschemas/elements/HumanFvcRecord/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanMeasuredFvcQuantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanMeasuredFvcQuantity001/</loc>
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
@@ -133,7 +169,15 @@
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanPercentPredictedFvcQuantity/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
          <loc>https://linkml.github.io/clinical-microschemas/elements/HumanPercentPredictedFvcRecord/</loc>
+         <lastmod>2026-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://linkml.github.io/clinical-microschemas/elements/HumanPredictedFvcQuantity/</loc>
          <lastmod>2026-05-20</lastmod>
     </url>
     <url>

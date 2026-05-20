@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="https://linkml.github.io/clinical-microschemas/elements/HumanPredictedFvcRecord/" rel="canonical"/>
+<link href="https://linkml.github.io/clinical-microschemas/elements/HumanBodyHeightQuantity001/" rel="canonical"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>Class: HumanPredictedFvcRecord - clinical-microschemas</title>
+<title>Class: HumanBodyHeightQuantity001 - clinical-microschemas</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -23,7 +23,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#class-humanpredictedfvcrecord">
+<a class="md-skip" href="#class-humanbodyheightquantity001">
           Skip to content
         </a>
 </div>
@@ -47,7 +47,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Class: HumanPredictedFvcRecord
+              Class: HumanBodyHeightQuantity001
             
           </span>
 </div>
@@ -189,23 +189,13 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#rules">
+<a class="md-nav__link" href="#usages">
 <span class="md-ellipsis">
       
-        Rules
+        Usages
       
     </span>
 </a>
-<nav aria-label="Rules" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#_1">
-<span class="md-ellipsis">
-</span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#identifier-and-mapping-information">
@@ -276,130 +266,39 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="class-humanpredictedfvcrecord">Class: HumanPredictedFvcRecord</h1>
-<p><em>Predicted total amount of air a person can forcibly exhale after taking the deepest breath possible. Predictions are based on a reference equation.</em></p>
-<p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanPredictedFvcRecord">cms:HumanPredictedFvcRecord</a></p>
+<h1 id="class-humanbodyheightquantity001">Class: HumanBodyHeightQuantity001</h1>
+<p><em>Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.</em></p>
+<p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity001">cms:HumanBodyHeightQuantity001</a></p>
 <div class="mermaid"> classDiagram
-    class HumanPredictedFvcRecord
-    click HumanPredictedFvcRecord href "../HumanPredictedFvcRecord/"
-      ClinicalMeasurementRecord &lt;|-- HumanPredictedFvcRecord
-        click ClinicalMeasurementRecord href "../ClinicalMeasurementRecord/"
+    class HumanBodyHeightQuantity001
+    click HumanBodyHeightQuantity001 href "../HumanBodyHeightQuantity001/"
+      HumanBodyHeightQuantity &lt;|-- HumanBodyHeightQuantity001
+        click HumanBodyHeightQuantity href "../HumanBodyHeightQuantity/"
 
-      HumanPredictedFvcRecord : age_at_measurement
+      HumanBodyHeightQuantity001 : comparator
 
 
 
 
 
-        HumanPredictedFvcRecord --&gt; "1" Quantity : age_at_measurement
-        click Quantity href "../Quantity/"
+        HumanBodyHeightQuantity001 --&gt; "0..1" ComparatorEnum : comparator
+        click ComparatorEnum href "../ComparatorEnum/"
 
 
 
-      HumanPredictedFvcRecord : body_location
+      HumanBodyHeightQuantity001 : quantity_unit
 
-      HumanPredictedFvcRecord : body_position
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" BodyPositionEnum : body_position
-        click BodyPositionEnum href "../BodyPositionEnum/"
-
-
-
-      HumanPredictedFvcRecord : calculated_from
-
-      HumanPredictedFvcRecord : collected_by
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" CollectedByEnum : collected_by
-        click CollectedByEnum href "../CollectedByEnum/"
-
-
-
-      HumanPredictedFvcRecord : context
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" ContextEnum : context
-        click ContextEnum href "../ContextEnum/"
-
-
-
-      HumanPredictedFvcRecord : data_type
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" DataTypeEnum : data_type
-        click DataTypeEnum href "../DataTypeEnum/"
-
-
-
-      HumanPredictedFvcRecord : instrument
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" InstrumentEnum : instrument
-        click InstrumentEnum href "../InstrumentEnum/"
-
-
-
-      HumanPredictedFvcRecord : measurement_type
-
-      HumanPredictedFvcRecord : measurement_value
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "1" HumanPredictedFvcQuantity : measurement_value
-        click HumanPredictedFvcQuantity href "../HumanPredictedFvcQuantity/"
-
-
-
-      HumanPredictedFvcRecord : method
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" MethodEnum : method
-        click MethodEnum href "../MethodEnum/"
-
-
-
-      HumanPredictedFvcRecord : reagent_kit
-
-
-
-
-
-        HumanPredictedFvcRecord --&gt; "0..1" ReagentKitEnum : reagent_kit
-        click ReagentKitEnum href "../ReagentKitEnum/"
-
-
-
-      HumanPredictedFvcRecord : subject_identifier
-
-      HumanPredictedFvcRecord : unit
+      HumanBodyHeightQuantity001 : quantity_value
 
 
 </div>
 <h2 id="inheritance">Inheritance</h2>
 <ul>
-<li><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a><ul>
-<li><strong>HumanPredictedFvcRecord</strong></li>
+<li><a href="../Quantity/">Quantity</a><ul>
+<li><a href="../HumanBodyHeightQuantity/">HumanBodyHeightQuantity</a><ul>
+<li><strong>HumanBodyHeightQuantity001</strong></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -415,108 +314,41 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../subject_identifier/">subject_identifier</a></td>
-<td>1 <br/> <a href="../String/">String</a></td>
-<td>An identifier for the subject of the datum</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+<td><a href="../quantity_value/">quantity_value</a></td>
+<td>1 <br/> <a href="../Decimal/">Decimal</a></td>
+<td>The numeric value</td>
+<td><a href="../Quantity/">Quantity</a></td>
 </tr>
 <tr>
-<td><a href="../measurement_type/">measurement_type</a></td>
+<td><a href="../quantity_unit/">quantity_unit</a></td>
 <td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
-<td>A CURIE from OBA, OMOP, or LOINC</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+<td>Unit (UCUM, UO, QUDT, etc</td>
+<td><a href="../Quantity/">Quantity</a></td>
 </tr>
 <tr>
-<td><a href="../measurement_value/">measurement_value</a></td>
-<td>1 <br/> <a href="../HumanPredictedFvcQuantity/">HumanPredictedFvcQuantity</a></td>
-<td>The "value" in the observation key/value pair</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../unit/">unit</a></td>
-<td>0..1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
-<td>A unit from UCUM</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../method/">method</a></td>
-<td>0..1 <br/> <a href="../MethodEnum/">MethodEnum</a></td>
-<td>The method used for the measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../instrument/">instrument</a></td>
-<td>0..1 <br/> <a href="../InstrumentEnum/">InstrumentEnum</a></td>
-<td>The instrument used for the measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../reagent_kit/">reagent_kit</a></td>
-<td>0..1 <br/> <a href="../ReagentKitEnum/">ReagentKitEnum</a></td>
-<td>The reagent kit used for the measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../calculated_from/">calculated_from</a></td>
-<td>0..1 <br/> <a href="../String/">String</a></td>
-<td>An expression pointing at other CDE classes</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../body_location/">body_location</a></td>
-<td>0..1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
-<td>A CURIE from UBERON</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../body_position/">body_position</a></td>
-<td>0..1 <br/> <a href="../BodyPositionEnum/">BodyPositionEnum</a></td>
-<td>The body position during measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../context/">context</a></td>
-<td>0..1 <br/> <a href="../ContextEnum/">ContextEnum</a></td>
-<td>The context of the measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../collected_by/">collected_by</a></td>
-<td>0..1 <br/> <a href="../CollectedByEnum/">CollectedByEnum</a></td>
-<td>Who collected the measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../data_type/">data_type</a></td>
-<td>0..1 <br/> <a href="../DataTypeEnum/">DataTypeEnum</a></td>
-<td>The data type of the observation</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
-</tr>
-<tr>
-<td><a href="../age_at_measurement/">age_at_measurement</a></td>
-<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
-<td>Age of the subject at the time of measurement</td>
-<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+<td><a href="../comparator/">comparator</a></td>
+<td>0..1 <br/> <a href="../ComparatorEnum/">ComparatorEnum</a></td>
+<td>Comparison operator (less than, greater than, etc</td>
+<td><a href="../Quantity/">Quantity</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="rules">Rules</h2>
-<h3 id="_1"></h3>
+<h2 id="usages">Usages</h2>
 <table>
 <thead>
 <tr>
-<th>Rule Applied</th>
-<th>Preconditions</th>
-<th>Postconditions</th>
-<th>Elseconditions</th>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>slot_conditions</td>
-<td><code>{'measurement_type': {'any_of': [{'equals_string': 'OMOP:4150403'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'L'}]}, 'data_type': {'equals_string': 'decimal'}, 'method': {'any_of': [{'equals_string': 'GLI'}, {'equals_string': 'GLI-Global'}, {'equals_string': 'NHANESIII'}]}}</code></td>
-<td></td>
+<td><a href="../HumanBodyHeightRecord001/">HumanBodyHeightRecord001</a></td>
+<td><a href="../measurement_value/">measurement_value</a></td>
+<td>range</td>
+<td><a href="./">HumanBodyHeightQuantity001</a></td>
 </tr>
 </tbody>
 </table>
@@ -536,11 +368,11 @@
 <tbody>
 <tr>
 <td>self</td>
-<td>cms:HumanPredictedFvcRecord</td>
+<td>cms:HumanBodyHeightQuantity001</td>
 </tr>
 <tr>
 <td>native</td>
-<td>cms:HumanPredictedFvcRecord</td>
+<td>cms:HumanBodyHeightQuantity001</td>
 </tr>
 </tbody>
 </table>
@@ -548,230 +380,65 @@
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
 <h3 id="direct">Direct</h3>
 <details>
-<pre><code class="language-yaml">name: HumanPredictedFvcRecord
-description: Predicted total amount of air a person can forcibly exhale after taking
-  the deepest breath possible. Predictions are based on a reference equation.
+<pre><code class="language-yaml">name: HumanBodyHeightQuantity001
+description: Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.
 from_schema: https://w3id.org/linkml/clinical-microschemas
-is_a: ClinicalMeasurementRecord
+is_a: HumanBodyHeightQuantity
 slot_usage:
-  measurement_value:
-    name: measurement_value
-    range: HumanPredictedFvcQuantity
-rules:
-- preconditions:
-    slot_conditions:
-      measurement_type:
-        name: measurement_type
-        any_of:
-        - equals_string: OMOP:4150403
-  postconditions:
-    slot_conditions:
-      unit:
-        name: unit
-        any_of:
-        - equals_string: L
-      data_type:
-        name: data_type
-        equals_string: decimal
-      method:
-        name: method
-        any_of:
-        - equals_string: GLI
-        - equals_string: GLI-Global
-        - equals_string: NHANESIII
+  quantity_value:
+    name: quantity_value
+    minimum_value: 20
+    maximum_value: 220
 
 </code></pre>
 </details>
 <h3 id="induced">Induced</h3>
 <details>
-<pre><code class="language-yaml">name: HumanPredictedFvcRecord
-description: Predicted total amount of air a person can forcibly exhale after taking
-  the deepest breath possible. Predictions are based on a reference equation.
+<pre><code class="language-yaml">name: HumanBodyHeightQuantity001
+description: Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.
 from_schema: https://w3id.org/linkml/clinical-microschemas
-is_a: ClinicalMeasurementRecord
+is_a: HumanBodyHeightQuantity
 slot_usage:
-  measurement_value:
-    name: measurement_value
-    range: HumanPredictedFvcQuantity
+  quantity_value:
+    name: quantity_value
+    minimum_value: 20
+    maximum_value: 220
 attributes:
-  subject_identifier:
-    name: subject_identifier
-    description: An identifier for the subject of the datum
+  quantity_value:
+    name: quantity_value
+    description: The numeric value
     from_schema: https://w3id.org/linkml/clinical-microschemas
     rank: 1000
-    alias: subject_identifier
-    owner: HumanPredictedFvcRecord
+    alias: quantity_value
+    owner: HumanBodyHeightQuantity001
     domain_of:
-    - ClinicalMeasurementRecord
-    - ConditionStatusRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
-    range: string
+    - Quantity
+    range: decimal
     required: true
-  measurement_type:
-    name: measurement_type
-    description: A CURIE from OBA, OMOP, or LOINC
+    minimum_value: 20
+    maximum_value: 220
+  quantity_unit:
+    name: quantity_unit
+    description: Unit (UCUM, UO, QUDT, etc.)
     from_schema: https://w3id.org/linkml/clinical-microschemas
     rank: 1000
-    slot_uri: bdchm:observation_type
-    alias: measurement_type
-    owner: HumanPredictedFvcRecord
+    slot_uri: schema:unitCode
+    alias: quantity_unit
+    owner: HumanBodyHeightQuantity001
     domain_of:
-    - ClinicalMeasurementRecord
+    - Quantity
     range: uriorcurie
     required: true
-  measurement_value:
-    name: measurement_value
-    description: The "value" in the observation key/value pair
+  comparator:
+    name: comparator
+    description: Comparison operator (less than, greater than, etc.) or exact if null
     from_schema: https://w3id.org/linkml/clinical-microschemas
     rank: 1000
-    alias: measurement_value
-    owner: HumanPredictedFvcRecord
+    alias: comparator
+    owner: HumanBodyHeightQuantity001
     domain_of:
-    - ClinicalMeasurementRecord
-    range: HumanPredictedFvcQuantity
-    required: true
-  unit:
-    name: unit
-    description: A unit from UCUM
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    slot_uri: bdchm:unit
-    alias: unit
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: uriorcurie
-  method:
-    name: method
-    description: The method used for the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    slot_uri: bdchm:method_type
-    alias: method
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
-    range: MethodEnum
-  instrument:
-    name: instrument
-    description: The instrument used for the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: instrument
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    - ConditionStatusRecord
-    range: InstrumentEnum
-  reagent_kit:
-    name: reagent_kit
-    description: The reagent kit used for the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: reagent_kit
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: ReagentKitEnum
-  calculated_from:
-    name: calculated_from
-    description: An expression pointing at other CDE classes
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: calculated_from
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: string
-  body_location:
-    name: body_location
-    description: A CURIE from UBERON
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    slot_uri: bdchm:BodySite
-    alias: body_location
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: uriorcurie
-  body_position:
-    name: body_position
-    description: The body position during measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: body_position
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: BodyPositionEnum
-  context:
-    name: context
-    description: The context of the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: context
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: ContextEnum
-  collected_by:
-    name: collected_by
-    description: Who collected the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: collected_by
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
-    range: CollectedByEnum
-  data_type:
-    name: data_type
-    description: The data type of the observation
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: data_type
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: DataTypeEnum
-  age_at_measurement:
-    name: age_at_measurement
-    description: Age of the subject at the time of measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: age_at_measurement
-    owner: HumanPredictedFvcRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    range: Quantity
-    required: true
-rules:
-- preconditions:
-    slot_conditions:
-      measurement_type:
-        name: measurement_type
-        any_of:
-        - equals_string: OMOP:4150403
-  postconditions:
-    slot_conditions:
-      unit:
-        name: unit
-        any_of:
-        - equals_string: L
-      data_type:
-        name: data_type
-        equals_string: decimal
-      method:
-        name: method
-        any_of:
-        - equals_string: GLI
-        - equals_string: GLI-Global
-        - equals_string: NHANESIII
+    - Quantity
+    range: ComparatorEnum
 
 </code></pre>
 </details>

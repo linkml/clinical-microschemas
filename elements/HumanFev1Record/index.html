@@ -363,8 +363,8 @@
 
 
 
-        HumanFev1Record --&gt; "1" Quantity : measurement_value
-        click Quantity href "../Quantity/"
+        HumanFev1Record --&gt; "1" HumanFev1Quantity : measurement_value
+        click HumanFev1Quantity href "../HumanFev1Quantity/"
 
 
 
@@ -428,7 +428,7 @@
 </tr>
 <tr>
 <td><a href="../measurement_value/">measurement_value</a></td>
-<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
+<td>1 <br/> <a href="../HumanFev1Quantity/">HumanFev1Quantity</a></td>
 <td>The "value" in the observation key/value pair</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -515,7 +515,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OMOP:4241837'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'L'}, {'equals_string': 'mL'}]}, 'instrument': {'any_of': [{'equals_string': 'spirometer'}, {'equals_string': 'peak_flow_meter'}]}, 'body_position': {'any_of': [{'range': 'BodyPositionEnum'}]}, 'data_type': {'equals_string': 'decimal'}, 'measurement_value': {'range': 'decimal', 'minimum_value': 0, 'maximum_value': 12000}, 'context': {'any_of': [{'equals_string': 'before_bronchodilator'}, {'equals_string': 'after_bronchodilator'}]}, 'method': {'any_of': [{'equals_string': 'spirometry'}]}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'L'}, {'equals_string': 'mL'}]}, 'instrument': {'any_of': [{'equals_string': 'spirometer'}, {'equals_string': 'peak_flow_meter'}]}, 'body_position': {'any_of': [{'range': 'BodyPositionEnum'}]}, 'data_type': {'equals_string': 'decimal'}, 'context': {'any_of': [{'equals_string': 'before_bronchodilator'}, {'equals_string': 'after_bronchodilator'}]}, 'method': {'any_of': [{'equals_string': 'spirometry'}]}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -553,6 +553,10 @@ description: Maximum amount of air a person can forcibly exhale in the first sec
   of a breathing test
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanFev1Quantity
 rules:
 - preconditions:
     slot_conditions:
@@ -579,11 +583,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 12000
       context:
         name: context
         any_of:
@@ -603,6 +602,10 @@ description: Maximum amount of air a person can forcibly exhale in the first sec
   of a breathing test
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanFev1Quantity
 attributes:
   subject_identifier:
     name: subject_identifier
@@ -639,7 +642,7 @@ attributes:
     owner: HumanFev1Record
     domain_of:
     - ClinicalMeasurementRecord
-    range: Quantity
+    range: HumanFev1Quantity
     required: true
   unit:
     name: unit
@@ -786,11 +789,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 12000
       context:
         name: context
         any_of:

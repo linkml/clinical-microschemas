@@ -363,8 +363,8 @@
 
 
 
-        HumanPercentPredictedFvcRecord --&gt; "1" Quantity : measurement_value
-        click Quantity href "../Quantity/"
+        HumanPercentPredictedFvcRecord --&gt; "1" HumanPercentPredictedFvcQuantity : measurement_value
+        click HumanPercentPredictedFvcQuantity href "../HumanPercentPredictedFvcQuantity/"
 
 
 
@@ -428,7 +428,7 @@
 </tr>
 <tr>
 <td><a href="../measurement_value/">measurement_value</a></td>
-<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
+<td>1 <br/> <a href="../HumanPercentPredictedFvcQuantity/">HumanPercentPredictedFvcQuantity</a></td>
 <td>The "value" in the observation key/value pair</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -515,7 +515,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OMOP:4253179'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': '%'}]}, 'data_type': {'equals_string': 'decimal'}, 'measurement_value': {'range': 'decimal', 'minimum_value': 0, 'maximum_value': 150}, 'calculated_from': {'equals_expression': '({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord}) * 100'}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': '%'}]}, 'data_type': {'equals_string': 'decimal'}, 'calculated_from': {'equals_expression': '({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord}) * 100'}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -552,6 +552,10 @@
 description: Percent of the predicted FVC that is achieved by the patient
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanPercentPredictedFvcQuantity
 rules:
 - preconditions:
     slot_conditions:
@@ -568,11 +572,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 150
       calculated_from:
         name: calculated_from
         equals_expression: ({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord})
@@ -586,6 +585,10 @@ rules:
 description: Percent of the predicted FVC that is achieved by the patient
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanPercentPredictedFvcQuantity
 attributes:
   subject_identifier:
     name: subject_identifier
@@ -622,7 +625,7 @@ attributes:
     owner: HumanPercentPredictedFvcRecord
     domain_of:
     - ClinicalMeasurementRecord
-    range: Quantity
+    range: HumanPercentPredictedFvcQuantity
     required: true
   unit:
     name: unit
@@ -759,11 +762,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 150
       calculated_from:
         name: calculated_from
         equals_expression: ({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord})

@@ -363,8 +363,8 @@
 
 
 
-        HumanMeasuredFvcRecord001 --&gt; "1" Quantity : measurement_value
-        click Quantity href "../Quantity/"
+        HumanMeasuredFvcRecord001 --&gt; "1" HumanMeasuredFvcQuantity001 : measurement_value
+        click HumanMeasuredFvcQuantity001 href "../HumanMeasuredFvcQuantity001/"
 
 
 
@@ -431,7 +431,7 @@
 </tr>
 <tr>
 <td><a href="../measurement_value/">measurement_value</a></td>
-<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
+<td>1 <br/> <a href="../HumanMeasuredFvcQuantity001/">HumanMeasuredFvcQuantity001</a></td>
 <td>The "value" in the observation key/value pair</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -518,7 +518,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'unit': {'any_of': [{'equals_string': 'L'}]}}</code></td>
-<td><code>{'instrument': {'any_of': [{'equals_string': 'spirometer'}]}, 'body_position': {'any_of': [{'equals_string': 'sitting'}]}, 'data_type': {'equals_string': 'decimal'}, 'measurement_value': {'range': 'decimal', 'minimum_value': 0, 'maximum_value': 12}, 'context': {'any_of': [{'equals_string': 'before_bronchodilator'}, {'equals_string': 'after_bronchodilator'}]}, 'method': {'any_of': [{'equals_string': 'spirometry'}]}}</code></td>
+<td><code>{'instrument': {'any_of': [{'equals_string': 'spirometer'}]}, 'body_position': {'any_of': [{'equals_string': 'sitting'}]}, 'data_type': {'equals_string': 'decimal'}, 'context': {'any_of': [{'equals_string': 'before_bronchodilator'}, {'equals_string': 'after_bronchodilator'}]}, 'method': {'any_of': [{'equals_string': 'spirometry'}]}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -556,6 +556,10 @@ description: Total amount of air a person can forcibly exhale after taking the d
   breath possible
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanMeasuredFvcRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanMeasuredFvcQuantity001
 rules:
 - preconditions:
     slot_conditions:
@@ -576,11 +580,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 12
       context:
         name: context
         any_of:
@@ -600,6 +599,10 @@ description: Total amount of air a person can forcibly exhale after taking the d
   breath possible
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanMeasuredFvcRecord
+slot_usage:
+  measurement_value:
+    name: measurement_value
+    range: HumanMeasuredFvcQuantity001
 attributes:
   subject_identifier:
     name: subject_identifier
@@ -636,7 +639,7 @@ attributes:
     owner: HumanMeasuredFvcRecord001
     domain_of:
     - ClinicalMeasurementRecord
-    range: Quantity
+    range: HumanMeasuredFvcQuantity001
     required: true
   unit:
     name: unit
@@ -777,11 +780,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      measurement_value:
-        name: measurement_value
-        range: decimal
-        minimum_value: 0
-        maximum_value: 12
       context:
         name: context
         any_of:
