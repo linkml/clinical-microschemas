@@ -2542,7 +2542,7 @@ classes:
     class_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
 metamodel_version: 1.7.0
 source_file: clinical_microschemas.yaml
-source_file_date: '2026-05-20T13:44:23'
+source_file_date: '2026-05-20T13:46:22'
 source_file_size: 34292
-generation_date: '2026-05-20T13:44:35'
+generation_date: '2026-05-20T13:46:33'
 
