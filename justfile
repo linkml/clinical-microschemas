@@ -110,7 +110,8 @@ gen-python:
 [group('model development')]
 gen-project:
   uv run gen-project {{config_yaml}} -d {{dest}} {{source_schema_path}}
-  mv {{dest}}/*.py {{pymodel}}
+  mkdir -p {{pymodel}}
+  mv {{dest}}/*.py {{pymodel}}/
   uv run gen-pydantic {{gen_pydantic_args}} {{source_schema_path}} > {{pymodel}}/{{schema_name}}_pydantic.py
   uv run gen-java {{gen_java_args}} --output-directory {{dest}}/java/ {{source_schema_path}}
   @if [ ! ${{gen_owl_args}} ]; then \
