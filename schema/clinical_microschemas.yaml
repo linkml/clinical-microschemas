@@ -1,0 +1,2548 @@
+name: clinical-microschemas
+description: 'Clinical microschemas for composable clinical data elements.
+
+  Imports and extends the LinkML Microschema Profile.'
+title: Clinical Microschemas
+see_also:
+- https://linkml.github.io/clinical-microschemas
+id: https://w3id.org/linkml/clinical-microschemas
+version: 0.1.0
+imports:
+- linkml:types
+- https://raw.githubusercontent.com/linkml/linkml-microschema-profile/v0.3.0/src/linkml_microschema_profile/schema/linkml_microschema_profile
+license: MIT
+prefixes:
+  cms:
+    prefix_prefix: cms
+    prefix_reference: https://w3id.org/linkml/clinical-microschemas/
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+  schema:
+    prefix_prefix: schema
+    prefix_reference: http://schema.org/
+  PATO:
+    prefix_prefix: PATO
+    prefix_reference: http://purl.obolibrary.org/obo/PATO_
+  bdchm:
+    prefix_prefix: bdchm
+    prefix_reference: https://w3id.org/bdchm/
+  OBA:
+    prefix_prefix: OBA
+    prefix_reference: http://purl.obolibrary.org/obo/OBA_
+  OMOP:
+    prefix_prefix: OMOP
+    prefix_reference: https://athena.ohdsi.org/search-terms/terms/
+  LOINC:
+    prefix_prefix: LOINC
+    prefix_reference: https://loinc.org/
+  UCUM:
+    prefix_prefix: UCUM
+    prefix_reference: https://units-of-measurement.org/
+  UBERON:
+    prefix_prefix: UBERON
+    prefix_reference: http://purl.obolibrary.org/obo/UBERON_
+  MONDO:
+    prefix_prefix: MONDO
+    prefix_reference: http://purl.obolibrary.org/obo/MONDO_
+  HP:
+    prefix_prefix: HP
+    prefix_reference: http://purl.obolibrary.org/obo/HP_
+  MMO:
+    prefix_prefix: MMO
+    prefix_reference: http://purl.obolibrary.org/obo/MMO_
+  RxNorm:
+    prefix_prefix: RxNorm
+    prefix_reference: http://purl.bioontology.org/ontology/RXNORM/
+  ISO11179:
+    prefix_prefix: ISO11179
+    prefix_reference: http://purl.org/iso11179/
+  example:
+    prefix_prefix: example
+    prefix_reference: http://www.example.org/rdf#
+default_prefix: cms
+default_range: string
+types:
+  string:
+    name: string
+    definition_uri: https://w3id.org/linkml/String
+    description: A character string
+    notes:
+    - In RDF serializations, a slot with range of string is treated as a literal or
+      type xsd:string.   If you are authoring schemas in LinkML YAML, the type is
+      referenced with the lower case "string".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Text
+    base: str
+    uri: xsd:string
+  integer:
+    name: integer
+    definition_uri: https://w3id.org/linkml/Integer
+    description: An integer
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "integer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Integer
+    base: int
+    uri: xsd:integer
+  boolean:
+    name: boolean
+    definition_uri: https://w3id.org/linkml/Boolean
+    description: A binary (true or false) value
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "boolean".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Boolean
+    base: Bool
+    uri: xsd:boolean
+    repr: bool
+  float:
+    name: float
+    definition_uri: https://w3id.org/linkml/Float
+    description: A real number that conforms to the xsd:float specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "float".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:float
+  double:
+    name: double
+    definition_uri: https://w3id.org/linkml/Double
+    description: A real number that conforms to the xsd:double specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "double".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:double
+  decimal:
+    name: decimal
+    definition_uri: https://w3id.org/linkml/Decimal
+    description: A real number with arbitrary precision that conforms to the xsd:decimal
+      specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "decimal".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    broad_mappings:
+    - schema:Number
+    base: Decimal
+    uri: xsd:decimal
+  time:
+    name: time
+    definition_uri: https://w3id.org/linkml/Time
+    description: A time object represents a (local) time of day, independent of any
+      particular day
+    notes:
+    - URI is dateTime because OWL reasoners do not work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "time".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Time
+    base: XSDTime
+    uri: xsd:time
+    repr: str
+  date:
+    name: date
+    definition_uri: https://w3id.org/linkml/Date
+    description: a date (year, month and day) in an idealized calendar
+    notes:
+    - URI is dateTime because OWL reasoners don't work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Date
+    base: XSDDate
+    uri: xsd:date
+    repr: str
+  datetime:
+    name: datetime
+    definition_uri: https://w3id.org/linkml/Datetime
+    description: The combination of a date and time
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:DateTime
+    base: XSDDateTime
+    uri: xsd:dateTime
+    repr: str
+  date_or_datetime:
+    name: date_or_datetime
+    definition_uri: https://w3id.org/linkml/DateOrDatetime
+    description: Either a date or a datetime
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date_or_datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: linkml:DateOrDatetime
+    repr: str
+  uriorcurie:
+    name: uriorcurie
+    definition_uri: https://w3id.org/linkml/Uriorcurie
+    description: a URI or a CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uriorcurie".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  curie:
+    name: curie
+    definition_uri: https://w3id.org/linkml/Curie
+    conforms_to: https://www.w3.org/TR/curie/
+    description: a compact URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "curie".
+    comments:
+    - in RDF serializations this MUST be expanded to a URI
+    - in non-RDF serializations MAY be serialized as the compact representation
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: Curie
+    uri: xsd:string
+    repr: str
+  uri:
+    name: uri
+    definition_uri: https://w3id.org/linkml/Uri
+    conforms_to: https://www.ietf.org/rfc/rfc3987.txt
+    description: a complete URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uri".
+    comments:
+    - in RDF serializations a slot with range of uri is treated as a literal or type
+      xsd:anyURI unless it is an identifier or a reference to an identifier, in which
+      case it is translated directly to a node
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:URL
+    base: URI
+    uri: xsd:anyURI
+    repr: str
+  ncname:
+    name: ncname
+    definition_uri: https://w3id.org/linkml/Ncname
+    description: Prefix part of CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "ncname".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NCName
+    uri: xsd:string
+    repr: str
+  objectidentifier:
+    name: objectidentifier
+    definition_uri: https://w3id.org/linkml/Objectidentifier
+    description: A URI or CURIE that represents an object in the model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "objectidentifier".
+    comments:
+    - Used for inheritance and type checking
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: ElementIdentifier
+    uri: shex:iri
+    repr: str
+  nodeidentifier:
+    name: nodeidentifier
+    definition_uri: https://w3id.org/linkml/Nodeidentifier
+    description: A URI, CURIE or BNODE that represents a node in a model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "nodeidentifier".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NodeIdentifier
+    uri: shex:nonLiteral
+    repr: str
+  jsonpointer:
+    name: jsonpointer
+    definition_uri: https://w3id.org/linkml/Jsonpointer
+    conforms_to: https://datatracker.ietf.org/doc/html/rfc6901
+    description: A string encoding a JSON Pointer. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to a valid object within the current
+      instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpointer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  jsonpath:
+    name: jsonpath
+    definition_uri: https://w3id.org/linkml/Jsonpath
+    conforms_to: https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html
+    description: A string encoding a JSON Path. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to zero or more valid objects within
+      the current instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  sparqlpath:
+    name: sparqlpath
+    definition_uri: https://w3id.org/linkml/Sparqlpath
+    conforms_to: https://www.w3.org/TR/sparql11-query/#propertypaths
+    description: A string encoding a SPARQL Property Path. The value of the string
+      MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects
+      within the current instance document when encoded as RDF.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "sparqlpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+enums:
+  HistoricalStatusEnum:
+    name: HistoricalStatusEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HistoricalStatusEnum
+    description: Indicates whether something is present, absent, historical, or its
+      status is unknown.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      PRESENT:
+        text: PRESENT
+        description: Was present in the patient at observation time.
+      ABSENT:
+        text: ABSENT
+        description: Was absent in the patient at observation time.
+      UNKNOWN:
+        text: UNKNOWN
+        description: Was of unknown status in the patient at observation time.
+      HISTORICAL:
+        text: HISTORICAL
+        description: Was present in the patient historically.
+  ProvenanceEnum:
+    name: ProvenanceEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ProvenanceEnum
+    description: A set of values indicating the source or origin of a clinical record.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      EHR_BILLING_DIAGNOSIS:
+        text: EHR_BILLING_DIAGNOSIS
+        description: Diagnosis from EHR billing.
+      EHR_CHIEF_COMPLAINT:
+        text: EHR_CHIEF_COMPLAINT
+        description: Chief complaint from EHR.
+      EHR_ENCOUNTER_DIAGNOSIS:
+        text: EHR_ENCOUNTER_DIAGNOSIS
+        description: Encounter diagnosis from EHR.
+      EHR_EPISODE_ENTRY:
+        text: EHR_EPISODE_ENTRY
+        description: Episode entry from EHR.
+      EHR_PROBLEM_LIST_ENTRY:
+        text: EHR_PROBLEM_LIST_ENTRY
+        description: Problem list entry from EHR.
+      FIRST_POSITION_CONDITION:
+        text: FIRST_POSITION_CONDITION
+        description: First position condition.
+      PRIMARY_CONDITION:
+        text: PRIMARY_CONDITION
+        description: Primary condition.
+      SECONDARY_CONDITION:
+        text: SECONDARY_CONDITION
+        description: Secondary condition.
+      NLP_DERIVED:
+        text: NLP_DERIVED
+        description: Derived from natural language processing.
+      OBSERVATION_RECORDED_FROM_EHR:
+        text: OBSERVATION_RECORDED_FROM_EHR
+        description: Observation recorded from EHR.
+      PATIENT_SELF_REPORTED_CONDITION:
+        text: PATIENT_SELF_REPORTED_CONDITION
+        description: Patient self-reported condition.
+      REFERRAL_RECORD:
+        text: REFERRAL_RECORD
+        description: From referral record.
+      TUMOR_REGISTRY:
+        text: TUMOR_REGISTRY
+        description: From tumor registry.
+      WORKING_DIAGNOSIS:
+        text: WORKING_DIAGNOSIS
+        description: Working diagnosis.
+      CLINICAL_DIAGNOSIS:
+        text: CLINICAL_DIAGNOSIS
+        description: Clinical diagnosis.
+  ConditionSeverityEnum:
+    name: ConditionSeverityEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ConditionSeverityEnum
+    description: A subjective assessment of the severity of a condition.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      MILD:
+        text: MILD
+        description: Lower intensity condition.
+        meaning: OMOP:4116992
+      MODERATE:
+        text: MODERATE
+        description: Medium intensity condition.
+        meaning: OMOP:3272197
+      SEVERE:
+        text: SEVERE
+        description: Higher intensity condition.
+        meaning: OMOP:4087703
+  FamilyRelationshipEnum:
+    name: FamilyRelationshipEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/FamilyRelationshipEnum
+    description: Values describing kinship connections between individuals.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      ONESELF:
+        text: ONESELF
+        description: Self-reference.
+      NATURAL_PARENT:
+        text: NATURAL_PARENT
+        description: Mother or father unspecified.
+        meaning: OMOP:4029630
+      NATURAL_FATHER:
+        text: NATURAL_FATHER
+        description: Biological father.
+        meaning: OMOP:4321888
+      NATURAL_MOTHER:
+        text: NATURAL_MOTHER
+        description: Biological mother.
+        meaning: OMOP:4277283
+      NATURAL_SIBLING:
+        text: NATURAL_SIBLING
+        description: Sister or brother unspecified.
+        meaning: OMOP:4218412
+      NATURAL_BROTHER:
+        text: NATURAL_BROTHER
+        description: Biological brother.
+        meaning: OMOP:4263682
+      NATURAL_SISTER:
+        text: NATURAL_SISTER
+        description: Biological sister.
+        meaning: OMOP:4251326
+      NATURAL_CHILD:
+        text: NATURAL_CHILD
+        description: Biological offspring.
+        meaning: OMOP:4326600
+      BLOOD_RELATIVE:
+        text: BLOOD_RELATIVE
+        description: Generic consanguineous relation.
+        meaning: OMOP:4053608
+  RouteAdminEnum:
+    name: RouteAdminEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/RouteAdminEnum
+    description: Routes of drug administration
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      oral:
+        text: oral
+        description: Oral administration
+        meaning: OMOP:4132161
+      intravenous:
+        text: intravenous
+        description: Intravenous administration
+        meaning: OMOP:4171047
+      intramuscular:
+        text: intramuscular
+        description: Intramuscular administration
+        meaning: OMOP:4302612
+      subcutaneous:
+        text: subcutaneous
+        description: Subcutaneous administration
+        meaning: OMOP:4142048
+      intradermal:
+        text: intradermal
+        description: Intradermal administration
+        meaning: OMOP:4156706
+      transdermal:
+        text: transdermal
+        description: Transdermal administration
+        meaning: OMOP:4262099
+      rectal:
+        text: rectal
+        description: Rectal administration
+        meaning: OMOP:4290759
+      vaginal:
+        text: vaginal
+        description: Vaginal administration
+        meaning: OMOP:4057765
+      nasal:
+        text: nasal
+        description: Nasal administration
+        meaning: OMOP:4262914
+      topical:
+        text: topical
+        description: Topical administration
+        meaning: OMOP:4263689
+      sublingual:
+        text: sublingual
+        description: Sublingual administration
+        meaning: OMOP:4292110
+      buccal:
+        text: buccal
+        description: Buccal administration
+        meaning: OMOP:4181897
+      intra_articular:
+        text: intra_articular
+        description: Intra-articular administration
+        meaning: OMOP:4006860
+      intraperitoneal:
+        text: intraperitoneal
+        description: Intraperitoneal administration
+        meaning: OMOP:4243022
+      intrathecal:
+        text: intrathecal
+        description: Intrathecal administration
+        meaning: OMOP:4217202
+      epidural:
+        text: epidural
+        description: Epidural administration
+        meaning: OMOP:4225555
+      intra_arterial:
+        text: intra_arterial
+        description: Intra-arterial administration
+        meaning: OMOP:4240824
+      ophthalmic:
+        text: ophthalmic
+        description: Ophthalmic administration
+        meaning: OMOP:4184451
+      otic:
+        text: otic
+        description: Otic (ear) administration
+        meaning: OMOP:4023156
+      enteral:
+        text: enteral
+        description: Enteral administration
+        meaning: OMOP:4167540
+      percutaneous:
+        text: percutaneous
+        description: Percutaneous administration
+        meaning: OMOP:4177987
+  DataTypeEnum:
+    name: DataTypeEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/DataTypeEnum
+    description: The data type of an observation value
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      decimal:
+        text: decimal
+        description: Decimal number
+      integer:
+        text: integer
+        description: Integer number
+      enum:
+        text: enum
+        description: Enumerated value
+      boolean:
+        text: boolean
+        description: Boolean value
+  MethodEnum:
+    name: MethodEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/MethodEnum
+    description: The method used for a measurement or observation
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      survey:
+        text: survey
+        description: list of questions given to a participant for data collection
+          purposes - the survey is filled out by the participant independently
+      interview:
+        text: interview
+        description: series of questions posed to a participant by an interviewer
+          for data collection purposes
+      calculated:
+        text: calculated
+        description: clinical record that results from a calculation rather than being
+          directly measured
+      spirometry:
+        text: spirometry
+        description: breathing test used to assess lung function
+      body_plesmography:
+        text: body_plesmography
+        description: precise pulmonary function test where the patient sits in a sealed
+          chamber and breathes into a specialized mouthpiece. This method uses Boyle's
+          Law  and is considered a "gold standard"
+      GLI:
+        text: GLI
+        description: a standard reference range and calculator for spirometry and
+          lung function tests published by the Global Lung Function Initiative in
+          2012
+      GLI-Global:
+        text: GLI-Global
+        description: a standard reference range and calculator for spirometry and
+          lung function tests published by the Global Lung Function Initiative in
+          2022. This is an update of the 2012 standard that is more ethnically diverse
+      NHANESIII:
+        text: NHANESIII
+        description: standard reference equations for spirometry published in 2005
+  InstrumentEnum:
+    name: InstrumentEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/InstrumentEnum
+    description: The instrument used for a measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      wall_mounted_stadiometer:
+        text: wall_mounted_stadiometer
+        description: fixed, high-precision medical device used to measure human height,
+          consisting of a vertical measuring rod or tape fastened to a wall with a
+          sliding headpiece
+        meaning: MMO:0000105
+      flexible_measuring_tape:
+        text: flexible_measuring_tape
+        description: flexible tape used to measure height or body circumference
+      portable_stadiometer:
+        text: portable_stadiometer
+        description: portable device used to measure height, typically used in field
+          settings
+      anthropometer_rod:
+        text: anthropometer_rod
+        description: rigid rod-based instrument used to measure body dimensions including
+          height
+      sonar_stadiometer:
+        text: sonar_stadiometer
+        description: ultrasound-based device used to measure height without contact
+      mechanical_beam_balance_scale:
+        text: mechanical_beam_balance_scale
+        description: medical device used to measure human weight
+        meaning: MMO:0000087
+      digital_scale:
+        text: digital_scale
+        description: electronic device used to measure human weight using strain gauge
+          sensors
+        meaning: MMO:0000087
+      spring_scale:
+        text: spring_scale
+        description: mechanical device that measures weight by the displacement of
+          a spring
+      spirometer:
+        text: spirometer
+        description: medical device that measures lung function by recording the amount
+          and speed of air a person can inhale and exhale
+      vitalograph:
+        text: vitalograph
+        description: a portable medical device that measures lung function by recording
+          the amount and speed of air a person can inhale and exhale
+      body_plesmograph:
+        text: body_plesmograph
+        description: sealed, clear chamber with a mouthpiece for a person to breath
+          through
+      peak_flow_meter:
+        text: peak_flow_meter
+        description: portable, handheld device used to measure how fast and hard a
+          person can exhale
+  ReagentKitEnum:
+    name: ReagentKitEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ReagentKitEnum
+    description: The reagent kit used for a measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      placeholder:
+        text: placeholder
+        description: Placeholder value
+  BodyPositionEnum:
+    name: BodyPositionEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyPositionEnum
+    description: The body position during a measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      supine:
+        text: supine
+        description: Lying face up
+      standing:
+        text: standing
+        description: Standing upright
+      sitting:
+        text: sitting
+        description: Seated position
+  ContextEnum:
+    name: ContextEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ContextEnum
+    description: The context in which a measurement was taken
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      fasted_8_hrs:
+        text: fasted_8_hrs
+        description: Fasted for 8 hours
+      fasted_12_hrs:
+        text: fasted_12_hrs
+        description: Fasted for 12 hours
+      before_bronchodilator:
+        text: before_bronchodilator
+        description: Before bronchodilator administration
+      after_bronchodilator:
+        text: after_bronchodilator
+        description: After bronchodilator administration
+      taking_lipid_lowering_medications:
+        text: taking_lipid_lowering_medications
+        description: While taking lipid-lowering medications
+      before_physical_activity:
+        text: before_physical_activity
+        description: Before physical activity
+      during_physical_activity:
+        text: during_physical_activity
+        description: During physical activity
+      after_physical_activity:
+        text: after_physical_activity
+        description: After physical activity
+      during_procedure:
+        text: during_procedure
+        description: During a procedure
+      taking_diabetes_medication:
+        text: taking_diabetes_medication
+        description: While taking diabetes medication
+      lowest:
+        text: lowest
+        description: Lowest recorded value
+  CollectedByEnum:
+    name: CollectedByEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/CollectedByEnum
+    description: Who collected the measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      doctor:
+        text: doctor
+        description: Collected by a doctor
+      nurse:
+        text: nurse
+        description: Collected by a nurse
+      technician:
+        text: technician
+        description: Collected by a technician
+      self_administered:
+        text: self_administered
+        description: Self-administered by the patient
+      first_examiner:
+        text: first_examiner
+        description: Collected by the first examiner
+      second_examiner:
+        text: second_examiner
+        description: Collected by the second examiner
+  AssociatedEvidenceEnum:
+    name: AssociatedEvidenceEnum
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/AssociatedEvidenceEnum
+    description: The method used for diagnosis
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    permissible_values:
+      placeholder:
+        text: placeholder
+        description: Placeholder value
+  ComparatorEnum:
+    name: ComparatorEnum
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/ComparatorEnum
+    description: Comparator for quantity values
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    permissible_values:
+      lt:
+        text: lt
+        description: Less than
+      le:
+        text: le
+        description: Less than or equal to
+      ge:
+        text: ge
+        description: Greater than or equal to
+      gt:
+        text: gt
+        description: Greater than
+slots:
+  dose:
+    name: dose
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/dose
+    description: Amount of drug per administration
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:dose
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  frequency:
+    name: frequency
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/frequency
+    description: How often e.g. 2 per day
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:frequency
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  indication:
+    name: indication
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/indication
+    description: Condition/reason for drug (SNOMED, ICD, Mondo, HPO, etc)
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:indication
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: uriorcurie
+  subject_identifier:
+    name: subject_identifier
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/subject_identifier
+    description: An identifier for the subject of the datum
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:subject_identifier
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    - ConditionStatusRecord
+    - DrugStatusRecord
+    - ProcedureStatusRecord
+    range: string
+  measurement_type:
+    name: measurement_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_type
+    description: A CURIE from OBA, OMOP, or LOINC
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:observation_type
+    slot_uri: bdchm:observation_type
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: uriorcurie
+  unit:
+    name: unit
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/unit
+    description: A unit from UCUM
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:unit
+    slot_uri: bdchm:unit
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: uriorcurie
+  method:
+    name: method
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/method
+    description: The method used for the measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:method_type
+    slot_uri: bdchm:method_type
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    - DrugStatusRecord
+    - ProcedureStatusRecord
+    range: MethodEnum
+  instrument:
+    name: instrument
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/instrument
+    description: The instrument used for the measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:instrument
+    owner: ConditionStatusRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    - ConditionStatusRecord
+    range: InstrumentEnum
+  reagent_kit:
+    name: reagent_kit
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/reagent_kit
+    description: The reagent kit used for the measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:reagent_kit
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: ReagentKitEnum
+  calculated_from:
+    name: calculated_from
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/calculated_from
+    description: An expression pointing at other CDE classes
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:calculated_from
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: string
+  body_location:
+    name: body_location
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/body_location
+    description: A CURIE from UBERON
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:BodySite
+    slot_uri: bdchm:BodySite
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: uriorcurie
+  body_position:
+    name: body_position
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/body_position
+    description: The body position during measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:body_position
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: BodyPositionEnum
+  context:
+    name: context
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/context
+    description: The context of the measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:context
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: ContextEnum
+  collected_by:
+    name: collected_by
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/collected_by
+    description: Who collected the measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:collected_by
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    - DrugStatusRecord
+    - ProcedureStatusRecord
+    range: CollectedByEnum
+  condition_type:
+    name: condition_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/condition_type
+    description: A CURIE from MONDO or HPO
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:condition_concept
+    slot_uri: bdchm:condition_concept
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: uriorcurie
+  associated_evidence:
+    name: associated_evidence
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/associated_evidence
+    description: The method used for diagnosis
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:associated_evidence
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: AssociatedEvidenceEnum
+  drug_type:
+    name: drug_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/drug_type
+    description: A CURIE from RxNorm
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:drug_concept
+    slot_uri: bdchm:drug_concept
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: uriorcurie
+  procedure_type:
+    name: procedure_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/procedure_type
+    description: A CURIE from OMOP
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:procedure_concept
+    slot_uri: bdchm:procedure_concept
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ProcedureStatusRecord
+    range: uriorcurie
+  data_type:
+    name: data_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/data_type
+    description: The data type of the observation
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:data_type
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: DataTypeEnum
+  age_at_measurement:
+    name: age_at_measurement
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_measurement
+    description: Age of the subject at the time of measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_measurement
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  age_at_condition_start:
+    name: age_at_condition_start
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_condition_start
+    description: Age of the subject at the start of the condition
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_condition_start
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  age_at_condition_end:
+    name: age_at_condition_end
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_condition_end
+    description: Age of the subject at the end of the condition
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_condition_end
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  condition_status:
+    name: condition_status
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/condition_status
+    description: A value indicating whether the medical condition described in this
+      record is present, absent, historically present, or unknown for this individual
+      patient.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:condition_status
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: HistoricalStatusEnum
+  condition_provenance:
+    name: condition_provenance
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/condition_provenance
+    description: A value representing the provenance of the Condition record.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:condition_provenance
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: ProvenanceEnum
+  condition_severity:
+    name: condition_severity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/condition_severity
+    description: A subjective assessment of the severity of the condition.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:condition_severity
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: ConditionSeverityEnum
+  relationship_to_participant:
+    name: relationship_to_participant
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/relationship_to_participant
+    description: A value indicating the relationship between the Participant to which
+      the Condition is attributed and the individual who had the reported Condition.
+      If the Condition is affecting the participant themselves, then 'Self' is the
+      appropriate relationship.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:relationship_to_participant
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    range: FamilyRelationshipEnum
+  age_at_drug_start:
+    name: age_at_drug_start
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_drug_start
+    description: Age of the subject at the start of drug exposure
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_drug_start
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  age_at_drug_end:
+    name: age_at_drug_end
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_drug_end
+    description: Age of the subject at the end of drug exposure
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_drug_end
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  age_at_procedure_start:
+    name: age_at_procedure_start
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_procedure_start
+    description: Age of the subject at the start of the procedure
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_procedure_start
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ProcedureStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  age_at_procedure_end:
+    name: age_at_procedure_end
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_procedure_end
+    description: Age of the subject at the end of the procedure
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:age_at_procedure_end
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ProcedureStatusRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  route_of_administration:
+    name: route_of_administration
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/route_of_administration
+    description: Routes of drug administration
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:route_of_administration
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: RouteAdminEnum
+  measurement_value:
+    name: measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:measurement_value
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  predicted_value:
+    name: predicted_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/predicted_value
+    description: A predicted measurement value based on a reference population, range,
+      equation, or other relevant information. Often used to normalize a measurement
+      based on body size, age, or sex
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:predicted_value
+    owner: Relativity
+    domain_of:
+    - Relativity
+    range: decimal
+  lower_limit_normal:
+    name: lower_limit_normal
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/lower_limit_normal
+    description: placeholder
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:lower_limit_normal
+    owner: Relativity
+    domain_of:
+    - Relativity
+    range: decimal
+  upper_limit_normal:
+    name: upper_limit_normal
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/upper_limit_normal
+    description: placeholder
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:upper_limit_normal
+    owner: Relativity
+    domain_of:
+    - Relativity
+    range: decimal
+  percent_predicted_value:
+    name: percent_predicted_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/percent_predicted_value
+    description: Ratio of the actual measured value to the predicted value
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    slot_uri: cms:percent_predicted_value
+    owner: Relativity
+    domain_of:
+    - Relativity
+    range: decimal
+  profile_version:
+    name: profile_version
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/profile_version
+    description: Version of microschema profile this conforms to
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/profile_version
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+  domain_of_use:
+    name: domain_of_use
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/domain_of_use
+    description: Domains where this microschema is applicable
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/domain_of_use
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+    multivalued: true
+  subject:
+    name: subject
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/subject
+    description: Entity being measured, observed, or interviewed - person, animal,
+      specimen, or environmental material
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/subject
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+    required: true
+  observation_type:
+    name: observation_type
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/observation_type
+    description: Question being asked, measurement being taken, quality being observed
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/observation_type
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+    required: true
+  location:
+    name: location
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/location
+    description: Spatial metadata specifying where the observation was made - geolocation,
+      place name, site id, environment, or biome
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/location
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+    required: true
+  temporality:
+    name: temporality
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/temporality
+    description: Temporal metadata specifying when an observation was made. This can
+      be relative or absolute - datetime, age of person, season, or geologic era
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/temporality
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+    required: true
+  methodology:
+    name: methodology
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/methodology
+    description: Information about how an observation was made - method, instrument,
+      reagent kit, statistical modifier
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/methodology
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: string
+    required: true
+  observation_result:
+    name: observation_result
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/observation_result
+    description: The outcome of the observation type - answer, value, result, determination
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/observation_result
+    owner: MicroschemaDefinition
+    domain_of:
+    - MicroschemaDefinition
+    range: ValueMicroschemaDefinition
+    required: true
+    inlined: true
+    inlined_as_list: true
+  quantity_value:
+    name: quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    owner: Quantity
+    domain_of:
+    - Quantity
+    range: decimal
+    required: true
+  quantity_unit:
+    name: quantity_unit
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_unit
+    description: Unit (UCUM, UO, QUDT, etc.)
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    mappings:
+    - schema:unitCode
+    slot_uri: schema:unitCode
+    owner: Quantity
+    domain_of:
+    - Quantity
+    range: uriorcurie
+    required: true
+  comparator:
+    name: comparator
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/comparator
+    description: Comparison operator (less than, greater than, etc.) or exact if null
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/comparator
+    owner: Quantity
+    domain_of:
+    - Quantity
+    range: ComparatorEnum
+  datetime:
+    name: datetime
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/datetime
+    description: Absolute timestamp
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/datetime
+    owner: Timepoint
+    domain_of:
+    - Timepoint
+    range: datetime
+  relative_to_event:
+    name: relative_to_event
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/relative_to_event
+    description: Event this is relative to
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/relative_to_event
+    owner: Timepoint
+    domain_of:
+    - Timepoint
+    range: uriorcurie
+  offset:
+    name: offset
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/offset
+    description: Offset from event (e.g., "+3 days")
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/offset
+    owner: Timepoint
+    domain_of:
+    - Timepoint
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  subject_age:
+    name: subject_age
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/subject_age
+    description: Age of the subject at this timepoint (e.g., age when the event occurred)
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/subject_age
+    owner: Timepoint
+    domain_of:
+    - Timepoint
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  interval_start:
+    name: interval_start
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/interval_start
+    description: Start of the interval
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/interval_start
+    owner: TimeInterval
+    domain_of:
+    - TimeInterval
+    range: Timepoint
+    inlined: true
+    inlined_as_list: true
+  interval_end:
+    name: interval_end
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/interval_end
+    description: End of the interval
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/interval_end
+    owner: TimeInterval
+    domain_of:
+    - TimeInterval
+    range: Timepoint
+    inlined: true
+    inlined_as_list: true
+  duration:
+    name: duration
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/duration
+    description: Duration as alternative to start/end
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/duration
+    owner: TimeInterval
+    domain_of:
+    - TimeInterval
+    range: Quantity
+    inlined: true
+    inlined_as_list: true
+  code:
+    name: code
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/code
+    description: The code value as a CURIE
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/code
+    owner: CodedValue
+    domain_of:
+    - CodedValue
+    range: uriorcurie
+    required: true
+  code_label:
+    name: code_label
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/code_label
+    description: Human-readable label for the code
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/code_label
+    owner: CodedValue
+    domain_of:
+    - CodedValue
+    range: string
+  code_system:
+    name: code_system
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/code_system
+    description: The code system URI
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/code_system
+    owner: CodedValue
+    domain_of:
+    - CodedValue
+    range: uriorcurie
+  ClinicalMeasurementRecord_subject_identifier:
+    name: ClinicalMeasurementRecord_subject_identifier
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/subject_identifier
+    description: An identifier for the subject of the datum
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: subject_identifier
+    domain: ClinicalMeasurementRecord
+    slot_uri: cms:subject_identifier
+    alias: subject_identifier
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    is_usage_slot: true
+    usage_slot_name: subject_identifier
+    range: string
+    required: true
+  ClinicalMeasurementRecord_measurement_type:
+    name: ClinicalMeasurementRecord_measurement_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_type
+    description: A CURIE from OBA, OMOP, or LOINC
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:observation_type
+    is_a: measurement_type
+    domain: ClinicalMeasurementRecord
+    slot_uri: bdchm:observation_type
+    alias: measurement_type
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_type
+    range: uriorcurie
+    required: true
+  ClinicalMeasurementRecord_measurement_value:
+    name: ClinicalMeasurementRecord_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: measurement_value
+    domain: ClinicalMeasurementRecord
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: Quantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  ClinicalMeasurementRecord_age_at_measurement:
+    name: ClinicalMeasurementRecord_age_at_measurement
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/age_at_measurement
+    description: Age of the subject at the time of measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: age_at_measurement
+    domain: ClinicalMeasurementRecord
+    slot_uri: cms:age_at_measurement
+    alias: age_at_measurement
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    is_usage_slot: true
+    usage_slot_name: age_at_measurement
+    range: Quantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  ConditionStatusRecord_subject_identifier:
+    name: ConditionStatusRecord_subject_identifier
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/subject_identifier
+    description: An identifier for the subject of the datum
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: subject_identifier
+    domain: ConditionStatusRecord
+    slot_uri: cms:subject_identifier
+    alias: subject_identifier
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    is_usage_slot: true
+    usage_slot_name: subject_identifier
+    range: string
+    required: true
+  ConditionStatusRecord_condition_type:
+    name: ConditionStatusRecord_condition_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/condition_type
+    description: A CURIE from MONDO or HPO
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:condition_concept
+    is_a: condition_type
+    domain: ConditionStatusRecord
+    slot_uri: bdchm:condition_concept
+    alias: condition_type
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    is_usage_slot: true
+    usage_slot_name: condition_type
+    range: uriorcurie
+    required: true
+  ConditionStatusRecord_condition_status:
+    name: ConditionStatusRecord_condition_status
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/condition_status
+    description: A value indicating whether the medical condition described in this
+      record is present, absent, historically present, or unknown for this individual
+      patient.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: condition_status
+    domain: ConditionStatusRecord
+    slot_uri: cms:condition_status
+    alias: condition_status
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    is_usage_slot: true
+    usage_slot_name: condition_status
+    range: HistoricalStatusEnum
+    required: true
+  ConditionStatusRecord_relationship_to_participant:
+    name: ConditionStatusRecord_relationship_to_participant
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/relationship_to_participant
+    description: A value indicating the relationship between the Participant to which
+      the Condition is attributed and the individual who had the reported Condition.
+      If the Condition is affecting the participant themselves, then 'Self' is the
+      appropriate relationship.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: relationship_to_participant
+    domain: ConditionStatusRecord
+    slot_uri: cms:relationship_to_participant
+    alias: relationship_to_participant
+    owner: ConditionStatusRecord
+    domain_of:
+    - ConditionStatusRecord
+    is_usage_slot: true
+    usage_slot_name: relationship_to_participant
+    range: FamilyRelationshipEnum
+    required: true
+  DrugStatusRecord_subject_identifier:
+    name: DrugStatusRecord_subject_identifier
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/subject_identifier
+    description: An identifier for the subject of the datum
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: subject_identifier
+    domain: DrugStatusRecord
+    slot_uri: cms:subject_identifier
+    alias: subject_identifier
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    is_usage_slot: true
+    usage_slot_name: subject_identifier
+    range: string
+    required: true
+  DrugStatusRecord_drug_type:
+    name: DrugStatusRecord_drug_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/drug_type
+    description: A CURIE from RxNorm
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:drug_concept
+    is_a: drug_type
+    domain: DrugStatusRecord
+    slot_uri: bdchm:drug_concept
+    alias: drug_type
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    is_usage_slot: true
+    usage_slot_name: drug_type
+    range: uriorcurie
+    required: true
+  ProcedureStatusRecord_subject_identifier:
+    name: ProcedureStatusRecord_subject_identifier
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/subject_identifier
+    description: An identifier for the subject of the datum
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: subject_identifier
+    domain: ProcedureStatusRecord
+    slot_uri: cms:subject_identifier
+    alias: subject_identifier
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ProcedureStatusRecord
+    is_usage_slot: true
+    usage_slot_name: subject_identifier
+    range: string
+    required: true
+  ProcedureStatusRecord_procedure_type:
+    name: ProcedureStatusRecord_procedure_type
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/procedure_type
+    description: A CURIE from OMOP
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:procedure_concept
+    is_a: procedure_type
+    domain: ProcedureStatusRecord
+    slot_uri: bdchm:procedure_concept
+    alias: procedure_type
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ProcedureStatusRecord
+    is_usage_slot: true
+    usage_slot_name: procedure_type
+    range: uriorcurie
+    required: true
+  HumanFvcRecord_predicted_value:
+    name: HumanFvcRecord_predicted_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/predicted_value
+    description: A predicted measurement value based on a reference population, range,
+      equation, or other relevant information. Often used to normalize a measurement
+      based on body size, age, or sex
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: predicted_value
+    domain: HumanFvcRecord
+    slot_uri: cms:predicted_value
+    alias: predicted_value
+    owner: HumanFvcRecord
+    domain_of:
+    - HumanFvcRecord
+    is_usage_slot: true
+    usage_slot_name: predicted_value
+    range: decimal
+    required: true
+  HumanFvcRecord_percent_predicted_value:
+    name: HumanFvcRecord_percent_predicted_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/percent_predicted_value
+    description: Ratio of the actual measured value to the predicted value
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: percent_predicted_value
+    domain: HumanFvcRecord
+    slot_uri: cms:percent_predicted_value
+    alias: percent_predicted_value
+    owner: HumanFvcRecord
+    domain_of:
+    - HumanFvcRecord
+    is_usage_slot: true
+    usage_slot_name: percent_predicted_value
+    range: decimal
+    required: true
+classes:
+  ClinicalMeasurementRecord:
+    name: ClinicalMeasurementRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ClinicalMeasurementRecord
+    instantiates:
+    - MicroschemaDefinition
+    annotations:
+      domain_of_use:
+        tag: domain_of_use
+        value: clinical
+    description: A data structure with key and value attributes that represents a
+      single observation. This can include results of clinical labs, scores and indices,
+      socioeconomic, or behavioral observations.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:Observation
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    slot_usage:
+      subject_identifier:
+        name: subject_identifier
+        required: true
+      measurement_type:
+        name: measurement_type
+        required: true
+      measurement_value:
+        name: measurement_value
+        required: true
+      age_at_measurement:
+        name: age_at_measurement
+        required: true
+    class_uri: bdchm:Observation
+  ConditionStatusRecord:
+    name: ConditionStatusRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ConditionStatusRecord
+    instantiates:
+    - MicroschemaDefinition
+    annotations:
+      domain_of_use:
+        tag: domain_of_use
+        value: clinical
+    description: Record suggesting the presence of a disease or medical condition
+      stated as a diagnosis, sign, or symptom
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:Condition
+    slots:
+    - ConditionStatusRecord_subject_identifier
+    - ConditionStatusRecord_condition_type
+    - associated_evidence
+    - instrument
+    - age_at_condition_start
+    - age_at_condition_end
+    - ConditionStatusRecord_condition_status
+    - condition_provenance
+    - condition_severity
+    - ConditionStatusRecord_relationship_to_participant
+    slot_usage:
+      subject_identifier:
+        name: subject_identifier
+        required: true
+      condition_type:
+        name: condition_type
+        required: true
+      condition_status:
+        name: condition_status
+        required: true
+      relationship_to_participant:
+        name: relationship_to_participant
+        required: true
+    class_uri: bdchm:Condition
+  DrugStatusRecord:
+    name: DrugStatusRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/DrugStatusRecord
+    instantiates:
+    - MicroschemaDefinition
+    annotations:
+      domain_of_use:
+        tag: domain_of_use
+        value: clinical
+    description: Record suggesting exposure to a medication
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:DrugExposure
+    slots:
+    - DrugStatusRecord_subject_identifier
+    - DrugStatusRecord_drug_type
+    - method
+    - collected_by
+    - age_at_drug_start
+    - age_at_drug_end
+    - route_of_administration
+    - dose
+    - frequency
+    - indication
+    slot_usage:
+      subject_identifier:
+        name: subject_identifier
+        required: true
+      drug_type:
+        name: drug_type
+        required: true
+    class_uri: bdchm:DrugExposure
+  ProcedureStatusRecord:
+    name: ProcedureStatusRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/ProcedureStatusRecord
+    instantiates:
+    - MicroschemaDefinition
+    annotations:
+      domain_of_use:
+        tag: domain_of_use
+        value: clinical
+    description: Record of activity or process ordered by or carried out by a healthcare
+      provider for a diagnostic or therapeutic reason
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:Procedure
+    slots:
+    - ProcedureStatusRecord_subject_identifier
+    - ProcedureStatusRecord_procedure_type
+    - method
+    - collected_by
+    - age_at_procedure_start
+    - age_at_procedure_end
+    slot_usage:
+      subject_identifier:
+        name: subject_identifier
+        required: true
+      procedure_type:
+        name: procedure_type
+        required: true
+    class_uri: bdchm:Procedure
+  HumanBodyHeightRecord:
+    name: HumanBodyHeightRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord
+    description: Measurement of linear distance of a human body from the bottom of
+      a flat foot to the top-most point of the head
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanBodyHeightRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OBA:VT0001253
+            - equals_string: OMOP:903133
+            - equals_string: LOINC:3036277
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: cm
+            - equals_string: '[in_i]'
+            - equals_string: m
+            - equals_string: '[ft_i]'
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: wall_mounted_stadiometer
+            - equals_string: flexible_measuring_tape
+            - equals_string: portable_stadiometer
+            - equals_string: anthropometer_rod
+            - equals_string: sonar_stadiometer
+          body_position:
+            name: body_position
+            any_of:
+            - range: BodyPositionEnum
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 300
+  HumanBodyHeightRecord001:
+    name: HumanBodyHeightRecord001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord001
+    description: Measurement of linear distance of a standing human body from the
+      bottom of a flat foot to the top-most point of the head measured with a wall-mounted
+      stadiometer
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanBodyHeightRecord001
+    rules:
+    - preconditions:
+        slot_conditions:
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: wall_mounted_stadiometer
+          unit:
+            name: unit
+            any_of:
+            - equals_string: cm
+          body_position:
+            name: body_position
+            any_of:
+            - equals_string: standing
+      postconditions:
+        slot_conditions:
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 20
+            maximum_value: 220
+          unit:
+            name: unit
+            equals_string: cm
+  HumanBodyWeightRecord:
+    name: HumanBodyWeightRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightRecord
+    description: Measurement of the force exerted by a human body on a scale due to
+      gravity
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanBodyWeightRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OBA:VT0001259
+            - equals_string: OMOP:903121
+            - equals_string: LOINC:29463-7
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: kg
+            - equals_string: '[lb_av]'
+            - equals_string: g
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: mechanical_beam_balance_scale
+            - equals_string: digital_scale
+            - equals_string: spring_scale
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 700
+  HumanBodyWeightRecord001:
+    name: HumanBodyWeightRecord001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightRecord001
+    description: Measurement of the force exerted by a human body on a mechanical
+      beam balance due to gravity
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyWeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanBodyWeightRecord001
+    rules:
+    - preconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: kg
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: mechanical_beam_balance_scale
+      postconditions:
+        slot_conditions:
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 550
+  BodyMassIndexRecord:
+    name: BodyMassIndexRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexRecord
+    description: A calculated numerical quantity representing an individual's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:BodyMassIndexRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OBA:0002045455
+            - equals_string: OMOP:3038553
+            - equals_string: LOINC:39156-5
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: kg/m2
+          method:
+            name: method
+            any_of:
+            - equals_string: calculated
+          data_type:
+            name: data_type
+            id_prefixes:
+            - decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 5
+            maximum_value: 200
+          calculated_from:
+            name: calculated_from
+            equals_expression: '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001}
+              / 100)^2'
+  HumanFvcRecord:
+    name: HumanFvcRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanFvcRecord
+    description: Total amount of air a person can forcibly exhale after taking the
+      deepest breath possible
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - HumanFvcRecord_predicted_value
+    - HumanFvcRecord_percent_predicted_value
+    slot_usage:
+      predicted_value:
+        name: predicted_value
+        required: true
+      percent_predicted_value:
+        name: percent_predicted_value
+        required: true
+    class_uri: cms:HumanFvcRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OMOP:4176265
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: L
+            - equals_string: mL
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: spirometer
+            - equals_string: vitalograph
+            - equals_string: body_plesmograph
+          body_position:
+            name: body_position
+            any_of:
+            - range: BodyPositionEnum
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 12000
+          context:
+            name: context
+            any_of:
+            - equals_string: before_bronchodilator
+            - equals_string: after_bronchodilator
+          method:
+            name: method
+            any_of:
+            - equals_string: spirometry
+            - equals_string: body_plesmography
+  HumanMeasuredFvcRecord:
+    name: HumanMeasuredFvcRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanMeasuredFvcRecord
+    description: Total amount of air a person can forcibly exhale after taking the
+      deepest breath possible
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanMeasuredFvcRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OMOP:4176265
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: L
+            - equals_string: mL
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: spirometer
+            - equals_string: vitalograph
+            - equals_string: body_plesmograph
+          body_position:
+            name: body_position
+            any_of:
+            - range: BodyPositionEnum
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 12000
+          context:
+            name: context
+            any_of:
+            - equals_string: before_bronchodilator
+            - equals_string: after_bronchodilator
+          method:
+            name: method
+            any_of:
+            - equals_string: spirometry
+            - equals_string: body_plesmography
+  HumanMeasuredFvcRecord001:
+    name: HumanMeasuredFvcRecord001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanMeasuredFvcRecord001
+    description: Total amount of air a person can forcibly exhale after taking the
+      deepest breath possible
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanMeasuredFvcRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanMeasuredFvcRecord001
+    rules:
+    - preconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: L
+      postconditions:
+        slot_conditions:
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: spirometer
+          body_position:
+            name: body_position
+            any_of:
+            - equals_string: sitting
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 12
+          context:
+            name: context
+            any_of:
+            - equals_string: before_bronchodilator
+            - equals_string: after_bronchodilator
+          method:
+            name: method
+            any_of:
+            - equals_string: spirometry
+  HumanPredictedFvcRecord:
+    name: HumanPredictedFvcRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanPredictedFvcRecord
+    description: Predicted total amount of air a person can forcibly exhale after
+      taking the deepest breath possible. Predictions are based on a reference equation.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanPredictedFvcRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OMOP:4150403
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: L
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 12
+          method:
+            name: method
+            any_of:
+            - equals_string: GLI
+            - equals_string: GLI-Global
+            - equals_string: NHANESIII
+  HumanPercentPredictedFvcRecord:
+    name: HumanPercentPredictedFvcRecord
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanPercentPredictedFvcRecord
+    description: Percent of the predicted FVC that is achieved by the patient
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanPercentPredictedFvcRecord
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OMOP:4253179
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: '%'
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 150
+          calculated_from:
+            name: calculated_from
+            equals_expression: ({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord})
+              * 100
+  HumanFev1Record:
+    name: HumanFev1Record
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanFev1Record
+    description: Maximum amount of air a person can forcibly exhale in the first second
+      of a breathing test
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: ClinicalMeasurementRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - ClinicalMeasurementRecord_measurement_value
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    class_uri: cms:HumanFev1Record
+    rules:
+    - preconditions:
+        slot_conditions:
+          measurement_type:
+            name: measurement_type
+            any_of:
+            - equals_string: OMOP:4241837
+      postconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: L
+            - equals_string: mL
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: spirometer
+            - equals_string: peak_flow_meter
+          body_position:
+            name: body_position
+            any_of:
+            - range: BodyPositionEnum
+          data_type:
+            name: data_type
+            equals_string: decimal
+          measurement_value:
+            name: measurement_value
+            range: decimal
+            minimum_value: 0
+            maximum_value: 12000
+          context:
+            name: context
+            any_of:
+            - equals_string: before_bronchodilator
+            - equals_string: after_bronchodilator
+          method:
+            name: method
+            any_of:
+            - equals_string: spirometry
+  Relativity:
+    name: Relativity
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/Relativity
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mixin: true
+    slots:
+    - predicted_value
+    - lower_limit_normal
+    - upper_limit_normal
+    - percent_predicted_value
+    class_uri: cms:Relativity
+  MicroschemaDefinition:
+    name: MicroschemaDefinition
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/MicroschemaDefinition
+    annotations:
+      must_not_have_id_slot:
+        tag: must_not_have_id_slot
+        value: true
+      must_be_inlined:
+        tag: must_be_inlined
+        value: true
+    description: A metaclass for classes that conform to the Microschema profile.
+      Classes that instantiate this are designed for inline composition.
+    comments:
+    - Classes instantiating this SHOULD NOT have identifier slots
+    - Classes instantiating this SHOULD be used with inlined=true
+    - Classes instantiating this MAY compose other microschemas via attributes
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    abstract: true
+    slots:
+    - profile_version
+    - domain_of_use
+    - subject
+    - observation_type
+    - location
+    - temporality
+    - methodology
+    - observation_result
+    class_uri: https://w3id.org/linkml/linkml-microschema-profile/MicroschemaDefinition
+  ValueMicroschemaDefinition:
+    name: ValueMicroschemaDefinition
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/ValueMicroschemaDefinition
+    annotations:
+      must_not_have_id_slot:
+        tag: must_not_have_id_slot
+        value: true
+      must_be_inlined:
+        tag: must_be_inlined
+        value: true
+    description: 'A microschema representing a typed value with optional unit/system.
+      Examples: Quantity, Timepoint, CodedValue, Range. This is the range for observation
+      result'
+    comments:
+    - Classes instantiating this SHOULD NOT have identifier slots
+    - Classes instantiating this SHOULD be used with inlined=true
+    - Classes instantiating this MAY compose other microschemas via attributes
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    abstract: true
+    class_uri: https://w3id.org/linkml/linkml-microschema-profile/ValueMicroschemaDefinition
+  Quantity:
+    name: Quantity
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/Quantity
+    instantiates:
+    - ValueMicroschemaDefinition
+    description: A numerical value with unit
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slots:
+    - quantity_value
+    - quantity_unit
+    - comparator
+    class_uri: https://w3id.org/linkml/linkml-microschema-profile/Quantity
+  Timepoint:
+    name: Timepoint
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/Timepoint
+    instantiates:
+    - ValueMicroschemaDefinition
+    description: A point in time, potentially relative
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slots:
+    - datetime
+    - relative_to_event
+    - offset
+    - subject_age
+    class_uri: https://w3id.org/linkml/linkml-microschema-profile/Timepoint
+  TimeInterval:
+    name: TimeInterval
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/TimeInterval
+    instantiates:
+    - ValueMicroschemaDefinition
+    description: A period between two timepoints
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slots:
+    - interval_start
+    - interval_end
+    - duration
+    class_uri: https://w3id.org/linkml/linkml-microschema-profile/TimeInterval
+  CodedValue:
+    name: CodedValue
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
+    instantiates:
+    - ValueMicroschemaDefinition
+    description: A value from a controlled vocabulary
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    slots:
+    - code
+    - code_label
+    - code_system
+    class_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
+metamodel_version: 1.7.0
+source_file: clinical_microschemas.yaml
+source_file_date: '2026-05-20T13:44:23'
+source_file_size: 34292
+generation_date: '2026-05-20T13:44:35'
+
