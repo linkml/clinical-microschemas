@@ -326,6 +326,8 @@ classes:
 
   HumanFvcRecord:
     is_a: ClinicalMeasurementRecord
+    mixins:
+      - Relativity
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
       possible
