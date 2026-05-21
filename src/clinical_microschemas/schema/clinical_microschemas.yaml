@@ -225,10 +225,6 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
-            measurement_value:
-              range: decimal
-              maximum_value: 230
-              minimum_value: 6
               
   HumanBodyHeightRecord002:
     is_a: HumanBodyHeightRecord
@@ -252,10 +248,7 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
-            measurement_value:
-              range: decimal
-              maximum_value: 90
-              minimum_value: 1.4
+
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
   #────────────────────────────────────────────────────────────────
@@ -321,10 +314,6 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
-            measurement_value:
-              range: decimal
-              maximum_value: 220
-              minimum_value: 0.1
 
   HumanBodyWeightRecord002:
     is_a: HumanBodyWeightRecord
@@ -348,10 +337,7 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
-            measurement_value:
-              range: decimal
-              maximum_value: 500
-              minimum_value: 0.25
+
   #────────────────────────────────────────────────────────────────
   # Body Mass Index (BMI) Microschemas
   #────────────────────────────────────────────────────────────────
@@ -389,10 +375,6 @@ classes:
                 - equals_string: calculated
             data_type:
               equals_string: decimal
-            measurement_value:
-              range: decimal
-              maximum_value: 200
-              minimum_value: 5
             calculated_from:
               equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
 
@@ -403,6 +385,7 @@ classes:
     is_a: ClinicalMeasurementRecord
     mixins:
       - Relativity
+      - Context
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
       possible. This microschema uses the Relativity mixin to bundle measured, predicted,
@@ -426,10 +409,6 @@ classes:
                 - equals_string: body_plesmograph
             data_type:
               equals_string: decimal
-            context:
-              any_of:
-                - equals_string: before_bronchodilator
-                - equals_string: after_bronchodilator
             method:
               any_of:
                 - equals_string: spirometry
@@ -598,6 +577,61 @@ classes:
               any_of:
                 - equals_string: spirometry
 
+  HumanBasophilCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of basophil cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanBasophilCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0002607
+                - equals_string: OMOP:3006315
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+                - equals_string: "{#}/uL"
+            instrument:
+              any_of:
+                - equals_string: flow cytometer
+                - equals_string: microscope
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: CBC
+
+  HumanBasophilCountRecord001:
+    is_a: HumanBasophilCountRecord
+    description: >-
+      Concentration of basophil cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanBasophilCountQuantity001
+      unit:
+        any_of:
+          -  equals_string: "10*3/uL"
+
+  HumanBasophilCountRecord002:
+    is_a: HumanBasophilCountRecord
+    description: >-
+      Concentration of basophil cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanBasophilCountQuantity001
+      unit:
+        any_of:
+          -  equals_string: "{#}/uL"          
+          
+#------------------------------------------------------------------
+#    Mixins
+#-----------------------------------------------------------------
   Relativity:
     mixin: true
     slots:
@@ -605,6 +639,12 @@ classes:
       - lower_limit_normal
       - upper_limit_normal
       - percent_predicted_value
+
+  Context:
+    mixin: true
+    slots:
+      - activity
+      - relative_timing
 
   #────────────────────────────────────────────────────────────────
   # Typed Quantity subclasses for per-record numeric bounds
@@ -616,39 +656,65 @@ classes:
 
   HumanBodyHeightQuantity:
     is_a: Quantity
-    description: Human body height, bounded 0–300.
+    description: Human body height. Negative heights are impossible.
     slot_usage:
       quantity_value:
         minimum_value: 0
-        maximum_value: 300
 
   HumanBodyHeightQuantity001:
     is_a: HumanBodyHeightQuantity
-    description: Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.
+    description: >-
+      Standing wall-mounted-stadiometer human body height in cm, bounded 30–220. 
+      Minimum represents observed limits on human height. Maximum represents
+      limit of measurement device.
+    slot_usage:
+      quantity_value:
+        minimum_value: 30
+        maximum_value: 230
+
+  HumanBodyHeightQuantity002:
+    is_a: HumanBodyHeightQuantity
+    description: >-
+      Standing wall-mounted-stadiometer human body height in in, bounded 20–90. 
+      Minimum represents observed limits on human height. Maximum represents
+      limit of measurement device.
     slot_usage:
       quantity_value:
         minimum_value: 20
-        maximum_value: 220
+        maximum_value: 90
 
   HumanBodyWeightQuantity:
     is_a: Quantity
-    description: Human body weight, bounded 0–700.
+    description: Human body weight. Negative weights are impossible.
     slot_usage:
       quantity_value:
         minimum_value: 0
-        maximum_value: 700
 
   HumanBodyWeightQuantity001:
     is_a: HumanBodyWeightQuantity
-    description: Mechanical-beam-balance human body weight in kg, bounded 0–550.
+    description: >-
+      Mechanical-beam-balance human body weight in kg, bounded 0–230. Maximum weight
+      set based on limits of measurement device.
     slot_usage:
       quantity_value:
         minimum_value: 0
-        maximum_value: 550
+        maximum_value: 230
+
+  HumanBodyWeightQuantity002:
+    is_a: HumanBodyWeightQuantity
+    description: >-
+      Mechanical-beam-balance human body weight in lbs, bounded 0–500. Maximum weight
+      set based on limits of measurement device.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 500
 
   BodyMassIndexQuantity:
     is_a: Quantity
-    description: Body mass index value in kg/m², bounded 5–200.
+    description: >-
+      Body mass index value in kg/m², bounded 5–200. Limits based on observed limits 
+      of human body size.
     slot_usage:
       quantity_value:
         minimum_value: 5
@@ -702,6 +768,33 @@ classes:
         minimum_value: 0
         maximum_value: 12000
 
+  HumanBasophilCountQuantity:
+    is_a: Quantity
+    description: >-
+      Basophil concentration measurement. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanBasophilCountQuantity001:
+    is_a: HumanBasophilCountQuantity
+    description: >-
+      Basophil concentration measurement, bounded 0-0.3 based on observed 
+      biological limits.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 0.3
+
+  HumanBasophilCountQuantity002:
+    is_a: HumanBasophilCountQuantity
+    description: >-
+      Basophil concentration measurement, bounded 0-300 based on observed 
+      biological limits.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 300
 #────────────────────────────────────────────────────────────────
 # SLOTS
 #────────────────────────────────────────────────────────────────
@@ -832,6 +925,14 @@ slots:
     range: decimal
     description: >-
       Ratio of the actual measured value to the predicted value
+  activity_type:
+    range: ActivityTypeEnum
+    description: >-
+      Activity that adds context to a clinical measurement
+  relative_timing:
+    range: RelativeTimingEnum
+    description: >-
+      Timing of the activity relative to the clinical measurement
 
 #────────────────────────────────────────────────────────────────
 # ENUMS
@@ -1153,3 +1254,20 @@ enums:
     permissible_values:
       placeholder:
         description: Placeholder value
+
+  ActivityTypeEnum:
+    description: Type of activity being recorded
+    permissible_values:
+      fasting:
+      bronchodilator_medication_use:
+      diabetes_medication_use:
+      antihyperlipidemics_medication_use:
+      physical_activity:
+      medical_procedure:
+
+  RelativeTimingEnum:
+    description: Set of values describing the relative timing of an activity
+    permissible_values:
+      after:
+      before:
+      during:
