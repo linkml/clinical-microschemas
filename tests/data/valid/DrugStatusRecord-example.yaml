@@ -7,6 +7,6 @@ dose:
 frequency:
   quantity_value: 1
   quantity_unit: d
-age_at_drug_start:
+age_at_drug_record:
   quantity_value: 30
   quantity_unit: a
