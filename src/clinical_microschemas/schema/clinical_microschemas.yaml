@@ -933,6 +933,33 @@ slots:
     range: RelativeTimingEnum
     description: >-
       Timing of the activity relative to the clinical measurement
+  study_site:
+    range: string
+    description: >-
+      Institution name, clinic name, or other indication of where a measurement
+      was taken geographically
+  absolute_time:
+    range: datetime
+    description: >-
+      Calendar date when a measurement was taken
+  age_at_condition_record:
+    range: decimal
+    description: >-
+      Age of participant when record of the condition was collected. This 
+      slot can accommodate an "age at encounter" where a medical history was 
+      collected, or a record was adjudicated.
+  age_at_drug_record:
+    range: decimal
+    description: >-
+      Age of participant when record of the drug was collected. This 
+      slot can accommodate an "age at encounter" where the participant was
+      asked for their medication list. 
+  age_at_procedure_record:
+    range: decimal
+    description: >-
+      Age of participant when record of the procedure was collected. This 
+      slot can accommodate an "age at encounter" where the participant was
+      asked for their medical history.
 
 #────────────────────────────────────────────────────────────────
 # ENUMS
