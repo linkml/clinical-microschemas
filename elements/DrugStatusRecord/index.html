@@ -283,6 +283,17 @@
 
 
 
+      DrugStatusRecord : age_at_drug_record
+
+
+
+
+
+        DrugStatusRecord --&gt; "1" Quantity : age_at_drug_record
+        click Quantity href "../Quantity/"
+
+
+
       DrugStatusRecord : age_at_drug_start
 
 
@@ -291,17 +302,6 @@
 
         DrugStatusRecord --&gt; "0..1" Quantity : age_at_drug_start
         click Quantity href "../Quantity/"
-
-
-
-      DrugStatusRecord : collected_by
-
-
-
-
-
-        DrugStatusRecord --&gt; "0..1" CollectedByEnum : collected_by
-        click CollectedByEnum href "../CollectedByEnum/"
 
 
 
@@ -330,17 +330,6 @@
 
 
       DrugStatusRecord : indication
-
-      DrugStatusRecord : method
-
-
-
-
-
-        DrugStatusRecord --&gt; "0..1" MethodEnum : method
-        click MethodEnum href "../MethodEnum/"
-
-
 
       DrugStatusRecord : route_of_administration
 
@@ -397,18 +386,6 @@
 <td>direct</td>
 </tr>
 <tr>
-<td><a href="../method/">method</a></td>
-<td>0..1 <br/> <a href="../MethodEnum/">MethodEnum</a></td>
-<td>The method used for the measurement</td>
-<td>direct</td>
-</tr>
-<tr>
-<td><a href="../collected_by/">collected_by</a></td>
-<td>0..1 <br/> <a href="../CollectedByEnum/">CollectedByEnum</a></td>
-<td>Who collected the measurement</td>
-<td>direct</td>
-</tr>
-<tr>
 <td><a href="../age_at_drug_start/">age_at_drug_start</a></td>
 <td>0..1 <br/> <a href="../Quantity/">Quantity</a></td>
 <td>Age of the subject at the start of drug exposure</td>
@@ -418,6 +395,12 @@
 <td><a href="../age_at_drug_end/">age_at_drug_end</a></td>
 <td>0..1 <br/> <a href="../Quantity/">Quantity</a></td>
 <td>Age of the subject at the end of drug exposure</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../age_at_drug_record/">age_at_drug_record</a></td>
+<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
+<td>Age of participant when record of the drug was collected</td>
 <td>direct</td>
 </tr>
 <tr>
@@ -501,10 +484,9 @@ from_schema: https://w3id.org/linkml/clinical-microschemas
 slots:
 - subject_identifier
 - drug_type
-- method
-- collected_by
 - age_at_drug_start
 - age_at_drug_end
+- age_at_drug_record
 - route_of_administration
 - dose
 - frequency
@@ -515,6 +497,9 @@ slot_usage:
     required: true
   drug_type:
     name: drug_type
+    required: true
+  age_at_drug_record:
+    name: age_at_drug_record
     required: true
 class_uri: bdchm:DrugExposure
 
@@ -537,6 +522,9 @@ slot_usage:
     required: true
   drug_type:
     name: drug_type
+    required: true
+  age_at_drug_record:
+    name: age_at_drug_record
     required: true
 attributes:
   subject_identifier:
@@ -565,31 +553,6 @@ attributes:
     - DrugStatusRecord
     range: uriorcurie
     required: true
-  method:
-    name: method
-    description: The method used for the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    slot_uri: bdchm:method_type
-    alias: method
-    owner: DrugStatusRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
-    range: MethodEnum
-  collected_by:
-    name: collected_by
-    description: Who collected the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    alias: collected_by
-    owner: DrugStatusRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
-    range: CollectedByEnum
   age_at_drug_start:
     name: age_at_drug_start
     description: Age of the subject at the start of drug exposure
@@ -610,6 +573,19 @@ attributes:
     domain_of:
     - DrugStatusRecord
     range: Quantity
+  age_at_drug_record:
+    name: age_at_drug_record
+    description: 'Age of participant when record of the drug was collected. This  slot
+      can accommodate an "age at encounter" where the participant was asked for their
+      medication list. '
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: age_at_drug_record
+    owner: DrugStatusRecord
+    domain_of:
+    - DrugStatusRecord
+    range: Quantity
+    required: true
   route_of_administration:
     name: route_of_administration
     description: Routes of drug administration

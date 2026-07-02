@@ -288,7 +288,11 @@
 
       HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord001
         click HumanBodyHeightRecord001 href "../HumanBodyHeightRecord001/"
+      HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord002
+        click HumanBodyHeightRecord002 href "../HumanBodyHeightRecord002/"
 
+
+      HumanBodyHeightRecord : absolute_time
 
       HumanBodyHeightRecord : age_at_measurement
 
@@ -395,6 +399,8 @@
 
 
 
+      HumanBodyHeightRecord : study_site
+
       HumanBodyHeightRecord : subject_identifier
 
       HumanBodyHeightRecord : unit
@@ -406,6 +412,7 @@
 <li><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a><ul>
 <li><strong>HumanBodyHeightRecord</strong><ul>
 <li><a href="../HumanBodyHeightRecord001/">HumanBodyHeightRecord001</a></li>
+<li><a href="../HumanBodyHeightRecord002/">HumanBodyHeightRecord002</a></li>
 </ul>
 </li>
 </ul>
@@ -506,6 +513,18 @@
 <td>Age of the subject at the time of measurement</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
+<tr>
+<td><a href="../study_site/">study_site</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Institution name, clinic name, or other indication of where a measurement was...</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
+<tr>
+<td><a href="../absolute_time/">absolute_time</a></td>
+<td>0..1 <br/> <a href="../datetime/">datetime</a></td>
+<td>Calendar date when a measurement was taken</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
 </tbody>
 </table>
 <h2 id="rules">Rules</h2>
@@ -523,7 +542,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OBA:VT0001253'}, {'equals_string': 'OMOP:903133'}, {'equals_string': 'LOINC:3036277'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'cm'}, {'equals_string': '[in_i]'}, {'equals_string': 'm'}, {'equals_string': '[ft_i]'}]}, 'instrument': {'any_of': [{'equals_string': 'wall_mounted_stadiometer'}, {'equals_string': 'flexible_measuring_tape'}, {'equals_string': 'portable_stadiometer'}, {'equals_string': 'anthropometer_rod'}, {'equals_string': 'sonar_stadiometer'}]}, 'body_position': {'any_of': [{'range': 'BodyPositionEnum'}]}, 'data_type': {'equals_string': 'decimal'}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'cm'}, {'equals_string': '[in_i]'}, {'equals_string': 'm'}, {'equals_string': '[ft_i]'}]}, 'instrument': {'any_of': [{'equals_string': 'wall_mounted_stadiometer'}, {'equals_string': 'flexible_measuring_tape'}, {'equals_string': 'portable_stadiometer'}, {'equals_string': 'anthropometer_rod'}, {'equals_string': 'sonar_stadiometer'}, {'equals_string': 'infantometer'}]}, 'data_type': {'equals_string': 'decimal'}, 'method': {'any_of': [{'equals_string': 'anthropometry'}]}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -591,13 +610,14 @@ rules:
         - equals_string: portable_stadiometer
         - equals_string: anthropometer_rod
         - equals_string: sonar_stadiometer
-      body_position:
-        name: body_position
-        any_of:
-        - range: BodyPositionEnum
+        - equals_string: infantometer
       data_type:
         name: data_type
         equals_string: decimal
+      method:
+        name: method
+        any_of:
+        - equals_string: anthropometry
 
 </code></pre>
 </details>
@@ -671,8 +691,6 @@ attributes:
     owner: HumanBodyHeightRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
     range: MethodEnum
   instrument:
     name: instrument
@@ -745,7 +763,6 @@ attributes:
     owner: HumanBodyHeightRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
     - ProcedureStatusRecord
     range: CollectedByEnum
   data_type:
@@ -769,6 +786,27 @@ attributes:
     - ClinicalMeasurementRecord
     range: Quantity
     required: true
+  study_site:
+    name: study_site
+    description: Institution name, clinic name, or other indication of where a measurement
+      was taken geographically
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: study_site
+    owner: HumanBodyHeightRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: string
+  absolute_time:
+    name: absolute_time
+    description: Calendar date when a measurement was taken
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: absolute_time
+    owner: HumanBodyHeightRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: datetime
 rules:
 - preconditions:
     slot_conditions:
@@ -795,13 +833,14 @@ rules:
         - equals_string: portable_stadiometer
         - equals_string: anthropometer_rod
         - equals_string: sonar_stadiometer
-      body_position:
-        name: body_position
-        any_of:
-        - range: BodyPositionEnum
+        - equals_string: infantometer
       data_type:
         name: data_type
         equals_string: decimal
+      method:
+        name: method
+        any_of:
+        - equals_string: anthropometry
 
 </code></pre>
 </details>

@@ -267,7 +267,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-humanbodyweightquantity">Class: HumanBodyWeightQuantity</h1>
-<p><em>Human body weight, bounded 0–700.</em></p>
+<p><em>Human body weight. Negative weights are impossible.</em></p>
 <p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightQuantity">cms:HumanBodyWeightQuantity</a></p>
 <div class="mermaid"> classDiagram
     class HumanBodyWeightQuantity
@@ -278,6 +278,8 @@
 
       HumanBodyWeightQuantity &lt;|-- HumanBodyWeightQuantity001
         click HumanBodyWeightQuantity001 href "../HumanBodyWeightQuantity001/"
+      HumanBodyWeightQuantity &lt;|-- HumanBodyWeightQuantity002
+        click HumanBodyWeightQuantity002 href "../HumanBodyWeightQuantity002/"
 
 
       HumanBodyWeightQuantity : comparator
@@ -302,6 +304,7 @@
 <li><a href="../Quantity/">Quantity</a><ul>
 <li><strong>HumanBodyWeightQuantity</strong><ul>
 <li><a href="../HumanBodyWeightQuantity001/">HumanBodyWeightQuantity001</a></li>
+<li><a href="../HumanBodyWeightQuantity002/">HumanBodyWeightQuantity002</a></li>
 </ul>
 </li>
 </ul>
@@ -386,28 +389,26 @@
 <h3 id="direct">Direct</h3>
 <details>
 <pre><code class="language-yaml">name: HumanBodyWeightQuantity
-description: Human body weight, bounded 0–700.
+description: Human body weight. Negative weights are impossible.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: Quantity
 slot_usage:
   quantity_value:
     name: quantity_value
     minimum_value: 0
-    maximum_value: 700
 
 </code></pre>
 </details>
 <h3 id="induced">Induced</h3>
 <details>
 <pre><code class="language-yaml">name: HumanBodyWeightQuantity
-description: Human body weight, bounded 0–700.
+description: Human body weight. Negative weights are impossible.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: Quantity
 slot_usage:
   quantity_value:
     name: quantity_value
     minimum_value: 0
-    maximum_value: 700
 attributes:
   quantity_value:
     name: quantity_value
@@ -421,7 +422,6 @@ attributes:
     range: decimal
     required: true
     minimum_value: 0
-    maximum_value: 700
   quantity_unit:
     name: quantity_unit
     description: Unit (UCUM, UO, QUDT, etc.)

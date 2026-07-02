@@ -297,6 +297,10 @@
         click HumanPercentPredictedFvcRecord href "../HumanPercentPredictedFvcRecord/"
       ClinicalMeasurementRecord &lt;|-- HumanFev1Record
         click HumanFev1Record href "../HumanFev1Record/"
+      ClinicalMeasurementRecord &lt;|-- HumanBasophilCountRecord
+        click HumanBasophilCountRecord href "../HumanBasophilCountRecord/"
+
+      ClinicalMeasurementRecord : absolute_time
 
       ClinicalMeasurementRecord : age_at_measurement
 
@@ -403,6 +407,8 @@
 
 
 
+      ClinicalMeasurementRecord : study_site
+
       ClinicalMeasurementRecord : subject_identifier
 
       ClinicalMeasurementRecord : unit
@@ -415,11 +421,12 @@
 <li><a href="../HumanBodyHeightRecord/">HumanBodyHeightRecord</a></li>
 <li><a href="../HumanBodyWeightRecord/">HumanBodyWeightRecord</a></li>
 <li><a href="../BodyMassIndexRecord/">BodyMassIndexRecord</a></li>
-<li><a href="../HumanFvcRecord/">HumanFvcRecord</a> [ <a href="../Relativity/">Relativity</a>]</li>
+<li><a href="../HumanFvcRecord/">HumanFvcRecord</a> [ <a href="../Relativity/">Relativity</a> <a href="../Context/">Context</a>]</li>
 <li><a href="../HumanMeasuredFvcRecord/">HumanMeasuredFvcRecord</a></li>
 <li><a href="../HumanPredictedFvcRecord/">HumanPredictedFvcRecord</a></li>
 <li><a href="../HumanPercentPredictedFvcRecord/">HumanPercentPredictedFvcRecord</a></li>
 <li><a href="../HumanFev1Record/">HumanFev1Record</a></li>
+<li><a href="../HumanBasophilCountRecord/">HumanBasophilCountRecord</a></li>
 </ul>
 </li>
 </ul>
@@ -533,6 +540,18 @@
 <td>Age of the subject at the time of measurement</td>
 <td>direct</td>
 </tr>
+<tr>
+<td><a href="../study_site/">study_site</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Institution name, clinic name, or other indication of where a measurement was...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../absolute_time/">absolute_time</a></td>
+<td>0..1 <br/> <a href="../datetime/">datetime</a></td>
+<td>Calendar date when a measurement was taken</td>
+<td>direct</td>
+</tr>
 </tbody>
 </table>
 <h2 id="identifier-and-mapping-information">Identifier and Mapping Information</h2>
@@ -604,6 +623,8 @@ slots:
 - collected_by
 - data_type
 - age_at_measurement
+- study_site
+- absolute_time
 slot_usage:
   subject_identifier:
     name: subject_identifier
@@ -706,8 +727,6 @@ attributes:
     owner: ClinicalMeasurementRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
     range: MethodEnum
   instrument:
     name: instrument
@@ -780,7 +799,6 @@ attributes:
     owner: ClinicalMeasurementRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
     - ProcedureStatusRecord
     range: CollectedByEnum
   data_type:
@@ -804,6 +822,27 @@ attributes:
     - ClinicalMeasurementRecord
     range: Quantity
     required: true
+  study_site:
+    name: study_site
+    description: Institution name, clinic name, or other indication of where a measurement
+      was taken geographically
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: study_site
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: string
+  absolute_time:
+    name: absolute_time
+    description: Calendar date when a measurement was taken
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: absolute_time
+    owner: ClinicalMeasurementRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: datetime
 class_uri: bdchm:Observation
 
 </code></pre>

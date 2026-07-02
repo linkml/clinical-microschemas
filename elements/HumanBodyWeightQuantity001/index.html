@@ -267,7 +267,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-humanbodyweightquantity001">Class: HumanBodyWeightQuantity001</h1>
-<p><em>Mechanical-beam-balance human body weight in kg, bounded 0–550.</em></p>
+<p><em>Mechanical-beam-balance human body weight in kg, bounded 0–230. Maximum weight set based on limits of measurement device.</em></p>
 <p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightQuantity001">cms:HumanBodyWeightQuantity001</a></p>
 <div class="mermaid"> classDiagram
     class HumanBodyWeightQuantity001
@@ -381,28 +381,30 @@
 <h3 id="direct">Direct</h3>
 <details>
 <pre><code class="language-yaml">name: HumanBodyWeightQuantity001
-description: Mechanical-beam-balance human body weight in kg, bounded 0–550.
+description: Mechanical-beam-balance human body weight in kg, bounded 0–230. Maximum
+  weight set based on limits of measurement device.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanBodyWeightQuantity
 slot_usage:
   quantity_value:
     name: quantity_value
     minimum_value: 0
-    maximum_value: 550
+    maximum_value: 230
 
 </code></pre>
 </details>
 <h3 id="induced">Induced</h3>
 <details>
 <pre><code class="language-yaml">name: HumanBodyWeightQuantity001
-description: Mechanical-beam-balance human body weight in kg, bounded 0–550.
+description: Mechanical-beam-balance human body weight in kg, bounded 0–230. Maximum
+  weight set based on limits of measurement device.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanBodyWeightQuantity
 slot_usage:
   quantity_value:
     name: quantity_value
     minimum_value: 0
-    maximum_value: 550
+    maximum_value: 230
 attributes:
   quantity_value:
     name: quantity_value
@@ -416,7 +418,7 @@ attributes:
     range: decimal
     required: true
     minimum_value: 0
-    maximum_value: 550
+    maximum_value: 230
   quantity_unit:
     name: quantity_unit
     description: Unit (UCUM, UO, QUDT, etc.)

@@ -285,6 +285,8 @@
       ClinicalMeasurementRecord &lt;|-- HumanPercentPredictedFvcRecord
         click ClinicalMeasurementRecord href "../ClinicalMeasurementRecord/"
 
+      HumanPercentPredictedFvcRecord : absolute_time
+
       HumanPercentPredictedFvcRecord : age_at_measurement
 
 
@@ -389,6 +391,8 @@
         click ReagentKitEnum href "../ReagentKitEnum/"
 
 
+
+      HumanPercentPredictedFvcRecord : study_site
 
       HumanPercentPredictedFvcRecord : subject_identifier
 
@@ -496,6 +500,18 @@
 <td><a href="../age_at_measurement/">age_at_measurement</a></td>
 <td>1 <br/> <a href="../Quantity/">Quantity</a></td>
 <td>Age of the subject at the time of measurement</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
+<tr>
+<td><a href="../study_site/">study_site</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Institution name, clinic name, or other indication of where a measurement was...</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
+<tr>
+<td><a href="../absolute_time/">absolute_time</a></td>
+<td>0..1 <br/> <a href="../datetime/">datetime</a></td>
+<td>Calendar date when a measurement was taken</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
 </tbody>
@@ -648,8 +664,6 @@ attributes:
     owner: HumanPercentPredictedFvcRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
     range: MethodEnum
   instrument:
     name: instrument
@@ -722,7 +736,6 @@ attributes:
     owner: HumanPercentPredictedFvcRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
     - ProcedureStatusRecord
     range: CollectedByEnum
   data_type:
@@ -746,6 +759,27 @@ attributes:
     - ClinicalMeasurementRecord
     range: Quantity
     required: true
+  study_site:
+    name: study_site
+    description: Institution name, clinic name, or other indication of where a measurement
+      was taken geographically
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: study_site
+    owner: HumanPercentPredictedFvcRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: string
+  absolute_time:
+    name: absolute_time
+    description: Calendar date when a measurement was taken
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: absolute_time
+    owner: HumanPercentPredictedFvcRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: datetime
 rules:
 - preconditions:
     slot_conditions:

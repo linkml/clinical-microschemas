@@ -283,6 +283,17 @@
 
 
 
+      ProcedureStatusRecord : age_at_procedure_record
+
+
+
+
+
+        ProcedureStatusRecord --&gt; "1" Quantity : age_at_procedure_record
+        click Quantity href "../Quantity/"
+
+
+
       ProcedureStatusRecord : age_at_procedure_start
 
 
@@ -302,17 +313,6 @@
 
         ProcedureStatusRecord --&gt; "0..1" CollectedByEnum : collected_by
         click CollectedByEnum href "../CollectedByEnum/"
-
-
-
-      ProcedureStatusRecord : method
-
-
-
-
-
-        ProcedureStatusRecord --&gt; "0..1" MethodEnum : method
-        click MethodEnum href "../MethodEnum/"
 
 
 
@@ -362,12 +362,6 @@
 <td>direct</td>
 </tr>
 <tr>
-<td><a href="../method/">method</a></td>
-<td>0..1 <br/> <a href="../MethodEnum/">MethodEnum</a></td>
-<td>The method used for the measurement</td>
-<td>direct</td>
-</tr>
-<tr>
 <td><a href="../collected_by/">collected_by</a></td>
 <td>0..1 <br/> <a href="../CollectedByEnum/">CollectedByEnum</a></td>
 <td>Who collected the measurement</td>
@@ -383,6 +377,12 @@
 <td><a href="../age_at_procedure_end/">age_at_procedure_end</a></td>
 <td>0..1 <br/> <a href="../Quantity/">Quantity</a></td>
 <td>Age of the subject at the end of the procedure</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../age_at_procedure_record/">age_at_procedure_record</a></td>
+<td>1 <br/> <a href="../Quantity/">Quantity</a></td>
+<td>Age of participant when record of the procedure was collected</td>
 <td>direct</td>
 </tr>
 </tbody>
@@ -443,16 +443,19 @@ from_schema: https://w3id.org/linkml/clinical-microschemas
 slots:
 - subject_identifier
 - procedure_type
-- method
 - collected_by
 - age_at_procedure_start
 - age_at_procedure_end
+- age_at_procedure_record
 slot_usage:
   subject_identifier:
     name: subject_identifier
     required: true
   procedure_type:
     name: procedure_type
+    required: true
+  age_at_procedure_record:
+    name: age_at_procedure_record
     required: true
 class_uri: bdchm:Procedure
 
@@ -476,6 +479,9 @@ slot_usage:
     required: true
   procedure_type:
     name: procedure_type
+    required: true
+  age_at_procedure_record:
+    name: age_at_procedure_record
     required: true
 attributes:
   subject_identifier:
@@ -504,19 +510,6 @@ attributes:
     - ProcedureStatusRecord
     range: uriorcurie
     required: true
-  method:
-    name: method
-    description: The method used for the measurement
-    from_schema: https://w3id.org/linkml/clinical-microschemas
-    rank: 1000
-    slot_uri: bdchm:method_type
-    alias: method
-    owner: ProcedureStatusRecord
-    domain_of:
-    - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
-    range: MethodEnum
   collected_by:
     name: collected_by
     description: Who collected the measurement
@@ -526,7 +519,6 @@ attributes:
     owner: ProcedureStatusRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
     - ProcedureStatusRecord
     range: CollectedByEnum
   age_at_procedure_start:
@@ -549,6 +541,19 @@ attributes:
     domain_of:
     - ProcedureStatusRecord
     range: Quantity
+  age_at_procedure_record:
+    name: age_at_procedure_record
+    description: Age of participant when record of the procedure was collected. This  slot
+      can accommodate an "age at encounter" where the participant was asked for their
+      medical history.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: age_at_procedure_record
+    owner: ProcedureStatusRecord
+    domain_of:
+    - ProcedureStatusRecord
+    range: Quantity
+    required: true
 class_uri: bdchm:Procedure
 
 </code></pre>

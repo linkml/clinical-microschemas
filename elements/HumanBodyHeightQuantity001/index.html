@@ -267,7 +267,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-humanbodyheightquantity001">Class: HumanBodyHeightQuantity001</h1>
-<p><em>Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.</em></p>
+<p><em>Standing wall-mounted-stadiometer human body height in cm, bounded 30–220.  Minimum represents observed limits on human height. Maximum represents limit of measurement device.</em></p>
 <p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity001">cms:HumanBodyHeightQuantity001</a></p>
 <div class="mermaid"> classDiagram
     class HumanBodyHeightQuantity001
@@ -381,28 +381,32 @@
 <h3 id="direct">Direct</h3>
 <details>
 <pre><code class="language-yaml">name: HumanBodyHeightQuantity001
-description: Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.
+description: Standing wall-mounted-stadiometer human body height in cm, bounded 30–220.  Minimum
+  represents observed limits on human height. Maximum represents limit of measurement
+  device.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanBodyHeightQuantity
 slot_usage:
   quantity_value:
     name: quantity_value
-    minimum_value: 20
-    maximum_value: 220
+    minimum_value: 30
+    maximum_value: 230
 
 </code></pre>
 </details>
 <h3 id="induced">Induced</h3>
 <details>
 <pre><code class="language-yaml">name: HumanBodyHeightQuantity001
-description: Standing wall-mounted-stadiometer human body height in cm, bounded 20–220.
+description: Standing wall-mounted-stadiometer human body height in cm, bounded 30–220.  Minimum
+  represents observed limits on human height. Maximum represents limit of measurement
+  device.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanBodyHeightQuantity
 slot_usage:
   quantity_value:
     name: quantity_value
-    minimum_value: 20
-    maximum_value: 220
+    minimum_value: 30
+    maximum_value: 230
 attributes:
   quantity_value:
     name: quantity_value
@@ -415,8 +419,8 @@ attributes:
     - Quantity
     range: decimal
     required: true
-    minimum_value: 20
-    maximum_value: 220
+    minimum_value: 30
+    maximum_value: 230
   quantity_unit:
     name: quantity_unit
     description: Unit (UCUM, UO, QUDT, etc.)

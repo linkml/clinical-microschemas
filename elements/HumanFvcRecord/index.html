@@ -277,15 +277,30 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-humanfvcrecord">Class: HumanFvcRecord</h1>
-<p><em>Total amount of air a person can forcibly exhale after taking the deepest breath possible</em></p>
+<p><em>Total amount of air a person can forcibly exhale after taking the deepest breath possible. This microschema uses the Relativity mixin to bundle measured, predicted, and percent predicted values.</em></p>
 <p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanFvcRecord">cms:HumanFvcRecord</a></p>
 <div class="mermaid"> classDiagram
     class HumanFvcRecord
     click HumanFvcRecord href "../HumanFvcRecord/"
       Relativity &lt;|-- HumanFvcRecord
         click Relativity href "../Relativity/"
+      Context &lt;|-- HumanFvcRecord
+        click Context href "../Context/"
       ClinicalMeasurementRecord &lt;|-- HumanFvcRecord
         click ClinicalMeasurementRecord href "../ClinicalMeasurementRecord/"
+
+      HumanFvcRecord : absolute_time
+
+      HumanFvcRecord : activity_type
+
+
+
+
+
+        HumanFvcRecord --&gt; "0..1" ActivityTypeEnum : activity_type
+        click ActivityTypeEnum href "../ActivityTypeEnum/"
+
+
 
       HumanFvcRecord : age_at_measurement
 
@@ -398,6 +413,19 @@
 
 
 
+      HumanFvcRecord : relative_timing
+
+
+
+
+
+        HumanFvcRecord --&gt; "0..1" RelativeTimingEnum : relative_timing
+        click RelativeTimingEnum href "../RelativeTimingEnum/"
+
+
+
+      HumanFvcRecord : study_site
+
       HumanFvcRecord : subject_identifier
 
       HumanFvcRecord : unit
@@ -409,7 +437,7 @@
 <h2 id="inheritance">Inheritance</h2>
 <ul>
 <li><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a><ul>
-<li><strong>HumanFvcRecord</strong> [ <a href="../Relativity/">Relativity</a>]</li>
+<li><strong>HumanFvcRecord</strong> [ <a href="../Relativity/">Relativity</a> <a href="../Context/">Context</a>]</li>
 </ul>
 </li>
 </ul>
@@ -447,6 +475,18 @@
 <td>1 <br/> <a href="../Decimal/">Decimal</a></td>
 <td>Ratio of the actual measured value to the predicted value</td>
 <td><a href="../Relativity/">Relativity</a></td>
+</tr>
+<tr>
+<td><a href="../activity_type/">activity_type</a></td>
+<td>0..1 <br/> <a href="../ActivityTypeEnum/">ActivityTypeEnum</a></td>
+<td>Activity that adds context to a clinical measurement</td>
+<td><a href="../Context/">Context</a></td>
+</tr>
+<tr>
+<td><a href="../relative_timing/">relative_timing</a></td>
+<td>0..1 <br/> <a href="../RelativeTimingEnum/">RelativeTimingEnum</a></td>
+<td>Timing of the activity relative to the clinical measurement</td>
+<td><a href="../Context/">Context</a></td>
 </tr>
 <tr>
 <td><a href="../subject_identifier/">subject_identifier</a></td>
@@ -532,6 +572,18 @@
 <td>Age of the subject at the time of measurement</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
+<tr>
+<td><a href="../study_site/">study_site</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Institution name, clinic name, or other indication of where a measurement was...</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
+<tr>
+<td><a href="../absolute_time/">absolute_time</a></td>
+<td>0..1 <br/> <a href="../datetime/">datetime</a></td>
+<td>Calendar date when a measurement was taken</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
 </tbody>
 </table>
 <h2 id="rules">Rules</h2>
@@ -549,7 +601,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OMOP:4176265'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'L'}, {'equals_string': 'mL'}]}, 'instrument': {'any_of': [{'equals_string': 'spirometer'}, {'equals_string': 'vitalograph'}, {'equals_string': 'body_plesmograph'}]}, 'body_position': {'any_of': [{'range': 'BodyPositionEnum'}]}, 'data_type': {'equals_string': 'decimal'}, 'context': {'any_of': [{'equals_string': 'before_bronchodilator'}, {'equals_string': 'after_bronchodilator'}]}, 'method': {'any_of': [{'equals_string': 'spirometry'}, {'equals_string': 'body_plesmography'}]}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'L'}, {'equals_string': 'mL'}]}, 'instrument': {'any_of': [{'equals_string': 'spirometer'}, {'equals_string': 'vitalograph'}, {'equals_string': 'body_plesmograph'}]}, 'data_type': {'equals_string': 'decimal'}, 'method': {'any_of': [{'equals_string': 'spirometry'}, {'equals_string': 'body_plesmography'}]}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -584,11 +636,13 @@
 <details>
 <pre><code class="language-yaml">name: HumanFvcRecord
 description: Total amount of air a person can forcibly exhale after taking the deepest
-  breath possible
+  breath possible. This microschema uses the Relativity mixin to bundle measured,
+  predicted, and percent predicted values.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
 mixins:
 - Relativity
+- Context
 slot_usage:
   measurement_value:
     name: measurement_value
@@ -619,18 +673,9 @@ rules:
         - equals_string: spirometer
         - equals_string: vitalograph
         - equals_string: body_plesmograph
-      body_position:
-        name: body_position
-        any_of:
-        - range: BodyPositionEnum
       data_type:
         name: data_type
         equals_string: decimal
-      context:
-        name: context
-        any_of:
-        - equals_string: before_bronchodilator
-        - equals_string: after_bronchodilator
       method:
         name: method
         any_of:
@@ -643,11 +688,13 @@ rules:
 <details>
 <pre><code class="language-yaml">name: HumanFvcRecord
 description: Total amount of air a person can forcibly exhale after taking the deepest
-  breath possible
+  breath possible. This microschema uses the Relativity mixin to bundle measured,
+  predicted, and percent predicted values.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
 mixins:
 - Relativity
+- Context
 slot_usage:
   measurement_value:
     name: measurement_value
@@ -703,6 +750,26 @@ attributes:
     - Relativity
     range: decimal
     required: true
+  activity_type:
+    name: activity_type
+    description: Activity that adds context to a clinical measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: activity_type
+    owner: HumanFvcRecord
+    domain_of:
+    - Context
+    range: ActivityTypeEnum
+  relative_timing:
+    name: relative_timing
+    description: Timing of the activity relative to the clinical measurement
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: relative_timing
+    owner: HumanFvcRecord
+    domain_of:
+    - Context
+    range: RelativeTimingEnum
   subject_identifier:
     name: subject_identifier
     description: An identifier for the subject of the datum
@@ -761,8 +828,6 @@ attributes:
     owner: HumanFvcRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
     range: MethodEnum
   instrument:
     name: instrument
@@ -835,7 +900,6 @@ attributes:
     owner: HumanFvcRecord
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
     - ProcedureStatusRecord
     range: CollectedByEnum
   data_type:
@@ -859,6 +923,27 @@ attributes:
     - ClinicalMeasurementRecord
     range: Quantity
     required: true
+  study_site:
+    name: study_site
+    description: Institution name, clinic name, or other indication of where a measurement
+      was taken geographically
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: study_site
+    owner: HumanFvcRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: string
+  absolute_time:
+    name: absolute_time
+    description: Calendar date when a measurement was taken
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: absolute_time
+    owner: HumanFvcRecord
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: datetime
 rules:
 - preconditions:
     slot_conditions:
@@ -879,18 +964,9 @@ rules:
         - equals_string: spirometer
         - equals_string: vitalograph
         - equals_string: body_plesmograph
-      body_position:
-        name: body_position
-        any_of:
-        - range: BodyPositionEnum
       data_type:
         name: data_type
         equals_string: decimal
-      context:
-        name: context
-        any_of:
-        - equals_string: before_bronchodilator
-        - equals_string: after_bronchodilator
       method:
         name: method
         any_of:

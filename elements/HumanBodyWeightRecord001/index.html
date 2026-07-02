@@ -285,6 +285,8 @@
       HumanBodyWeightRecord &lt;|-- HumanBodyWeightRecord001
         click HumanBodyWeightRecord href "../HumanBodyWeightRecord/"
 
+      HumanBodyWeightRecord001 : absolute_time
+
       HumanBodyWeightRecord001 : age_at_measurement
 
 
@@ -389,6 +391,8 @@
         click ReagentKitEnum href "../ReagentKitEnum/"
 
 
+
+      HumanBodyWeightRecord001 : study_site
 
       HumanBodyWeightRecord001 : subject_identifier
 
@@ -501,6 +505,18 @@
 <td>Age of the subject at the time of measurement</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
+<tr>
+<td><a href="../study_site/">study_site</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Institution name, clinic name, or other indication of where a measurement was...</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
+<tr>
+<td><a href="../absolute_time/">absolute_time</a></td>
+<td>0..1 <br/> <a href="../datetime/">datetime</a></td>
+<td>Calendar date when a measurement was taken</td>
+<td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
+</tr>
 </tbody>
 </table>
 <h2 id="rules">Rules</h2>
@@ -518,7 +534,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'unit': {'any_of': [{'equals_string': 'kg'}]}, 'instrument': {'any_of': [{'equals_string': 'mechanical_beam_balance_scale'}]}}</code></td>
-<td><code>{'data_type': {'equals_string': 'decimal'}}</code></td>
+<td><code>{'body_position': {'any_of': [{'equals_string': 'standing'}]}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -573,9 +589,10 @@ rules:
         - equals_string: mechanical_beam_balance_scale
   postconditions:
     slot_conditions:
-      data_type:
-        name: data_type
-        equals_string: decimal
+      body_position:
+        name: body_position
+        any_of:
+        - equals_string: standing
 
 </code></pre>
 </details>
@@ -649,8 +666,6 @@ attributes:
     owner: HumanBodyWeightRecord001
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
-    - ProcedureStatusRecord
     range: MethodEnum
   instrument:
     name: instrument
@@ -723,7 +738,6 @@ attributes:
     owner: HumanBodyWeightRecord001
     domain_of:
     - ClinicalMeasurementRecord
-    - DrugStatusRecord
     - ProcedureStatusRecord
     range: CollectedByEnum
   data_type:
@@ -747,6 +761,27 @@ attributes:
     - ClinicalMeasurementRecord
     range: Quantity
     required: true
+  study_site:
+    name: study_site
+    description: Institution name, clinic name, or other indication of where a measurement
+      was taken geographically
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: study_site
+    owner: HumanBodyWeightRecord001
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: string
+  absolute_time:
+    name: absolute_time
+    description: Calendar date when a measurement was taken
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    rank: 1000
+    alias: absolute_time
+    owner: HumanBodyWeightRecord001
+    domain_of:
+    - ClinicalMeasurementRecord
+    range: datetime
 rules:
 - preconditions:
     slot_conditions:
@@ -760,9 +795,10 @@ rules:
         - equals_string: mechanical_beam_balance_scale
   postconditions:
     slot_conditions:
-      data_type:
-        name: data_type
-        equals_string: decimal
+      body_position:
+        name: body_position
+        any_of:
+        - equals_string: standing
 
 </code></pre>
 </details>

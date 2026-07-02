@@ -419,6 +419,11 @@
 </thead>
 <tbody>
 <tr>
+<td>anthropometry</td>
+<td>None</td>
+<td>physical measurement of the human body, including height, weight, and other b...</td>
+</tr>
+<tr>
 <td>survey</td>
 <td>None</td>
 <td>list of questions given to a participant for data collection purposes - the s...</td>
@@ -444,17 +449,17 @@
 <td>precise pulmonary function test where the patient sits in a sealed chamber an...</td>
 </tr>
 <tr>
-<td>GLI</td>
+<td>gli</td>
 <td>None</td>
 <td>a standard reference range and calculator for spirometry and lung function te...</td>
 </tr>
 <tr>
-<td>GLI-Global</td>
+<td>gli_global</td>
 <td>None</td>
 <td>a standard reference range and calculator for spirometry and lung function te...</td>
 </tr>
 <tr>
-<td>NHANESIII</td>
+<td>nhanesiii</td>
 <td>None</td>
 <td>standard reference equations for spirometry published in 2005</td>
 </tr>
@@ -488,6 +493,10 @@ description: The method used for a measurement or observation
 from_schema: https://w3id.org/linkml/clinical-microschemas
 rank: 1000
 permissible_values:
+  anthropometry:
+    text: anthropometry
+    description: physical measurement of the human body, including height, weight,
+      and other body dimensions
   survey:
     text: survey
     description: list of questions given to a participant for data collection purposes
@@ -508,17 +517,17 @@ permissible_values:
     description: precise pulmonary function test where the patient sits in a sealed
       chamber and breathes into a specialized mouthpiece. This method uses Boyle's
       Law  and is considered a &quot;gold standard&quot;
-  GLI:
-    text: GLI
+  gli:
+    text: gli
     description: a standard reference range and calculator for spirometry and lung
       function tests published by the Global Lung Function Initiative in 2012
-  GLI-Global:
-    text: GLI-Global
+  gli_global:
+    text: gli_global
     description: a standard reference range and calculator for spirometry and lung
       function tests published by the Global Lung Function Initiative in 2022. This
       is an update of the 2012 standard that is more ethnically diverse
-  NHANESIII:
-    text: NHANESIII
+  nhanesiii:
+    text: nhanesiii
     description: standard reference equations for spirometry published in 2005
 
 </code></pre>

@@ -528,6 +528,18 @@ Imports and extends the LinkML Microschema Profile.</p>
 <td>A calculated numerical quantity representing an individual's weight-to-height...</td>
 </tr>
 <tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBasophilCountRecord/">HumanBasophilCountRecord</a></td>
+<td>Concentration of basophil cells in whole blood</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBasophilCountRecord001/">HumanBasophilCountRecord001</a></td>
+<td>Concentration of basophil cells in whole blood</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBasophilCountRecord002/">HumanBasophilCountRecord002</a></td>
+<td>Concentration of basophil cells in whole blood</td>
+</tr>
+<tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyHeightRecord/">HumanBodyHeightRecord</a></td>
 <td>Measurement of linear distance of a human body from the bottom of a flat foot...</td>
 </tr>
@@ -536,11 +548,19 @@ Imports and extends the LinkML Microschema Profile.</p>
 <td>Measurement of linear distance of a standing human body from the bottom of a ...</td>
 </tr>
 <tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyHeightRecord002/">HumanBodyHeightRecord002</a></td>
+<td>Measurement of linear distance of a standing human body from the bottom of a ...</td>
+</tr>
+<tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyWeightRecord/">HumanBodyWeightRecord</a></td>
 <td>Measurement of the force exerted by a human body on a scale due to gravity</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyWeightRecord001/">HumanBodyWeightRecord001</a></td>
+<td>Measurement of the force exerted by a human body on a mechanical beam balance...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyWeightRecord002/">HumanBodyWeightRecord002</a></td>
 <td>Measurement of the force exerted by a human body on a mechanical beam balance...</td>
 </tr>
 <tr>
@@ -576,6 +596,10 @@ Imports and extends the LinkML Microschema Profile.</p>
 <td>Record suggesting the presence of a disease or medical condition stated as a ...</td>
 </tr>
 <tr>
+<td><a href="Context/">Context</a></td>
+<td>Mixin providing contextual slots that describe the activity type and relative...</td>
+</tr>
+<tr>
 <td><a href="DrugStatusRecord/">DrugStatusRecord</a></td>
 <td>Record suggesting exposure to a medication</td>
 </tr>
@@ -596,20 +620,40 @@ Imports and extends the LinkML Microschema Profile.</p>
 <td>Body mass index value in kg/m², bounded 5–200</td>
 </tr>
 <tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBasophilCountQuantity/">HumanBasophilCountQuantity</a></td>
+<td>Basophil concentration measurement</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBasophilCountQuantity001/">HumanBasophilCountQuantity001</a></td>
+<td>Basophil concentration measurement, bounded 0-0</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBasophilCountQuantity002/">HumanBasophilCountQuantity002</a></td>
+<td>Basophil concentration measurement, bounded 0-300 based on observed  biologic...</td>
+</tr>
+<tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyHeightQuantity/">HumanBodyHeightQuantity</a></td>
-<td>Human body height, bounded 0–300</td>
+<td>Human body height</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyHeightQuantity001/">HumanBodyHeightQuantity001</a></td>
-<td>Standing wall-mounted-stadiometer human body height in cm, bounded 20–220</td>
+<td>Standing wall-mounted-stadiometer human body height in cm, bounded 30–220</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyHeightQuantity002/">HumanBodyHeightQuantity002</a></td>
+<td>Standing wall-mounted-stadiometer human body height in in, bounded 20–90</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyWeightQuantity/">HumanBodyWeightQuantity</a></td>
-<td>Human body weight, bounded 0–700</td>
+<td>Human body weight</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyWeightQuantity001/">HumanBodyWeightQuantity001</a></td>
-<td>Mechanical-beam-balance human body weight in kg, bounded 0–550</td>
+<td>Mechanical-beam-balance human body weight in kg, bounded 0–230</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanBodyWeightQuantity002/">HumanBodyWeightQuantity002</a></td>
+<td>Mechanical-beam-balance human body weight in lbs, bounded 0–500</td>
 </tr>
 <tr>
 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="HumanFev1Quantity/">HumanFev1Quantity</a></td>
@@ -637,7 +681,7 @@ Imports and extends the LinkML Microschema Profile.</p>
 </tr>
 <tr>
 <td><a href="Relativity/">Relativity</a></td>
-<td></td>
+<td>Mixin providing slots for bundling measured, predicted, and percent predicted...</td>
 </tr>
 <tr>
 <td><a href="TimeInterval/">TimeInterval</a></td>
@@ -663,8 +707,20 @@ Imports and extends the LinkML Microschema Profile.</p>
 </thead>
 <tbody>
 <tr>
+<td><a href="absolute_time/">absolute_time</a></td>
+<td>Calendar date when a measurement was taken</td>
+</tr>
+<tr>
+<td><a href="activity_type/">activity_type</a></td>
+<td>Activity that adds context to a clinical measurement</td>
+</tr>
+<tr>
 <td><a href="age_at_condition_end/">age_at_condition_end</a></td>
 <td>Age of the subject at the end of the condition</td>
+</tr>
+<tr>
+<td><a href="age_at_condition_record/">age_at_condition_record</a></td>
+<td>Age of participant when record of the condition was collected</td>
 </tr>
 <tr>
 <td><a href="age_at_condition_start/">age_at_condition_start</a></td>
@@ -673,6 +729,10 @@ Imports and extends the LinkML Microschema Profile.</p>
 <tr>
 <td><a href="age_at_drug_end/">age_at_drug_end</a></td>
 <td>Age of the subject at the end of drug exposure</td>
+</tr>
+<tr>
+<td><a href="age_at_drug_record/">age_at_drug_record</a></td>
+<td>Age of participant when record of the drug was collected</td>
 </tr>
 <tr>
 <td><a href="age_at_drug_start/">age_at_drug_start</a></td>
@@ -685,6 +745,10 @@ Imports and extends the LinkML Microschema Profile.</p>
 <tr>
 <td><a href="age_at_procedure_end/">age_at_procedure_end</a></td>
 <td>Age of the subject at the end of the procedure</td>
+</tr>
+<tr>
+<td><a href="age_at_procedure_record/">age_at_procedure_record</a></td>
+<td>Age of participant when record of the procedure was collected</td>
 </tr>
 <tr>
 <td><a href="age_at_procedure_start/">age_at_procedure_start</a></td>
@@ -859,12 +923,20 @@ Imports and extends the LinkML Microschema Profile.</p>
 <td>A value indicating the relationship between the Participant to which the Cond...</td>
 </tr>
 <tr>
+<td><a href="relative_timing/">relative_timing</a></td>
+<td>Timing of the activity relative to the clinical measurement</td>
+</tr>
+<tr>
 <td><a href="relative_to_event/">relative_to_event</a></td>
 <td>Event this is relative to</td>
 </tr>
 <tr>
 <td><a href="route_of_administration/">route_of_administration</a></td>
 <td>Routes of drug administration</td>
+</tr>
+<tr>
+<td><a href="study_site/">study_site</a></td>
+<td>Institution name, clinic name, or other indication of where a measurement was...</td>
 </tr>
 <tr>
 <td><a href="subject/">subject</a></td>
@@ -901,6 +973,10 @@ Imports and extends the LinkML Microschema Profile.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><a href="ActivityTypeEnum/">ActivityTypeEnum</a></td>
+<td>Type of activity being recorded</td>
+</tr>
 <tr>
 <td><a href="AssociatedEvidenceEnum/">AssociatedEvidenceEnum</a></td>
 <td>The method used for diagnosis</td>
@@ -952,6 +1028,10 @@ Imports and extends the LinkML Microschema Profile.</p>
 <tr>
 <td><a href="ReagentKitEnum/">ReagentKitEnum</a></td>
 <td>The reagent kit used for a measurement</td>
+</tr>
+<tr>
+<td><a href="RelativeTimingEnum/">RelativeTimingEnum</a></td>
+<td>Set of values describing the relative timing of an activity</td>
 </tr>
 <tr>
 <td><a href="RouteAdminEnum/">RouteAdminEnum</a></td>
