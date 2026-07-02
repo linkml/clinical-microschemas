@@ -5,6 +5,7 @@ measurement_value:
   quantity_unit: cm
 unit: cm
 instrument: wall_mounted_stadiometer
+method: anthropometry
 body_position: standing
 data_type: decimal
 age_at_measurement:

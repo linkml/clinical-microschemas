@@ -5,6 +5,8 @@ measurement_value:
   quantity_unit: kg
 unit: kg
 instrument: mechanical_beam_balance_scale
+method: anthropometry
+body_position: standing
 data_type: decimal
 age_at_measurement:
   quantity_value: 35

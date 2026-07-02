@@ -949,19 +949,19 @@ slots:
     description: >-
       Calendar date when a measurement was taken
   age_at_condition_record:
-    range: decimal
+    range: Quantity
     description: >-
       Age of participant when record of the condition was collected. This 
       slot can accommodate an "age at encounter" where a medical history was 
       collected, or a record was adjudicated.
   age_at_drug_record:
-    range: decimal
+    range: Quantity
     description: >-
       Age of participant when record of the drug was collected. This 
       slot can accommodate an "age at encounter" where the participant was
       asked for their medication list. 
   age_at_procedure_record:
-    range: decimal
+    range: Quantity
     description: >-
       Age of participant when record of the procedure was collected. This 
       slot can accommodate an "age at encounter" where the participant was
@@ -1144,6 +1144,10 @@ enums:
   MethodEnum:
     description: The method used for a measurement or observation
     permissible_values:
+      anthropometry:
+        description: >-
+          physical measurement of the human body, including height, weight, and other
+          body dimensions
       survey:
         description: >-
           list of questions given to a participant for data collection purposes - the
