@@ -634,6 +634,9 @@ classes:
 #-----------------------------------------------------------------
   Relativity:
     mixin: true
+    description: >-
+      Mixin providing slots for bundling measured, predicted, and percent predicted values
+      with their normal limits.
     slots:
       - predicted_value
       - lower_limit_normal
@@ -642,8 +645,11 @@ classes:
 
   Context:
     mixin: true
+    description: >-
+      Mixin providing contextual slots that describe the activity type and relative timing
+      associated with a clinical measurement.
     slots:
-      - activity
+      - activity_type
       - relative_timing
 
   #────────────────────────────────────────────────────────────────
@@ -970,89 +976,89 @@ enums:
     description: >-
       Indicates whether something is present, absent, historical, or its status is unknown.
     permissible_values:
-      PRESENT:
+      present:
         description: Was present in the patient at observation time.
-      ABSENT:
+      absent:
         description: Was absent in the patient at observation time.
-      UNKNOWN:
+      unknown:
         description: Was of unknown status in the patient at observation time.
-      HISTORICAL:
+      historical:
         description: Was present in the patient historically.
 
   ProvenanceEnum:
     description: A set of values indicating the source or origin of a clinical record.
     permissible_values:
-      EHR_BILLING_DIAGNOSIS:
+      ehr_billing_diagnosis:
         description: Diagnosis from EHR billing.
-      EHR_CHIEF_COMPLAINT:
+      ehr_chief_complaint:
         description: Chief complaint from EHR.
-      EHR_ENCOUNTER_DIAGNOSIS:
+      ehr_encounter_diagnosis:
         description: Encounter diagnosis from EHR.
-      EHR_EPISODE_ENTRY:
+      ehr_episode_entry:
         description: Episode entry from EHR.
-      EHR_PROBLEM_LIST_ENTRY:
+      ehr_problem_list_entry:
         description: Problem list entry from EHR.
-      FIRST_POSITION_CONDITION:
+      first_position_condition:
         description: First position condition.
-      PRIMARY_CONDITION:
+      primary_condition:
         description: Primary condition.
-      SECONDARY_CONDITION:
+      secondary_condition:
         description: Secondary condition.
-      NLP_DERIVED:
+      nlp_derived:
         description: Derived from natural language processing.
-      OBSERVATION_RECORDED_FROM_EHR:
+      observation_recorded_from_ehr:
         description: Observation recorded from EHR.
-      PATIENT_SELF_REPORTED_CONDITION:
+      patient_self_reported_condition:
         description: Patient self-reported condition.
-      REFERRAL_RECORD:
+      referral_record:
         description: From referral record.
-      TUMOR_REGISTRY:
+      tumor_registry:
         description: From tumor registry.
-      WORKING_DIAGNOSIS:
+      working_diagnosis:
         description: Working diagnosis.
-      CLINICAL_DIAGNOSIS:
+      clinical_diagnosis:
         description: Clinical diagnosis.
 
   ConditionSeverityEnum:
     description: A subjective assessment of the severity of a condition.
     permissible_values:
-      MILD:
+      mild:
         description: Lower intensity condition.
         meaning: OMOP:4116992
-      MODERATE:
+      moderate:
         description: Medium intensity condition.
         meaning: OMOP:3272197
-      SEVERE:
+      severe:
         description: Higher intensity condition.
         meaning: OMOP:4087703
 
   FamilyRelationshipEnum:
     description: Values describing kinship connections between individuals.
     permissible_values:
-      ONESELF:
+      oneself:
         description: Self-reference.
-      NATURAL_PARENT:
+      natural_parent:
         description: Mother or father unspecified.
         meaning: OMOP:4029630
-      NATURAL_FATHER:
+      natural_father:
         description: Biological father.
         meaning: OMOP:4321888
-      NATURAL_MOTHER:
+      natural_mother:
         description: Biological mother.
         meaning: OMOP:4277283
-      NATURAL_SIBLING:
+      natural_sibling:
         description: Sister or brother unspecified.
         meaning: OMOP:4218412
-      NATURAL_BROTHER:
+      natural_brother:
         description: Biological brother.
         meaning: OMOP:4263682
-      NATURAL_SISTER:
+      natural_sister:
         description: Biological sister.
         meaning: OMOP:4251326
-      NATURAL_CHILD:
+      natural_child:
         description: Biological offspring.
         meaning: OMOP:4326600
-      BLOOD_RELATIVE:
+      blood_relative:
         description: Generic consanguineous relation.
         meaning: OMOP:4053608
 
@@ -1158,16 +1164,16 @@ enums:
           precise pulmonary function test where the patient sits in a sealed chamber and
           breathes into a specialized mouthpiece. This method uses Boyle's Law  and is
           considered a "gold standard"
-      GLI:
+      gli:
         description: >-
           a standard reference range and calculator for spirometry and lung function
           tests published by the Global Lung Function Initiative in 2012
-      GLI-Global:
+      gli_global:
         description: >-
           a standard reference range and calculator for spirometry and lung function
           tests published by the Global Lung Function Initiative in 2022. This is an
           update of the 2012 standard that is more ethnically diverse
-      NHANESIII:
+      nhanesiii:
         description: >-
           standard reference equations for spirometry published in 2005
 
