@@ -4,6 +4,6 @@ condition_status: present
 relationship_to_participant: oneself
 condition_provenance: ehr_encounter_diagnosis
 condition_severity: mild
-age_at_condition_start:
+age_at_condition_record:
   quantity_value: 28
   quantity_unit: a
