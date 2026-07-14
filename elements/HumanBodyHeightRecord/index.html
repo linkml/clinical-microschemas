@@ -290,6 +290,14 @@
         click HumanBodyHeightRecord001 href "../HumanBodyHeightRecord001/"
       HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord002
         click HumanBodyHeightRecord002 href "../HumanBodyHeightRecord002/"
+      HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord003
+        click HumanBodyHeightRecord003 href "../HumanBodyHeightRecord003/"
+      HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord004
+        click HumanBodyHeightRecord004 href "../HumanBodyHeightRecord004/"
+      HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord005
+        click HumanBodyHeightRecord005 href "../HumanBodyHeightRecord005/"
+      HumanBodyHeightRecord &lt;|-- HumanBodyHeightRecord006
+        click HumanBodyHeightRecord006 href "../HumanBodyHeightRecord006/"
 
 
       HumanBodyHeightRecord : absolute_time
@@ -413,6 +421,10 @@
 <li><strong>HumanBodyHeightRecord</strong><ul>
 <li><a href="../HumanBodyHeightRecord001/">HumanBodyHeightRecord001</a></li>
 <li><a href="../HumanBodyHeightRecord002/">HumanBodyHeightRecord002</a></li>
+<li><a href="../HumanBodyHeightRecord003/">HumanBodyHeightRecord003</a></li>
+<li><a href="../HumanBodyHeightRecord004/">HumanBodyHeightRecord004</a></li>
+<li><a href="../HumanBodyHeightRecord005/">HumanBodyHeightRecord005</a></li>
+<li><a href="../HumanBodyHeightRecord006/">HumanBodyHeightRecord006</a></li>
 </ul>
 </li>
 </ul>
@@ -431,7 +443,7 @@
 <tbody>
 <tr>
 <td><a href="../subject_identifier/">subject_identifier</a></td>
-<td>1 <br/> <a href="../String/">String</a></td>
+<td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
 <td>An identifier for the subject of the datum</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -645,7 +657,7 @@ attributes:
     - ConditionStatusRecord
     - DrugStatusRecord
     - ProcedureStatusRecord
-    range: string
+    range: uriorcurie
     required: true
   measurement_type:
     name: measurement_type

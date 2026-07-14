@@ -277,13 +277,20 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-bodymassindexrecord">Class: BodyMassIndexRecord</h1>
-<p><em>A calculated numerical quantity representing an individual's weight-to-height ratio. BMI is calculated as weight (kg) divided by height (m) squared.</em></p>
+<p><em>A calculated numerical quantity representing an individual's weight-to-height ratio. BMI is calculated as weight (kg) divided by height (m) squared. The height is measured in cm and the weight is collected in kg.</em></p>
 <p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/BodyMassIndexRecord">cms:BodyMassIndexRecord</a></p>
 <div class="mermaid"> classDiagram
     class BodyMassIndexRecord
     click BodyMassIndexRecord href "../BodyMassIndexRecord/"
       ClinicalMeasurementRecord &lt;|-- BodyMassIndexRecord
         click ClinicalMeasurementRecord href "../ClinicalMeasurementRecord/"
+
+
+      BodyMassIndexRecord &lt;|-- BodyMassIndexRecord001
+        click BodyMassIndexRecord001 href "../BodyMassIndexRecord001/"
+      BodyMassIndexRecord &lt;|-- BodyMassIndexRecord002
+        click BodyMassIndexRecord002 href "../BodyMassIndexRecord002/"
+
 
       BodyMassIndexRecord : absolute_time
 
@@ -403,7 +410,11 @@
 <h2 id="inheritance">Inheritance</h2>
 <ul>
 <li><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a><ul>
-<li><strong>BodyMassIndexRecord</strong></li>
+<li><strong>BodyMassIndexRecord</strong><ul>
+<li><a href="../BodyMassIndexRecord001/">BodyMassIndexRecord001</a></li>
+<li><a href="../BodyMassIndexRecord002/">BodyMassIndexRecord002</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -420,7 +431,7 @@
 <tbody>
 <tr>
 <td><a href="../subject_identifier/">subject_identifier</a></td>
-<td>1 <br/> <a href="../String/">String</a></td>
+<td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
 <td>An identifier for the subject of the datum</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -531,7 +542,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OBA:0002045455'}, {'equals_string': 'OMOP:3038553'}, {'equals_string': 'LOINC:39156-5'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'kg/m2'}]}, 'method': {'any_of': [{'equals_string': 'calculated'}]}, 'data_type': {'equals_string': 'decimal'}, 'calculated_from': {'equals_expression': '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2'}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'kg/m2'}]}, 'method': {'any_of': [{'equals_string': 'calculated'}]}, 'data_type': {'equals_string': 'decimal'}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -566,7 +577,8 @@
 <details>
 <pre><code class="language-yaml">name: BodyMassIndexRecord
 description: A calculated numerical quantity representing an individual's weight-to-height
-  ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+  ratio. BMI is calculated as weight (kg) divided by height (m) squared. The height
+  is measured in cm and the weight is collected in kg.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
 slot_usage:
@@ -595,10 +607,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      calculated_from:
-        name: calculated_from
-        equals_expression: '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001}
-          / 100)^2'
 
 </code></pre>
 </details>
@@ -606,7 +614,8 @@ rules:
 <details>
 <pre><code class="language-yaml">name: BodyMassIndexRecord
 description: A calculated numerical quantity representing an individual's weight-to-height
-  ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+  ratio. BMI is calculated as weight (kg) divided by height (m) squared. The height
+  is measured in cm and the weight is collected in kg.
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: ClinicalMeasurementRecord
 slot_usage:
@@ -626,7 +635,7 @@ attributes:
     - ConditionStatusRecord
     - DrugStatusRecord
     - ProcedureStatusRecord
-    range: string
+    range: uriorcurie
     required: true
   measurement_type:
     name: measurement_type
@@ -810,10 +819,6 @@ rules:
       data_type:
         name: data_type
         equals_string: decimal
-      calculated_from:
-        name: calculated_from
-        equals_expression: '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001}
-          / 100)^2'
 
 </code></pre>
 </details>

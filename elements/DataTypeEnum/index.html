@@ -438,6 +438,26 @@
 <td>None</td>
 <td>Boolean value</td>
 </tr>
+<tr>
+<td>string</td>
+<td>None</td>
+<td>String value</td>
+</tr>
+<tr>
+<td>numeric</td>
+<td>None</td>
+<td>decimal or integer - from dbGAP data types</td>
+</tr>
+<tr>
+<td>code</td>
+<td>None</td>
+<td>data are a list of acceptable values or a controlled vocabulary, from dbGAP d...</td>
+</tr>
+<tr>
+<td>uriorcurie</td>
+<td>None</td>
+<td>A URI or CURIE value</td>
+</tr>
 </tbody>
 </table>
 <h2 id="slots">Slots</h2>
@@ -480,6 +500,19 @@ permissible_values:
   boolean:
     text: boolean
     description: Boolean value
+  string:
+    text: string
+    description: String value
+  numeric:
+    text: numeric
+    description: decimal or integer - from dbGAP data types
+  code:
+    text: code
+    description: data are a list of acceptable values or a controlled vocabulary,
+      from dbGAP data types, same as enum
+  uriorcurie:
+    text: uriorcurie
+    description: A URI or CURIE value
 
 </code></pre>
 

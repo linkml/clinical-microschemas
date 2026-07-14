@@ -290,6 +290,8 @@
         click HumanBodyWeightRecord001 href "../HumanBodyWeightRecord001/"
       HumanBodyWeightRecord &lt;|-- HumanBodyWeightRecord002
         click HumanBodyWeightRecord002 href "../HumanBodyWeightRecord002/"
+      HumanBodyWeightRecord &lt;|-- HumanBodyWeightRecord003
+        click HumanBodyWeightRecord003 href "../HumanBodyWeightRecord003/"
 
 
       HumanBodyWeightRecord : absolute_time
@@ -413,6 +415,7 @@
 <li><strong>HumanBodyWeightRecord</strong><ul>
 <li><a href="../HumanBodyWeightRecord001/">HumanBodyWeightRecord001</a></li>
 <li><a href="../HumanBodyWeightRecord002/">HumanBodyWeightRecord002</a></li>
+<li><a href="../HumanBodyWeightRecord003/">HumanBodyWeightRecord003</a></li>
 </ul>
 </li>
 </ul>
@@ -431,7 +434,7 @@
 <tbody>
 <tr>
 <td><a href="../subject_identifier/">subject_identifier</a></td>
-<td>1 <br/> <a href="../String/">String</a></td>
+<td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
 <td>An identifier for the subject of the datum</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -542,7 +545,7 @@
 <tr>
 <td>slot_conditions</td>
 <td><code>{'measurement_type': {'any_of': [{'equals_string': 'OBA:VT0001259'}, {'equals_string': 'OMOP:903121'}, {'equals_string': 'LOINC:29463-7'}]}}</code></td>
-<td><code>{'unit': {'any_of': [{'equals_string': 'kg'}, {'equals_string': '[lb_av]'}, {'equals_string': 'g'}]}, 'instrument': {'any_of': [{'equals_string': 'mechanical_beam_balance_scale'}, {'equals_string': 'digital_scale'}, {'equals_string': 'spring_scale'}, {'equals_string': 'bariatric_scale'}]}, 'data_type': {'equals_string': 'decimal'}, 'method': {'any_of': [{'equals_string': 'anthropometry'}]}}</code></td>
+<td><code>{'unit': {'any_of': [{'equals_string': 'kg'}, {'equals_string': '[lb_av]'}, {'equals_string': 'g'}]}, 'instrument': {'any_of': [{'equals_string': 'mechanical_beam_balance_scale'}, {'equals_string': 'digital_scale'}, {'equals_string': 'spring_scale'}, {'equals_string': 'bariatric_scale'}, {'equals_string': 'body_composition_analyzer'}]}, 'data_type': {'equals_string': 'decimal'}, 'method': {'any_of': [{'equals_string': 'anthropometry'}]}}</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -607,6 +610,7 @@ rules:
         - equals_string: digital_scale
         - equals_string: spring_scale
         - equals_string: bariatric_scale
+        - equals_string: body_composition_analyzer
       data_type:
         name: data_type
         equals_string: decimal
@@ -640,7 +644,7 @@ attributes:
     - ConditionStatusRecord
     - DrugStatusRecord
     - ProcedureStatusRecord
-    range: string
+    range: uriorcurie
     required: true
   measurement_type:
     name: measurement_type
@@ -826,6 +830,7 @@ rules:
         - equals_string: digital_scale
         - equals_string: spring_scale
         - equals_string: bariatric_scale
+        - equals_string: body_composition_analyzer
       data_type:
         name: data_type
         equals_string: decimal

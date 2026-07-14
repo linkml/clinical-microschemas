@@ -277,7 +277,7 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-humanbodyheightrecord001">Class: HumanBodyHeightRecord001</h1>
-<p><em>Measurement of linear distance of a standing human body from the bottom of a flat foot to the top-most point of the head measured with a wall-mounted stadiometer</em></p>
+<p><em>Measurement of linear distance of a standing human body from the bottom of a flat foot to the top-most point of the head measured in centimeters with a wall-mounted stadiometer</em></p>
 <p>URI: <a href="https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord001">cms:HumanBodyHeightRecord001</a></p>
 <div class="mermaid"> classDiagram
     class HumanBodyHeightRecord001
@@ -423,7 +423,7 @@
 <tbody>
 <tr>
 <td><a href="../subject_identifier/">subject_identifier</a></td>
-<td>1 <br/> <a href="../String/">String</a></td>
+<td>1 <br/> <a href="../Uriorcurie/">Uriorcurie</a></td>
 <td>An identifier for the subject of the datum</td>
 <td><a href="../ClinicalMeasurementRecord/">ClinicalMeasurementRecord</a></td>
 </tr>
@@ -569,7 +569,8 @@
 <details>
 <pre><code class="language-yaml">name: HumanBodyHeightRecord001
 description: Measurement of linear distance of a standing human body from the bottom
-  of a flat foot to the top-most point of the head measured with a wall-mounted stadiometer
+  of a flat foot to the top-most point of the head measured in centimeters with a
+  wall-mounted stadiometer
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanBodyHeightRecord
 slot_usage:
@@ -600,7 +601,8 @@ rules:
 <details>
 <pre><code class="language-yaml">name: HumanBodyHeightRecord001
 description: Measurement of linear distance of a standing human body from the bottom
-  of a flat foot to the top-most point of the head measured with a wall-mounted stadiometer
+  of a flat foot to the top-most point of the head measured in centimeters with a
+  wall-mounted stadiometer
 from_schema: https://w3id.org/linkml/clinical-microschemas
 is_a: HumanBodyHeightRecord
 slot_usage:
@@ -620,7 +622,7 @@ attributes:
     - ConditionStatusRecord
     - DrugStatusRecord
     - ProcedureStatusRecord
-    range: string
+    range: uriorcurie
     required: true
   measurement_type:
     name: measurement_type

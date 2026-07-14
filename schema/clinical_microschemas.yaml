@@ -569,6 +569,19 @@ enums:
       boolean:
         text: boolean
         description: Boolean value
+      string:
+        text: string
+        description: String value
+      numeric:
+        text: numeric
+        description: decimal or integer - from dbGAP data types
+      code:
+        text: code
+        description: data are a list of acceptable values or a controlled vocabulary,
+          from dbGAP data types, same as enum
+      uriorcurie:
+        text: uriorcurie
+        description: A URI or CURIE value
   MethodEnum:
     name: MethodEnum
     definition_uri: https://w3id.org/linkml/clinical-microschemas/MethodEnum
@@ -858,7 +871,7 @@ slots:
     - ConditionStatusRecord
     - DrugStatusRecord
     - ProcedureStatusRecord
-    range: string
+    range: uriorcurie
   measurement_type:
     name: measurement_type
     definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_type
@@ -1553,7 +1566,7 @@ slots:
     - ClinicalMeasurementRecord
     is_usage_slot: true
     usage_slot_name: subject_identifier
-    range: string
+    range: uriorcurie
     required: true
   ClinicalMeasurementRecord_measurement_type:
     name: ClinicalMeasurementRecord_measurement_type
@@ -1623,7 +1636,7 @@ slots:
     - ConditionStatusRecord
     is_usage_slot: true
     usage_slot_name: subject_identifier
-    range: string
+    range: uriorcurie
     required: true
   ConditionStatusRecord_condition_type:
     name: ConditionStatusRecord_condition_type
@@ -1714,7 +1727,7 @@ slots:
     - DrugStatusRecord
     is_usage_slot: true
     usage_slot_name: subject_identifier
-    range: string
+    range: uriorcurie
     required: true
   DrugStatusRecord_drug_type:
     name: DrugStatusRecord_drug_type
@@ -1768,7 +1781,7 @@ slots:
     - ProcedureStatusRecord
     is_usage_slot: true
     usage_slot_name: subject_identifier
-    range: string
+    range: uriorcurie
     required: true
   ProcedureStatusRecord_procedure_type:
     name: ProcedureStatusRecord_procedure_type
@@ -1862,6 +1875,97 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
+  HumanBodyHeightRecord003_measurement_value:
+    name: HumanBodyHeightRecord003_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord_measurement_value
+    domain: HumanBodyHeightRecord003
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyHeightRecord003
+    domain_of:
+    - HumanBodyHeightRecord003
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyHeightQuantity002
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyHeightRecord004_measurement_value:
+    name: HumanBodyHeightRecord004_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord_measurement_value
+    domain: HumanBodyHeightRecord004
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyHeightRecord004
+    domain_of:
+    - HumanBodyHeightRecord004
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyHeightQuantity003
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyHeightRecord005_measurement_value:
+    name: HumanBodyHeightRecord005_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord_measurement_value
+    domain: HumanBodyHeightRecord005
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyHeightRecord005
+    domain_of:
+    - HumanBodyHeightRecord005
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyHeightQuantity004
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyHeightRecord006_measurement_value:
+    name: HumanBodyHeightRecord006_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord_measurement_value
+    domain: HumanBodyHeightRecord006
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyHeightRecord006
+    domain_of:
+    - HumanBodyHeightRecord006
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyHeightQuantity003
+    required: true
+    inlined: true
+    inlined_as_list: true
+  HumanBodyHeightRecord006_unit:
+    name: HumanBodyHeightRecord006_unit
+    id_prefixes:
+    - cm
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/unit
+    description: A unit from UCUM
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    mappings:
+    - bdchm:unit
+    is_a: unit
+    domain: HumanBodyHeightRecord006
+    slot_uri: bdchm:unit
+    alias: unit
+    owner: HumanBodyHeightRecord006
+    domain_of:
+    - HumanBodyHeightRecord006
+    is_usage_slot: true
+    usage_slot_name: unit
+    range: uriorcurie
   HumanBodyWeightRecord_measurement_value:
     name: HumanBodyWeightRecord_measurement_value
     definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
@@ -1916,6 +2020,24 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
+  HumanBodyWeightRecord003_measurement_value:
+    name: HumanBodyWeightRecord003_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyWeightRecord_measurement_value
+    domain: HumanBodyWeightRecord003
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: HumanBodyWeightRecord003
+    domain_of:
+    - HumanBodyWeightRecord003
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: HumanBodyWeightQuantity003
+    required: true
+    inlined: true
+    inlined_as_list: true
   BodyMassIndexRecord_measurement_value:
     name: BodyMassIndexRecord_measurement_value
     definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
@@ -1934,6 +2056,76 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
+  BodyMassIndexRecord001_measurement_value:
+    name: BodyMassIndexRecord001_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: BodyMassIndexRecord_measurement_value
+    domain: BodyMassIndexRecord001
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: BodyMassIndexRecord001
+    domain_of:
+    - BodyMassIndexRecord001
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: BodyMassIndexQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  BodyMassIndexRecord001_calculated_from:
+    name: BodyMassIndexRecord001_calculated_from
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/calculated_from
+    description: An expression pointing at other CDE classes
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: calculated_from
+    domain: BodyMassIndexRecord001
+    slot_uri: cms:calculated_from
+    alias: calculated_from
+    owner: BodyMassIndexRecord001
+    domain_of:
+    - BodyMassIndexRecord001
+    is_usage_slot: true
+    usage_slot_name: calculated_from
+    range: string
+    equals_expression: '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} /
+      100)^2'
+  BodyMassIndexRecord002_measurement_value:
+    name: BodyMassIndexRecord002_measurement_value
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
+    description: The "value" in the observation key/value pair
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: BodyMassIndexRecord_measurement_value
+    domain: BodyMassIndexRecord002
+    slot_uri: cms:measurement_value
+    alias: measurement_value
+    owner: BodyMassIndexRecord002
+    domain_of:
+    - BodyMassIndexRecord002
+    is_usage_slot: true
+    usage_slot_name: measurement_value
+    range: BodyMassIndexQuantity
+    required: true
+    inlined: true
+    inlined_as_list: true
+  BodyMassIndexRecord002_calculated_from:
+    name: BodyMassIndexRecord002_calculated_from
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/calculated_from
+    description: An expression pointing at other CDE classes
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: calculated_from
+    domain: BodyMassIndexRecord002
+    slot_uri: cms:calculated_from
+    alias: calculated_from
+    owner: BodyMassIndexRecord002
+    domain_of:
+    - BodyMassIndexRecord002
+    is_usage_slot: true
+    usage_slot_name: calculated_from
+    range: string
+    equals_expression: ({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord003}
+      / 39.37)^2
   HumanFvcRecord_measurement_value:
     name: HumanFvcRecord_measurement_value
     definition_uri: https://w3id.org/linkml/clinical-microschemas/measurement_value
@@ -2221,6 +2413,42 @@ slots:
     required: true
     minimum_value: 20
     maximum_value: 90
+  HumanBodyHeightQuantity003_quantity_value:
+    name: HumanBodyHeightQuantity003_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: HumanBodyHeightQuantity_quantity_value
+    domain: HumanBodyHeightQuantity003
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyHeightQuantity003
+    domain_of:
+    - HumanBodyHeightQuantity003
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 30
+    maximum_value: 250
+  HumanBodyHeightQuantity004_quantity_value:
+    name: HumanBodyHeightQuantity004_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: HumanBodyHeightQuantity_quantity_value
+    domain: HumanBodyHeightQuantity004
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyHeightQuantity004
+    domain_of:
+    - HumanBodyHeightQuantity004
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0.98
+    maximum_value: 8.2
   HumanBodyWeightQuantity_quantity_value:
     name: HumanBodyWeightQuantity_quantity_value
     definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
@@ -2274,6 +2502,24 @@ slots:
     required: true
     minimum_value: 0
     maximum_value: 500
+  HumanBodyWeightQuantity003_quantity_value:
+    name: HumanBodyWeightQuantity003_quantity_value
+    definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    description: The numeric value
+    from_schema: https://w3id.org/linkml/linkml-microschema-profile
+    is_a: HumanBodyWeightQuantity_quantity_value
+    domain: HumanBodyWeightQuantity003
+    slot_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
+    alias: quantity_value
+    owner: HumanBodyWeightQuantity003
+    domain_of:
+    - HumanBodyWeightQuantity003
+    is_usage_slot: true
+    usage_slot_name: quantity_value
+    range: decimal
+    required: true
+    minimum_value: 0
+    maximum_value: 270
   BodyMassIndexQuantity_quantity_value:
     name: BodyMassIndexQuantity_quantity_value
     definition_uri: https://w3id.org/linkml/linkml-microschema-profile/quantity_value
@@ -2676,8 +2922,8 @@ classes:
     name: HumanBodyHeightRecord001
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord001
     description: Measurement of linear distance of a standing human body from the
-      bottom of a flat foot to the top-most point of the head measured with a wall-mounted
-      stadiometer
+      bottom of a flat foot to the top-most point of the head measured in centimeters
+      with a wall-mounted stadiometer
     from_schema: https://w3id.org/linkml/clinical-microschemas
     is_a: HumanBodyHeightRecord
     slots:
@@ -2723,8 +2969,8 @@ classes:
     name: HumanBodyHeightRecord002
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord002
     description: Measurement of linear distance of a standing human body from the
-      bottom of a flat foot to the top-most point of the head measured with a wall-mounted
-      stadiometer
+      bottom of a flat foot to the top-most point of the head measured in inches with
+      a wall-mounted stadiometer
     from_schema: https://w3id.org/linkml/clinical-microschemas
     is_a: HumanBodyHeightRecord
     slots:
@@ -2766,6 +3012,180 @@ classes:
             name: body_position
             any_of:
             - equals_string: standing
+  HumanBodyHeightRecord003:
+    name: HumanBodyHeightRecord003
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord003
+    description: Measurement of linear distance of a standing human body from the
+      bottom of a flat foot to the top-most point of the head measured in inches with
+      a portable stadiometer
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - HumanBodyHeightRecord003_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyHeightQuantity002
+    class_uri: cms:HumanBodyHeightRecord003
+    rules:
+    - preconditions:
+        slot_conditions:
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: portable_stadiometer
+          unit:
+            name: unit
+            any_of:
+            - equals_string: '[in_i]'
+      postconditions:
+        slot_conditions:
+          body_position:
+            name: body_position
+            any_of:
+            - equals_string: standing
+  HumanBodyHeightRecord004:
+    name: HumanBodyHeightRecord004
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord004
+    description: Measurement of linear distance of a standing human body from the
+      bottom of a flat foot to the top-most point of the head measured in centimeters
+      with an  anthropometer
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - HumanBodyHeightRecord004_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyHeightQuantity003
+    class_uri: cms:HumanBodyHeightRecord004
+    rules:
+    - preconditions:
+        slot_conditions:
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: anthropometer_rod
+          unit:
+            name: unit
+            any_of:
+            - equals_string: cm
+      postconditions:
+        slot_conditions:
+          body_position:
+            name: body_position
+            any_of:
+            - equals_string: standing
+  HumanBodyHeightRecord005:
+    name: HumanBodyHeightRecord005
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord005
+    description: Measurement of linear distance of a standing human body from the
+      bottom of a flat foot to the top-most point of the head measured in feet with
+      a wall-mounted stadiometer
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - HumanBodyHeightRecord005_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyHeightQuantity004
+    class_uri: cms:HumanBodyHeightRecord005
+    rules:
+    - preconditions:
+        slot_conditions:
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: wall_mounted_stadiometer
+          unit:
+            name: unit
+            any_of:
+            - equals_string: '[ft_i]'
+      postconditions:
+        slot_conditions:
+          body_position:
+            name: body_position
+            any_of:
+            - equals_string: standing
+  HumanBodyHeightRecord006:
+    name: HumanBodyHeightRecord006
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightRecord006
+    description: Measurement of linear distance of a human body from the bottom of
+      a flat foot to the top-most point of the head in cm
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - HumanBodyHeightRecord006_measurement_value
+    - HumanBodyHeightRecord006_unit
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyHeightQuantity003
+      unit:
+        name: unit
+        id_prefixes:
+        - cm
+    class_uri: cms:HumanBodyHeightRecord006
   HumanBodyWeightRecord:
     name: HumanBodyWeightRecord
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightRecord
@@ -2819,6 +3239,7 @@ classes:
             - equals_string: digital_scale
             - equals_string: spring_scale
             - equals_string: bariatric_scale
+            - equals_string: body_composition_analyzer
           data_type:
             name: data_type
             equals_string: decimal
@@ -2918,11 +3339,58 @@ classes:
             name: body_position
             any_of:
             - equals_string: standing
+  HumanBodyWeightRecord003:
+    name: HumanBodyWeightRecord003
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightRecord003
+    description: Measurement of the force exerted by a human body on a body composition
+      analyzer due to gravity
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyWeightRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - calculated_from
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - HumanBodyWeightRecord003_measurement_value
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: HumanBodyWeightQuantity003
+    class_uri: cms:HumanBodyWeightRecord003
+    rules:
+    - preconditions:
+        slot_conditions:
+          unit:
+            name: unit
+            any_of:
+            - equals_string: kg
+          instrument:
+            name: instrument
+            any_of:
+            - equals_string: body_composition_analyzer
+      postconditions:
+        slot_conditions:
+          body_position:
+            name: body_position
+            any_of:
+            - equals_string: standing
   BodyMassIndexRecord:
     name: BodyMassIndexRecord
     definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexRecord
     description: A calculated numerical quantity representing an individual's weight-to-height
-      ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The height
+      is measured in cm and the weight is collected in kg.
     from_schema: https://w3id.org/linkml/clinical-microschemas
     is_a: ClinicalMeasurementRecord
     slots:
@@ -2969,10 +3437,74 @@ classes:
           data_type:
             name: data_type
             equals_string: decimal
-          calculated_from:
-            name: calculated_from
-            equals_expression: '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001}
-              / 100)^2'
+  BodyMassIndexRecord001:
+    name: BodyMassIndexRecord001
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexRecord001
+    description: A calculated numerical quantity representing an individual's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The height
+      is measured in cm and the weight is collected in kg.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: BodyMassIndexRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - BodyMassIndexRecord001_measurement_value
+    - BodyMassIndexRecord001_calculated_from
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: BodyMassIndexQuantity
+      calculated_from:
+        name: calculated_from
+        equals_expression: '{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001}
+          / 100)^2'
+    class_uri: cms:BodyMassIndexRecord001
+  BodyMassIndexRecord002:
+    name: BodyMassIndexRecord002
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexRecord002
+    description: A calculated numerical quantity representing an individual's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The height
+      is measured in inches and the weight is collected in lbs.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: BodyMassIndexRecord
+    slots:
+    - ClinicalMeasurementRecord_subject_identifier
+    - ClinicalMeasurementRecord_measurement_type
+    - unit
+    - method
+    - instrument
+    - reagent_kit
+    - body_location
+    - body_position
+    - context
+    - collected_by
+    - data_type
+    - ClinicalMeasurementRecord_age_at_measurement
+    - study_site
+    - absolute_time
+    - BodyMassIndexRecord002_measurement_value
+    - BodyMassIndexRecord002_calculated_from
+    slot_usage:
+      measurement_value:
+        name: measurement_value
+        range: BodyMassIndexQuantity
+      calculated_from:
+        name: calculated_from
+        equals_expression: ({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord003}
+          / 39.37)^2
+    class_uri: cms:BodyMassIndexRecord002
   HumanFvcRecord:
     name: HumanFvcRecord
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanFvcRecord
@@ -3491,9 +4023,9 @@ classes:
   HumanBodyHeightQuantity001:
     name: HumanBodyHeightQuantity001
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity001
-    description: "Standing wall-mounted-stadiometer human body height in cm, bounded\
-      \ 30\u2013220.  Minimum represents observed limits on human height. Maximum\
-      \ represents limit of measurement device."
+    description: "Standing wall-mounted or portable stadiometer human body height\
+      \ in cm, bounded 30\u2013230.  Minimum represents observed limits on human height.\
+      \ Maximum represents limit of measurement device."
     from_schema: https://w3id.org/linkml/clinical-microschemas
     is_a: HumanBodyHeightQuantity
     slots:
@@ -3509,9 +4041,9 @@ classes:
   HumanBodyHeightQuantity002:
     name: HumanBodyHeightQuantity002
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity002
-    description: "Standing wall-mounted-stadiometer human body height in in, bounded\
-      \ 20\u201390.  Minimum represents observed limits on human height. Maximum represents\
-      \ limit of measurement device."
+    description: "Standing wall-mounted or portable stadiometer human body height\
+      \ in inches, bounded 20\u201390.  Minimum represents observed limits on human\
+      \ height. Maximum represents limit of measurement device."
     from_schema: https://w3id.org/linkml/clinical-microschemas
     is_a: HumanBodyHeightQuantity
     slots:
@@ -3524,6 +4056,42 @@ classes:
         minimum_value: 20
         maximum_value: 90
     class_uri: cms:HumanBodyHeightQuantity002
+  HumanBodyHeightQuantity003:
+    name: HumanBodyHeightQuantity003
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity003
+    description: Standing anthropometer human body height in cm, bounded 30-250.  Minimum
+      represents observed limits on human height. Maximum represents limit of measurement
+      device.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightQuantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyHeightQuantity003_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 30
+        maximum_value: 250
+    class_uri: cms:HumanBodyHeightQuantity003
+  HumanBodyHeightQuantity004:
+    name: HumanBodyHeightQuantity004
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyHeightQuantity004
+    description: Standing wall-mounted or portable stadiometer human body height in
+      ft, bounded 0.98-8.2.  Minimum represents observed limits on human height. Maximum
+      represents limit of measurement device.
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyHeightQuantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyHeightQuantity004_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0.98
+        maximum_value: 8.2
+    class_uri: cms:HumanBodyHeightQuantity004
   HumanBodyWeightQuantity:
     name: HumanBodyWeightQuantity
     definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightQuantity
@@ -3573,6 +4141,23 @@ classes:
         minimum_value: 0
         maximum_value: 500
     class_uri: cms:HumanBodyWeightQuantity002
+  HumanBodyWeightQuantity003:
+    name: HumanBodyWeightQuantity003
+    definition_uri: https://w3id.org/linkml/clinical-microschemas/HumanBodyWeightQuantity003
+    description: "Body composition analyzer human body weight in kg, bounded 0\u2013\
+      270. Maximum weight set based on limits of measurement device."
+    from_schema: https://w3id.org/linkml/clinical-microschemas
+    is_a: HumanBodyWeightQuantity
+    slots:
+    - quantity_unit
+    - comparator
+    - HumanBodyWeightQuantity003_quantity_value
+    slot_usage:
+      quantity_value:
+        name: quantity_value
+        minimum_value: 0
+        maximum_value: 270
+    class_uri: cms:HumanBodyWeightQuantity003
   BodyMassIndexQuantity:
     name: BodyMassIndexQuantity
     definition_uri: https://w3id.org/linkml/clinical-microschemas/BodyMassIndexQuantity
@@ -3834,7 +4419,7 @@ classes:
     class_uri: https://w3id.org/linkml/linkml-microschema-profile/CodedValue
 metamodel_version: 1.7.0
 source_file: clinical_microschemas.yaml
-source_file_date: '2026-07-02T15:02:47'
-source_file_size: 44231
-generation_date: '2026-07-02T15:02:57'
+source_file_date: '2026-07-14T15:33:03'
+source_file_size: 49866
+generation_date: '2026-07-14T15:33:14'
 
