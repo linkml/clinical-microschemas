@@ -207,7 +207,7 @@ classes:
     is_a: HumanBodyHeightRecord
     description: >-
       Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured with a wall-mounted stadiometer
+      to the top-most point of the head measured in centimeters with a wall-mounted stadiometer
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity001
@@ -230,7 +230,7 @@ classes:
     is_a: HumanBodyHeightRecord
     description: >-
       Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured with a wall-mounted stadiometer
+      to the top-most point of the head measured in inches with a wall-mounted stadiometer
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity002
@@ -248,6 +248,86 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+
+  HumanBodyHeightRecord003:
+    is_a: HumanBodyHeightRecord
+    description: >-
+      Measurement of linear distance of a standing human body from the bottom of a flat foot
+      to the top-most point of the head measured in inches with a portable stadiometer
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity002
+    rules:
+      - preconditions:
+          slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: portable_stadiometer
+            unit:
+              any_of:
+                - equals_string: "[in_i]"
+        postconditions:
+          slot_conditions:
+            body_position:
+              any_of:
+                - equals_string: standing
+
+  HumanBodyHeightRecord004:
+    is_a: HumanBodyHeightRecord
+    description: >-
+      Measurement of linear distance of a standing human body from the bottom of a flat foot
+      to the top-most point of the head measured in centimeters with an 
+      anthropometer
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity003
+    rules:
+      - preconditions:
+          slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: anthropometer_rod
+            unit:
+              any_of:
+                - equals_string: cm
+        postconditions:
+          slot_conditions:
+            body_position:
+              any_of:
+                - equals_string: standing
+
+  HumanBodyHeightRecord005:
+    is_a: HumanBodyHeightRecord
+    description: >-
+      Measurement of linear distance of a standing human body from the bottom of a flat foot
+      to the top-most point of the head measured in feet with a wall-mounted stadiometer
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity004
+    rules:
+      - preconditions:
+          slot_conditions:
+            instrument:
+              any_of:
+                - equals_string: wall_mounted_stadiometer
+            unit:
+              any_of:
+                - equals_string: "[ft_i]"
+        postconditions:
+          slot_conditions:
+            body_position:
+              any_of:
+                - equals_string: standing
+
+  HumanBodyHeightRecord006:
+    is_a: HumanBodyHeightRecord
+    description: >-
+      Measurement of linear distance of a human body from the bottom of a flat foot
+      to the top-most point of the head in cm
+    slot_usage:
+      measurement_value:
+        range: HumanBodyHeightQuantity003
+      unit: cm
 
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
@@ -286,6 +366,7 @@ classes:
                 - equals_string: digital_scale
                 - equals_string: spring_scale
                 - equals_string: bariatric_scale
+                - equals_string: body_composition_analyzer
             data_type:
               equals_string: decimal
             method:
@@ -338,6 +419,29 @@ classes:
               any_of:
                 - equals_string: standing
 
+  HumanBodyWeightRecord003:
+    is_a: HumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body on a body composition analyzer due
+      to gravity
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity003
+    rules:
+      - preconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: kg
+            instrument:
+              any_of:
+                - equals_string: body_composition_analyzer
+        postconditions:
+          slot_conditions:
+            body_position:
+              any_of:
+                - equals_string: standing
+
   #────────────────────────────────────────────────────────────────
   # Body Mass Index (BMI) Microschemas
   #────────────────────────────────────────────────────────────────
@@ -353,7 +457,8 @@ classes:
     is_a: ClinicalMeasurementRecord
     description: >-
       A calculated numerical quantity representing an individual's weight-to-height
-      ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The
+      height is measured in cm and the weight is collected in kg.
     slot_usage:
       measurement_value:
         range: BodyMassIndexQuantity
@@ -375,8 +480,30 @@ classes:
                 - equals_string: calculated
             data_type:
               equals_string: decimal
-            calculated_from:
-              equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
+
+  BodyMassIndexRecord001:
+    is_a: BodyMassIndexRecord
+    description: >-
+      A calculated numerical quantity representing an individual's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The
+      height is measured in cm and the weight is collected in kg.
+    slot_usage:
+      measurement_value:
+        range: BodyMassIndexQuantity
+      calculated_from:
+        equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
+
+  BodyMassIndexRecord002:
+    is_a: BodyMassIndexRecord
+    description: >-
+      A calculated numerical quantity representing an individual's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The
+      height is measured in inches and the weight is collected in lbs.
+    slot_usage:
+      measurement_value:
+        range: BodyMassIndexQuantity
+      calculated_from:
+        equals_expression: "({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord003} / 39.37)^2"
 
 #Need some suggestions on how to bundle a measured, predicted, and percent predicted
 #value. I suspect what I have done is not great. Open to suggestions.  
@@ -670,7 +797,7 @@ classes:
   HumanBodyHeightQuantity001:
     is_a: HumanBodyHeightQuantity
     description: >-
-      Standing wall-mounted-stadiometer human body height in cm, bounded 30–220. 
+      Standing wall-mounted or portable stadiometer human body height in cm, bounded 30–230. 
       Minimum represents observed limits on human height. Maximum represents
       limit of measurement device.
     slot_usage:
@@ -681,13 +808,35 @@ classes:
   HumanBodyHeightQuantity002:
     is_a: HumanBodyHeightQuantity
     description: >-
-      Standing wall-mounted-stadiometer human body height in in, bounded 20–90. 
+      Standing wall-mounted or portable stadiometer human body height in inches, bounded 20–90. 
       Minimum represents observed limits on human height. Maximum represents
       limit of measurement device.
     slot_usage:
       quantity_value:
         minimum_value: 20
         maximum_value: 90
+
+  HumanBodyHeightQuantity003:
+    is_a: HumanBodyHeightQuantity
+    description: >-
+      Standing anthropometer human body height in cm, bounded 30-250. 
+      Minimum represents observed limits on human height. Maximum represents
+      limit of measurement device.
+    slot_usage:
+      quantity_value:
+        minimum_value: 30
+        maximum_value: 250
+
+  HumanBodyHeightQuantity004:
+    is_a: HumanBodyHeightQuantity
+    description: >-
+      Standing wall-mounted or portable stadiometer human body height in ft, bounded 0.98-8.2. 
+      Minimum represents observed limits on human height. Maximum represents
+      limit of measurement device.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.98
+        maximum_value: 8.2
 
   HumanBodyWeightQuantity:
     is_a: Quantity
@@ -715,6 +864,16 @@ classes:
       quantity_value:
         minimum_value: 0
         maximum_value: 500
+
+  HumanBodyWeightQuantity003:
+    is_a: HumanBodyWeightQuantity
+    description: >-
+      Body composition analyzer human body weight in kg, bounded 0–270. Maximum weight
+      set based on limits of measurement device.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 270
 
   BodyMassIndexQuantity:
     is_a: Quantity
@@ -816,7 +975,7 @@ slots:
     range: uriorcurie
     description: Condition/reason for drug (SNOMED, ICD, Mondo, HPO, etc)
   subject_identifier:
-    range: string
+    range: uriorcurie
     description: An identifier for the subject of the datum
   measurement_type:
     range: uriorcurie
@@ -1140,6 +1299,16 @@ enums:
         description: Enumerated value
       boolean:
         description: Boolean value
+      string:
+        description: String value
+      numeric:
+        description: decimal or integer - from dbGAP data types
+      code:
+        description: >-
+          data are a list of acceptable values or a controlled vocabulary,
+          from dbGAP data types, same as enum
+      uriorcurie:
+        description: A URI or CURIE value
 
   MethodEnum:
     description: The method used for a measurement or observation
