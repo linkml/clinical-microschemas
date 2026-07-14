@@ -975,7 +975,7 @@ slots:
     range: uriorcurie
     description: Condition/reason for drug (SNOMED, ICD, Mondo, HPO, etc)
   subject_identifier:
-    range: string
+    range: uriorcurie
     description: An identifier for the subject of the datum
   measurement_type:
     range: uriorcurie
@@ -1299,6 +1299,16 @@ enums:
         description: Enumerated value
       boolean:
         description: Boolean value
+      string:
+        description: String value
+      numeric:
+        description: decimal or integer - from dbGAP data types
+      code:
+        description: >-
+          data are a list of acceptable values or a controlled vocabulary,
+          from dbGAP data types, same as enum
+      uriorcurie:
+        description: A URI or CURIE value
 
   MethodEnum:
     description: The method used for a measurement or observation
