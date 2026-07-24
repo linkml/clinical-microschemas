@@ -327,7 +327,11 @@ classes:
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity003
-      unit: cm
+    rules:
+      - postconditions:
+          slot_conditions:
+            unit:
+              equals_string: cm
 
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
@@ -1579,7 +1583,8 @@ enums:
       during:
   
   DynamicAsthmaEnum:
-    any_of:
+    description: Asthma and asthma-related terms from Mondo and HPO
+    include:
       - reachable_from:
           source_ontology: obo:mondo
           source_nodes:
@@ -1592,21 +1597,21 @@ enums:
             - HP:0002099
           relationship_types:
             - rdfs:subClassOf
-            
+
   DynamicHeartFailureEnum:
-    any_of:
-      - reachable_from:
-          source_ontology: obo:mondo
-          source_nodes:
-            - MONDO:0005252
-          relationship_types:
-            - rdfs:subClassOf
-            
+    description: Heart failure and related terms from Mondo
+    reachable_from:
+      source_ontology: obo:mondo
+      source_nodes:
+        - MONDO:0005252
+      relationship_types:
+        - rdfs:subClassOf
+
   DynamicObesityEnum:
-    any_of:
-      - reachable_from:
-          source_ontology: obo:hp
-          source_nodes:
-            - HP:0001513
-          relationship_types:
-            - rdfs:subClassOf
+    description: Obesity and related terms from HPO
+    reachable_from:
+      source_ontology: obo:hp
+      source_nodes:
+        - HP:0001513
+      relationship_types:
+        - rdfs:subClassOf
