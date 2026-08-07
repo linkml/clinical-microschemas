@@ -327,7 +327,11 @@ classes:
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity003
-      unit: cm
+    rules:
+      - postconditions:
+          slot_conditions:
+            unit:
+              equals_string: cm
 
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
@@ -754,8 +758,108 @@ classes:
         range: HumanBasophilCountQuantity001
       unit:
         any_of:
-          -  equals_string: "{#}/uL"          
-          
+          -  equals_string: "{#}/uL"
+
+#-------------------------------------------------
+# Conditions
+#-------------------------------------------------
+  AsthmaStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of asthma 
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicAsthmaEnum
+          - equals_string: ICD10:J45
+          - equals_string: OMOP:764677
+
+  HeartFailureStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of congestive 
+      heart failure in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicHeartFailureEnum
+          - equals_string: ICD10:I50
+          - equals_string: OMOP:316139
+
+  ObesityStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of obesity 
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicObesityEnum
+          - equals_string: OMOP:433736
+#-------------------------------------------------
+# Drugs
+#-------------------------------------------------
+  AspirinStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to aspirin
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: OMOP:1112807
+          - equals_string: RxNORM:1191 #How can I make this a dynamic enum?
+
+  BetaBlockerStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to aspirin
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: OMOP:21601741
+          - equals_string: ATC:C07A #How can I make this a dynamic enum?
+
+  DiabetesMedicationStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to aspirin
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:A10 #How can I make this a dynamic enum?
+
+#-------------------------------------------------
+# Procedures
+#-------------------------------------------------
+  PacemakerStatusRecord:
+    is_a: ProcedureStatusRecord
+    description: >-
+      Record of having a pacemaker implanted
+    slot_usage:
+      procedure_type:
+        any_of:
+          - equals_string: OMOP:54772840
+          - equals_string: NCIT:C99998
+
+  CoronaryAngioplastyStatusRecord:
+    is_a: ProcedureStatusRecord
+    description: >-
+      Record of having a coronary angioplasty
+    slot_usage:
+      procedure_type:
+        any_of:
+          - equals_string: OMOP:4184832
+
+  CoronaryBypassStatusRecord:
+    is_a: ProcedureStatusRecord
+    description: >-
+      Record of having a coronary artery bypass graft
+    slot_usage:
+      procedure_type:
+        any_of:
+          - equals_string: OMOP:4336464
+
 #------------------------------------------------------------------
 #    Mixins
 #-----------------------------------------------------------------
@@ -1477,3 +1581,37 @@ enums:
       after:
       before:
       during:
+  
+  DynamicAsthmaEnum:
+    description: Asthma and asthma-related terms from Mondo and HPO
+    include:
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0004979
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0002099
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicHeartFailureEnum:
+    description: Heart failure and related terms from Mondo
+    reachable_from:
+      source_ontology: obo:mondo
+      source_nodes:
+        - MONDO:0005252
+      relationship_types:
+        - rdfs:subClassOf
+
+  DynamicObesityEnum:
+    description: Obesity and related terms from HPO
+    reachable_from:
+      source_ontology: obo:hp
+      source_nodes:
+        - HP:0001513
+      relationship_types:
+        - rdfs:subClassOf
