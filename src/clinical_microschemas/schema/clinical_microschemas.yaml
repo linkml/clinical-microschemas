@@ -84,7 +84,8 @@ classes:
     instantiates:
       - MicroschemaDefinition
     description: >-
-      Record suggesting the presence of a disease or medical condition stated as a diagnosis, sign, or symptom
+      Record suggesting the presence of a disease or medical condition stated as a 
+      diagnosis, sign, or symptom
     class_uri: bdchm:Condition
     annotations:
       domain_of_use: clinical
@@ -162,7 +163,9 @@ classes:
         required: true
 
 #────────────────────────────────────────────────────────────────
-# EXAMPLES
+# SPECIFIC RECORD TYPES
+#────────────────────────────────────────────────────────────────
+# HEIGHT
 #────────────────────────────────────────────────────────────────
 
   HumanBodyHeightRecord:
@@ -197,11 +200,14 @@ classes:
                 - equals_string: anthropometer_rod
                 - equals_string: sonar_stadiometer
                 - equals_string: infantometer
+                - equals_string: unknown
             data_type:
               equals_string: decimal
             method:
               any_of:
-                - equals_string: anthropometry             
+                - equals_string: anthropometry
+                - equals_string: survey
+                - equals_string: interview
 
   HumanBodyHeightRecord001:
     is_a: HumanBodyHeightRecord
@@ -225,6 +231,9 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+            method:
+              any_of:
+                - equals_string: anthropometry
               
   HumanBodyHeightRecord002:
     is_a: HumanBodyHeightRecord
@@ -248,6 +257,9 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+            method:
+              any_of:
+                - equals_string: anthropometry                
 
   HumanBodyHeightRecord003:
     is_a: HumanBodyHeightRecord
@@ -271,6 +283,9 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+            method:
+              any_of:
+                - equals_string: anthropometry                
 
   HumanBodyHeightRecord004:
     is_a: HumanBodyHeightRecord
@@ -295,6 +310,9 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+            method:
+              any_of:
+                - equals_string: anthropometry                
 
   HumanBodyHeightRecord005:
     is_a: HumanBodyHeightRecord
@@ -318,6 +336,9 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+            method:
+              any_of:
+                - equals_string: anthropometry                
 
   HumanBodyHeightRecord006:
     is_a: HumanBodyHeightRecord
@@ -326,12 +347,19 @@ classes:
       to the top-most point of the head in cm
     slot_usage:
       measurement_value:
-        range: HumanBodyHeightQuantity003
+        range: HumanBodyHeightQuantity005
     rules:
       - postconditions:
           slot_conditions:
             unit:
               equals_string: cm
+            instrument:
+              equals_string: unknown
+            method:
+              any_of:
+                - equals_string: anthropometry
+                - equals_string: survey
+                - equals_string: interview              
 
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
@@ -357,6 +385,7 @@ classes:
                 - equals_string: OBA:VT0001259
                 - equals_string: OMOP:903121
                 - equals_string: LOINC:29463-7
+                - equals_string: LOINC:3141-9
         postconditions:
           slot_conditions:
             unit:
@@ -371,6 +400,8 @@ classes:
                 - equals_string: spring_scale
                 - equals_string: bariatric_scale
                 - equals_string: body_composition_analyzer
+                - equals_string: digital_baby_scale
+                - equals_string: mechanical_baby_scale
             data_type:
               equals_string: decimal
             method:
@@ -445,6 +476,29 @@ classes:
             body_position:
               any_of:
                 - equals_string: standing
+                
+  HumanBodyWeightRecord004:
+    is_a: HumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body on a digital scale due
+      to gravity
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity004
+    rules:
+      - preconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: kg
+            instrument:
+              any_of:
+                - equals_string: digital_scale
+        postconditions:
+          slot_conditions:
+            body_position:
+              any_of:
+                - equals_string: standing
 
   #────────────────────────────────────────────────────────────────
   # Body Mass Index (BMI) Microschemas
@@ -461,8 +515,7 @@ classes:
     is_a: ClinicalMeasurementRecord
     description: >-
       A calculated numerical quantity representing an individual's weight-to-height
-      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The
-      height is measured in cm and the weight is collected in kg.
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared. 
     slot_usage:
       measurement_value:
         range: BodyMassIndexQuantity
@@ -484,33 +537,21 @@ classes:
                 - equals_string: calculated
             data_type:
               equals_string: decimal
+            calculated_from:
+              any_of:
+                - equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord003} / 100)^2"
+                - equals_expression: "{HumanBodyWeightRecord003} / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "{HumanBodyWeightRecord004} / ({HumanBodyHeightRecord001} / 100)^2" 
+                - equals_expression: "{HumanBodyWeightRecord003} / ({HumanBodyHeightRecord003} / 100)^2"
+                - equals_expression: "{HumanBodyWeightRecord004} / ({HumanBodyHeightRecord003} / 100)^2"           
+                - equals_expression: "({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord002} / 39.37)^2"              
 
-  BodyMassIndexRecord001:
-    is_a: BodyMassIndexRecord
-    description: >-
-      A calculated numerical quantity representing an individual's weight-to-height
-      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The
-      height is measured in cm and the weight is collected in kg.
-    slot_usage:
-      measurement_value:
-        range: BodyMassIndexQuantity
-      calculated_from:
-        equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
-
-  BodyMassIndexRecord002:
-    is_a: BodyMassIndexRecord
-    description: >-
-      A calculated numerical quantity representing an individual's weight-to-height
-      ratio. BMI is calculated as weight (kg) divided by height (m) squared. The
-      height is measured in inches and the weight is collected in lbs.
-    slot_usage:
-      measurement_value:
-        range: BodyMassIndexQuantity
-      calculated_from:
-        equals_expression: "({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord003} / 39.37)^2"
-
+#--------------------------------------------------------------
 #Need some suggestions on how to bundle a measured, predicted, and percent predicted
 #value. I suspect what I have done is not great. Open to suggestions.  
+#SPIROMETRY
+#-------------------------------------------------------------
   
   HumanFvcRecord:
     is_a: ClinicalMeasurementRecord
@@ -708,6 +749,10 @@ classes:
               any_of:
                 - equals_string: spirometry
 
+#-----------------------------------------------
+#basophil count
+#-----------------------------------------------
+
   HumanBasophilCountRecord:
     is_a: ClinicalMeasurementRecord
     description: >-
@@ -730,13 +775,14 @@ classes:
                 - equals_string: "{#}/uL"
             instrument:
               any_of:
-                - equals_string: flow cytometer
+                - equals_string: flow_cytometer
                 - equals_string: microscope
+                - equals_string: particle_counter
             data_type:
               equals_string: decimal
             method:
               any_of:
-                - equals_string: CBC
+                - equals_string: cbc
 
   HumanBasophilCountRecord001:
     is_a: HumanBasophilCountRecord
@@ -760,6 +806,287 @@ classes:
         any_of:
           -  equals_string: "{#}/uL"
 
+#----------------------------------------------------------
+#8-epi-PGF2a
+#----------------------------------------------------------
+  Human8epiPGF2aUrineRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of 8-epi-prostaglandin F2 alpha in urine
+    slot_usage:
+      measurement_value:
+        range: Human8epiPGF2aUrineQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100046
+                - equals_string: OMOP:3011888
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "pg/mL"
+                - equals_string: "ng/mL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: lc_ms_ms
+                - equals_string: GC-MS
+                - equals_string: elisa
+
+  Human8epiPGF2aUrineRecord001:
+    is_a: Human8epiPGF2aUrineRecord
+    description: >-
+      Concentration of 8-epi-prostaglandin F2 alpha in urine
+    slot_usage:
+      measurement_value:
+        range: Human8epiPGF2aUrineQuantity001
+      unit:
+        any_of:
+          -  equals_string: "pg/mL"
+
+#----------------------------------------------------------
+#LP-PLA2 activity in blood
+#----------------------------------------------------------
+  HumanLPPLA2ActivityBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Activity of LP-PLA2 in blood
+    slot_usage:
+      measurement_value:
+        range: HumanLPPLA2ActivityBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100055
+                - equals_string: OMOP:36305170
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "nmol/min/mL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: plac_test
+
+#----------------------------------------------------------
+#Creatinine in Urine
+#----------------------------------------------------------
+  HumanCreatinineUrineRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of creatinine measured in urine
+    slot_usage:
+      measurement_value:
+        range: HumanCreatinineUrineQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0010540
+                - equals_string: OMOP:3007081
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "mg/dL"
+                - equals_string: "mmol/L"
+                - equals_string: "mg/L"
+                - equals_string: "g/L"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: jaffe_reaction
+                - equals_string: enzymatic_creatinine_assay
+                - equals_string: lc_ms_ms
+
+  HumanCreatinineUrineRecord001:
+    is_a: HumanCreatinineUrineRecord
+    description: >-
+      Concentration of creatinine measured in urine using the Jaffe reaction in mg/dL
+    slot_usage:
+      measurement_value:
+        range: HumanCreatinineUrineQuantity001
+      unit:
+        any_of:
+          -  equals_string: "mg/dL"
+    rules:
+      - postconditions:
+          slot_conditions:
+            method:
+              equals_string: jaffe_reaction
+
+  HumanCreatinineUrineRecord002:
+    is_a: HumanCreatinineUrineRecord
+    description: >-
+      Concentration of creatinine measured in urine using the Jaffe reaction in mmol/L
+    slot_usage:
+      measurement_value:
+        range: HumanCreatinineUrineQuantity002
+      unit:
+        any_of:
+          -  equals_string: "mmol/L"
+    rules:
+      - postconditions:
+          slot_conditions:
+            method:
+              equals_string: jaffe_reaction
+
+#----------------------------------------------------------
+#Albumin in Urine
+#----------------------------------------------------------
+  HumanAlbuminUrineRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of albumin measured in urine
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminUrineQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0002871
+                - equals_string: OMOP:2212188
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "mg/L"
+                - equals_string: "mg/dL"
+                - equals_string: "ug/mL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: immunoturbidometry
+                - equals_string: immunonephelometry
+                - equals_string: chemiluminescence_immunoassay
+                - equals_string: elisa
+                - equals_string: albumin_dipstick
+                - equals_string: hplc
+
+  HumanAlbuminUrineRecord001:
+    is_a: HumanAlbuminUrineRecord
+    description: >-
+      Concentration of albumin measured in urine in mg/dL using immunoturbidometry
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminUrineQuantity001
+      unit:
+        any_of:
+          -  equals_string: "mg/dL"
+      method:
+        any_of:
+          - equals_string: immunoturbidometry
+
+  HumanAlbuminUrineRecord002:
+    is_a: HumanAlbuminUrineRecord
+    description: >-
+      Concentration of albumin measured in urine in mg/L equivalent to ug/mL using an
+      albumin dipstick
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminUrineQuantity002
+      unit:
+        any_of:
+          -  equals_string: "mg/L"
+          -  equals_string: "ug/mL"
+      method:
+        any_of:
+          - equals_string: albumin_dipstick
+
+  HumanAlbuminUrineRecord003:
+    is_a: HumanAlbuminUrineRecord
+    description: >-
+      Concentration of albumin measured in urine in mg/L equivalent to ug/mL using HPLC
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminUrineQuantity003
+      unit:
+        any_of:
+          -  equals_string: "mg/L"
+          -  equals_string: "ug/mL"
+      method:
+        any_of:
+          - equals_string: hplc
+
+  HumanAlbuminUrineRecord004:
+    is_a: HumanAlbuminUrineRecord
+    description: >-
+      Concentration of albumin measured in urine in mg/L equivalent to ug/mL using 
+      immunonephelometry
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminUrineQuantity004
+      unit:
+        any_of:
+          -  equals_string: "mg/L"
+          -  equals_string: "ug/mL"
+      method:
+        any_of:
+          - equals_string: immunonephelometry
+
+  HumanAlbuminUrineRecord005:
+    is_a: HumanAlbuminUrineRecord
+    description: >-
+      Concentration of albumin measured in urine in mg/L equivalent to ug/mL using
+      immunoturbidometry
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminUrineQuantity005
+      unit:
+        any_of:
+          -  equals_string: "mg/L"
+          -  equals_string: "ug/mL"
+      method:
+        any_of:
+          - equals_string: immunoturbidometry
+#----------------------------------------------------------
+#Albumin Creatinine Ratio in Urine
+#----------------------------------------------------------
+  HumanAlbuminCreatinineRatioUrineRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Ratio of albumin to creatinine measured in urine
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminCreatinineRatioUrineQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100053
+                - equals_string: OMOP:4154347
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "mg/g{creat}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: calculated
+            calculated_from:
+              any_of:
+                - equals_expression: "{HumanAlbuminUrineRecord001} / ({HumanCreatinineUrineRecord001} / 1000)"
+                - equals_expression: "({HumanAlbuminUrineQuantity002} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
+                - equals_expression: "({HumanAlbuminUrineQuantity003} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
+                - equals_expression: "({HumanAlbuminUrineQuantity004} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
+                - equals_expression: "({HumanAlbuminUrineQuantity005} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
+
 #-------------------------------------------------
 # Conditions
 #-------------------------------------------------
@@ -778,7 +1105,7 @@ classes:
   HeartFailureStatusRecord:
     is_a: ConditionStatusRecord
     description: >-
-      Record suggesting the current or historical presence or absence of congestive 
+      Record suggesting the current or historical presence or absence of 
       heart failure in the patient/participant or their blood relatives
     slot_usage:
       condition_type:
@@ -797,6 +1124,180 @@ classes:
         any_of:
           - range: DynamicObesityEnum
           - equals_string: OMOP:433736
+  
+  AtrialFibrillationStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of atrial 
+      fibrillation in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicAfibEnum
+          - equals_string: OMOP:313217
+          - pattern: '^ICD10:I48(\.\d{1,2})?$'
+
+  AnginaStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of angina
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicAnginaEnum
+          - equals_string: OMOP:321318
+          - pattern: '^ICD10:I20(?:\.[0-9])?$'
+
+  CardiovascularDiseaseStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of cardiovascular
+      disease in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicCvdEnum
+          - equals_string: MONDO:0004995
+          - equals_string: OMOP:134057
+
+  CarotidPlaqueStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of carotid
+      plaque in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - equals_string: OMOP:4102124
+
+  COPDStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of COPD
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicCopdEnum
+          - equals_string: OMOP:44788836
+          - pattern: '^ICD10:J44(?:\.[0-9])?$'
+
+  DiabetesStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of diabetes
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicDiabetesEnum
+          - equals_string: "201820"
+          - pattern: '^ICD10:(E0[89]|E1[013]|O24)(\.\w{1,4})?'
+
+  StrokeStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of atrial 
+      fibrillation in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicStrokeEnum
+          - equals_string: OMOP:4212690
+          - pattern: '^ICD10:(I6[0-9](\.[A-Z0-9]{1,4})?'
+
+  HeartDiseaseStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of heart
+      disease in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicHeartDiseaseEnum
+          - equals_string: OMOP:321588
+
+  MyocardialInfarctionStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of myocardial
+      infarction in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicMyocardialInfarctionEnum
+          - equals_string: OMOP:1340204
+          - pattern: '^ICD10:(I21|I22|I25\.2)(\.[A-Z0-9]{1,4})?'
+
+  HypertensionStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of hypertension
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicHypertensionEnum
+          - equals_string: OMOP:320128
+
+  LeftVentricularHypertrophyStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of left ventricular
+      hypertrophy in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicLvhEnum
+          - equals_string: OMOP:4065282
+          - equals_string: "ICD10:I51.7"
+
+  PeripheralArterialDiseaseStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of peripheral
+      arterial disease in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicPadEnum
+          - equals_string: OMOP:3654996
+          - equals_string: "ICD10:I73.9"
+
+  SleepApneaStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of sleep apnea
+      in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicSleepApneaEnum
+          - equals_string: OMOP:313459
+          - pattern: '^ICD10:(G47\.3[0-379])?'
+
+  ValvularHeartDiseaseStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of valvular 
+      heart disease in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicVhdEnum
+          - equals_string: OMOP:4281749
+
+  VenousThromboembolismStatusRecord:
+    is_a: ConditionStatusRecord
+    description: >-
+      Record suggesting the current or historical presence or absence of venous
+      thromboembolism in the patient/participant or their blood relatives
+    slot_usage:
+      condition_type:
+        any_of:
+          - range: DynamicVenThromEnum
+          - equals_string: OMOP:4327889
 #-------------------------------------------------
 # Drugs
 #-------------------------------------------------
@@ -813,7 +1314,7 @@ classes:
   BetaBlockerStatusRecord:
     is_a: DrugStatusRecord
     description: >-
-      Record suggesting exposure to aspirin
+      Record suggesting exposure to beta blockers
     slot_usage:
       drug_type:
         any_of:
@@ -823,12 +1324,171 @@ classes:
   DiabetesMedicationStatusRecord:
     is_a: DrugStatusRecord
     description: >-
-      Record suggesting exposure to aspirin
+      Record suggesting exposure to diabetes medication
     slot_usage:
       drug_type:
         any_of:
           - equals_string: ATC:A10 #How can I make this a dynamic enum?
 
+  HypertensionMedicationStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to hypertension medication
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: OMOP:4015732
+          - equals_string: ATC:C02 #How can I make this a dynamic enum?
+
+  AceInhibitorStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to ACE inhibitors
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C09A #How can I make this a dynamic enum?
+
+  AldosteroneReceptorBlockerStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to Aldosterone receptor blockers
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C03DA #How can I make this a dynamic enum?
+
+  AlphaBlockerStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to Alpha blockers
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: NDFRT:N0000009918 #How can I make this a dynamic enum?
+          - equals_string: NDFRT:N0000175553
+          - equals_string: ATC:CV150
+          - equals_string: NDFRT:N0000009917
+
+  AngiotensinReceptorBlockerStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to Angiotensin receptor blockers
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C09C #How can I make this a dynamic enum?
+
+  CalciumChannelBlockerStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to Calcium channel blockers
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C08 #How can I make this a dynamic enum?
+
+  CentrallyActingAgentsStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to centrally acting agents
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C02A #How can I make this a dynamic enum?
+
+  DiureticsStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to diuretics
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C03 #How can I make this a dynamic enum?
+
+  InsulinStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to insulin
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: MESH:D007328 #How can I make this a dynamic enum?
+
+  NiacinMedicationStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to Niacin as a medication
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: RxCUI:7393 #How can I make this a dynamic enum?
+          - equals_string: NDFRT:N0000175594
+
+  LipidLoweringMedicationStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to lipid-lowering medications
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C10A #How can I make this a dynamic enum?
+
+  FibratesStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to Fibrates
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C10AB #How can I make this a dynamic enum?
+
+  BileAcidSequestrantStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to bile acid sequestrants
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: NDFRT:N0000180292 #How can I make this a dynamic enum?
+
+  OralHypoglycemicAgentStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to oral hypoglycemic agents
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C09A #How can I make this a dynamic enum?               
+
+  StatinStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to statins
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C10AA #How can I make this a dynamic enum?
+
+  SystemicSteroidStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to systemic steroids
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:H02A #How can I make this a dynamic enum?
+
+  VasodilatorStatusRecord:
+    is_a: DrugStatusRecord
+    description: >-
+      Record suggesting exposure to vasodilators
+    slot_usage:
+      drug_type:
+        any_of:
+          - equals_string: ATC:C01D #How can I make this a dynamic enum?
+          - equals_string: NDFRT:N0000175415
+          - equals_string: ATC:C04
 #-------------------------------------------------
 # Procedures
 #-------------------------------------------------
@@ -890,6 +1550,10 @@ classes:
   # quantity_unit). Numeric bounds therefore must attach to quantity_value,
   # not to the Quantity wrapper. Each record's measurement_value range is
   # set to one of these typed Quantities via slot_usage.
+  
+  #------------------------------
+  #Height
+  #------------------------------
 
   HumanBodyHeightQuantity:
     is_a: Quantity
@@ -903,7 +1567,7 @@ classes:
     description: >-
       Standing wall-mounted or portable stadiometer human body height in cm, bounded 30–230. 
       Minimum represents observed limits on human height. Maximum represents
-      limit of measurement device.
+      limit of a wall-mounted stadiometer.
     slot_usage:
       quantity_value:
         minimum_value: 30
@@ -914,7 +1578,7 @@ classes:
     description: >-
       Standing wall-mounted or portable stadiometer human body height in inches, bounded 20–90. 
       Minimum represents observed limits on human height. Maximum represents
-      limit of measurement device.
+      limit of a wall-mounted and a portable stadiometer.
     slot_usage:
       quantity_value:
         minimum_value: 20
@@ -925,7 +1589,7 @@ classes:
     description: >-
       Standing anthropometer human body height in cm, bounded 30-250. 
       Minimum represents observed limits on human height. Maximum represents
-      limit of measurement device.
+      limit of anthropometer rod.
     slot_usage:
       quantity_value:
         minimum_value: 30
@@ -936,11 +1600,26 @@ classes:
     description: >-
       Standing wall-mounted or portable stadiometer human body height in ft, bounded 0.98-8.2. 
       Minimum represents observed limits on human height. Maximum represents
-      limit of measurement device.
+      limit of a wall-mounted stadiometer.
     slot_usage:
       quantity_value:
         minimum_value: 0.98
         maximum_value: 8.2
+  
+  HumanBodyHeightQuantity005:
+    is_a: HumanBodyHeightQuantity
+    description: >-
+      Minimum and maximum represent biologically plausible values for adults. Use this
+      Quantity when instrument is unknown or the method is a survey or interview. Unit
+      is cm.
+    slot_usage:
+      quantity_value:
+        minimum_value: 54
+        maximum_value: 273
+
+#-------------------------------------------------
+#Weight
+#-------------------------------------------------
 
   HumanBodyWeightQuantity:
     is_a: Quantity
@@ -952,32 +1631,46 @@ classes:
   HumanBodyWeightQuantity001:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Mechanical-beam-balance human body weight in kg, bounded 0–230. Maximum weight
-      set based on limits of measurement device.
+      Mechanical-beam-balance human body weight in kg. Minimum weight based on biological
+      limits for adults. Maximum weight set based on limits of measurement device.
     slot_usage:
       quantity_value:
-        minimum_value: 0
+        minimum_value: 2
         maximum_value: 230
 
   HumanBodyWeightQuantity002:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Mechanical-beam-balance human body weight in lbs, bounded 0–500. Maximum weight
-      set based on limits of measurement device.
+      Mechanical-beam-balance human body weight in lbs. Minimum weight based on biological
+      limits for adults. Maximum weight set based on limits of measurement device.
     slot_usage:
       quantity_value:
-        minimum_value: 0
+        minimum_value: 4
         maximum_value: 500
 
   HumanBodyWeightQuantity003:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Body composition analyzer human body weight in kg, bounded 0–270. Maximum weight
-      set based on limits of measurement device.
+      Body composition analyzer human body weight in kg. Minimum weight based on biological
+      limits for adults. Maximum weight set based on limits of measurement device.
     slot_usage:
       quantity_value:
-        minimum_value: 0
+        minimum_value: 2
         maximum_value: 270
+
+  HumanBodyWeightQuantity004:
+    is_a: HumanBodyWeightQuantity
+    description: >-
+      Digital scale human body weight in kg. Minimum weight based on biological
+      limits for adults. Maximum weight set based on limits of measurement device.
+    slot_usage:
+      quantity_value:
+        minimum_value: 2
+        maximum_value: 180
+
+#-----------------------------------------------
+#BMI
+#------------------------------------------------
 
   BodyMassIndexQuantity:
     is_a: Quantity
@@ -988,6 +1681,10 @@ classes:
       quantity_value:
         minimum_value: 5
         maximum_value: 200
+
+#-------------------------------------------
+#spiromics
+#-------------------------------------------        
 
   HumanFvcQuantity:
     is_a: Quantity
@@ -1037,13 +1734,16 @@ classes:
         minimum_value: 0
         maximum_value: 12000
 
+#-------------------------------------
+#basophil count
+#--------------------------------------  
   HumanBasophilCountQuantity:
     is_a: Quantity
     description: >-
       Basophil concentration measurement. Negative values are impossible.
     slot_usage:
       quantity_value:
-        minimum_value: 0
+        minimum_value: 0      
 
   HumanBasophilCountQuantity001:
     is_a: HumanBasophilCountQuantity
@@ -1064,6 +1764,137 @@ classes:
       quantity_value:
         minimum_value: 0
         maximum_value: 300
+
+#------------------------------------------------
+#8-epi-PGF2a in Urine
+#-----------------------------------------------
+  Human8epiPGF2aUrineQuantity:
+    is_a: Quantity
+    description: >-
+      Meaasurement of 8-epi-prostaglandin F2 alpha in urine. Negative values are 
+      impossible
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        
+  Human8epiPGF2aUrineQuantity001:
+    is_a: Human8epiPGF2aUrineQuantity
+    description: >-
+      Meaasurement of 8-epi-prostaglandin F2 alpha in urine, bounded to 10-7000. Includes
+      pathological values and variation due to dehydration status
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 7000
+
+#-----------------------------------------------
+#Activity of LP-PLA2 in blood
+#----------------------------------------------
+  HumanLPPLA2ActivityBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Measurement of the activity of the Lp-PLA2 enzyme in blood. Negative values are
+      impossible. Maximum values are unknown.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+#-----------------------------------------------
+#Creatinine in urine
+#----------------------------------------------
+  HumanCreatinineUrineQuantity:
+    is_a: Quantity
+    description: >-
+      Meaasurement of creatinine in urine. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanCreatinineUrineQuantity001:
+    is_a: HumanCreatinineUrineQuantity
+    description: >-
+      Measurement of creatinine in urine, bounded to 2-450. Assuming jaffe reaction and
+      results in mg/dL
+    slot_usage:
+      quantity_value:
+        minimum_value: 2
+        maximum_value: 450
+
+  HumanCreatinineUrineQuantity002:
+    is_a: HumanCreatinineUrineQuantity
+    description: >-
+      Measurement of creatinine in urine, bounded to 2-450. Assuming jaffe reaction and
+      results in  mmol/L
+    slot_usage:
+      quantity_value:
+        minimum_value:  0.18
+        maximum_value: 36
+
+#-----------------------------------------------
+#Albumin in urine
+#----------------------------------------------
+  HumanAlbuminUrineQuantity:
+    is_a: Quantity
+    description: >-
+      Measurement of albumin in urine. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        
+  HumanAlbuminUrineQuantity001:
+    is_a: HumanAlbuminUrineQuantity
+    description: >-
+      Measurement of albumin in urine, bounded to mg/dL using immunoturbidometry
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.3
+        maximum_value: 5000
+
+  HumanAlbuminUrineQuantity002:
+    is_a: HumanAlbuminUrineQuantity
+    description: >-
+      Measurement of albumin in urine, bounded to mg/L using an albumin dipstick
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 300
+
+  HumanAlbuminUrineQuantity003:
+    is_a: HumanAlbuminUrineQuantity
+    description: >-
+      Measurement of albumin in urine, bounded to mg/L using HPLC
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+
+  HumanAlbuminUrineQuantity004:
+    is_a: HumanAlbuminUrineQuantity
+    description: >-
+      Measurement of albumin in urine, bounded to mg/L using immunonephelometry
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.3
+        maximum_value: 350
+
+  HumanAlbuminUrineQuantity005:
+    is_a: HumanAlbuminUrineQuantity
+    description: >-
+      Measurement of albumin in urine, bounded to mg/L using immunoturbidometry
+    slot_usage:
+      quantity_value:
+        minimum_value: 3
+        maximum_value: 50000
+
+#-----------------------------------------------
+#Albumin to creatinine ratio in urine
+#----------------------------------------------
+  HumanAlbuminCreatinineRatioUrineQuantity:
+    is_a: Quantity
+    description: >-
+      Calculation of the ratio of albumin to creatinine in urine, bounded to mg/g{creat}
+    slot_usage:
+      quantity_value:
+        minimum_value: 3
 #────────────────────────────────────────────────────────────────
 # SLOTS
 #────────────────────────────────────────────────────────────────
@@ -1413,6 +2244,8 @@ enums:
           from dbGAP data types, same as enum
       uriorcurie:
         description: A URI or CURIE value
+      identifier:
+        description: a string used as an identifier by an external data source
 
   MethodEnum:
     description: The method used for a measurement or observation
@@ -1453,6 +2286,50 @@ enums:
       nhanesiii:
         description: >-
           standard reference equations for spirometry published in 2005
+      jaffe_reaction:
+        description: >-
+          colorimetric method for measuring creatinine based on the Jaffe reaction,
+          in which creatinine reacts with picric acid in alkaline solution
+      cbc:
+        description: >-
+          complete blood count; a common blood test that measures the cellular
+          components of blood including red cells, white cells, and platelets
+      plac_test:
+        description: >-
+          Lipoprotein-Associated Phospholipase A2 (Lp-PLA2) test; a blood test
+          used to assess cardiovascular and stroke risk
+      enzymatic_creatinine_assay:
+        description: >-
+          enzymatic method for measuring creatinine using creatininase, offering
+          greater specificity than the Jaffe reaction with fewer interferences
+      lc_ms_ms:
+        description: >-
+          liquid chromatography-tandem mass spectrometry; a reference method for
+          quantifying analytes with high specificity and sensitivity
+      immunoturbidometry:
+        description: >-
+          photometric method measuring the turbidity caused by antigen-antibody
+          complexes in suspension
+      immunonephelometry:
+        description: >-
+          optical method measuring light scatter from antigen-antibody complexes
+          to quantify proteins such as albumin
+      chemiluminescence_immunoassay:
+        description: >-
+          immunoassay that uses a chemiluminescent label to detect and quantify
+          an analyte via light emission
+      elisa:
+        description: >-
+          enzyme-linked immunosorbent assay; a plate-based immunoassay for
+          detecting and quantifying proteins or antibodies
+      albumin_dipstick:
+        description: >-
+          semi-quantitative colorimetric urine test strip method for detecting
+          albumin
+      hplc:
+        description: >-
+          high-performance liquid chromatography; a chromatographic technique
+          used to separate, identify, and quantify analytes in a mixture
 
   InstrumentEnum:
     description: The instrument used for a measurement
@@ -1500,6 +2377,25 @@ enums:
         description: >-
           portable, handheld device used to measure how fast and hard a person can
           exhale
+      flow_cytometer:
+        description: >-
+          instrument that measures physical and chemical characteristics of cells
+          or particles as they flow through a laser beam
+      microscope:
+        description: >-
+          optical instrument used to magnify and visualize cells, microorganisms,
+          or other small structures
+      particle_counter:
+        description: >-
+          instrument that counts and sizes particles suspended in a fluid, used
+          in hematology analyzers
+      mechanical_baby_scale:
+        description: >-
+          mechanical scale designed to weigh infants and young children
+      unknown:
+        description: >-
+          the instrument used for the measurement is not known or was not
+          recorded
 
   ReagentKitEnum:
     description: The reagent kit used for a measurement
@@ -1581,7 +2477,10 @@ enums:
       after:
       before:
       during:
-  
+
+#---------------------------------------------------------
+#Condition Enums
+#----------------------------------------------------------  
   DynamicAsthmaEnum:
     description: Asthma and asthma-related terms from Mondo and HPO
     include:
@@ -1599,19 +2498,239 @@ enums:
             - rdfs:subClassOf
 
   DynamicHeartFailureEnum:
-    description: Heart failure and related terms from Mondo
-    reachable_from:
-      source_ontology: obo:mondo
-      source_nodes:
-        - MONDO:0005252
-      relationship_types:
-        - rdfs:subClassOf
+    description: Heart failure and related terms from Mondo and HPO
+    include:
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005252
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001635
+          relationship_types:
+            - rdfs:subClassOf        
 
   DynamicObesityEnum:
-    description: Obesity and related terms from HPO
-    reachable_from:
-      source_ontology: obo:hp
-      source_nodes:
-        - HP:0001513
-      relationship_types:
-        - rdfs:subClassOf
+    description: Obesity and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001513
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0011122
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicAfibEnum:
+    description: Atrial fibrillation and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0005110
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0004981
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicAnginaEnum:
+    description: Angina and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001681
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0006021
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicCvdEnum:
+    description: Cardiovascular disease and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001626
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0004995
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicCopdEnum:
+    description: COPD and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0006510
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005002
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicDiabetesEnum:
+    description: Diabetes and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0000819
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005015
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicStrokeEnum:
+    description: Stroke and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001297
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005098
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicHeartDiseaseEnum:
+    description: Heart disease and related terms from Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005267
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicMyocardialInfarctionEnum:
+    description: Myocardial infarction and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001658
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005068
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicHypertensionEnum:
+    description: Hypertension and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0000822
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005044
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicLvhEnum:
+    description: Left ventricular hypertrophy and related terms from HPO
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001712
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicPadEnum:
+    description: Peripheral arterial disease and related terms from Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005386
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicSleepApneaEnum:
+    description: Sleep apnea and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0010535
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005296
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicVhdEnum:
+    description: Valvular heart disease and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0001654
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0002869
+          relationship_types:
+            - rdfs:subClassOf
+
+  DynamicVenThromEnum:
+    description: Venous thromboembolism and related terms from HPO and Mondo
+    include:
+      - reachable_from:
+          source_ontology: obo:hp
+          source_nodes:
+            - HP:0004936
+          relationship_types:
+            - rdfs:subClassOf
+      - reachable_from:
+          source_ontology: obo:mondo
+          source_nodes:
+            - MONDO:0005399
+          relationship_types:
+            - rdfs:subClassOf            
