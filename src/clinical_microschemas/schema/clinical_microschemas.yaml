@@ -547,21 +547,14 @@ classes:
                 - equals_expression: "{HumanBodyWeightRecord004} / ({HumanBodyHeightRecord003} / 100)^2"           
                 - equals_expression: "({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord002} / 39.37)^2"              
 
-#--------------------------------------------------------------
-#Need some suggestions on how to bundle a measured, predicted, and percent predicted
-#value. I suspect what I have done is not great. Open to suggestions.  
+#--------------------------------------------------------------  
 #SPIROMETRY
 #-------------------------------------------------------------
-  
   HumanFvcRecord:
     is_a: ClinicalMeasurementRecord
-    mixins:
-      - Relativity
-      - Context
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
-      possible. This microschema uses the Relativity mixin to bundle measured, predicted,
-      and percent predicted values.
+      possible.
     rules:
       - preconditions:
           slot_conditions:
@@ -585,79 +578,31 @@ classes:
               any_of:
                 - equals_string: spirometry
                 - equals_string: body_plesmography
+            context:
+              any_of:
+                - equals_string: before_bronchodilator
+                - equals_string: after_bronchodilator
     slot_usage:
       measurement_value:
         range: HumanFvcQuantity
-      predicted_value:
-        required: true
-      percent_predicted_value:
-        required: true
 
-  HumanMeasuredFvcRecord:
-    is_a: ClinicalMeasurementRecord
+  HumanFvcRecord001:
+    is_a: HumanFvcRecord
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
-      possible
+      possible in L.
     slot_usage:
       measurement_value:
-        range: HumanMeasuredFvcQuantity
-    rules:
-      - preconditions:
-          slot_conditions:
-            measurement_type:
-              any_of:
-                - equals_string: OMOP:4176265
-        postconditions:
-          slot_conditions:
-            unit:
-              any_of:
-                - equals_string: L
-                - equals_string: mL
-            instrument:
-              any_of:
-                - equals_string: spirometer
-                - equals_string: vitalograph
-                - equals_string: body_plesmograph
-            data_type:
-              equals_string: decimal
-            context:
-              any_of:
-                - equals_string: before_bronchodilator
-                - equals_string: after_bronchodilator
-            method:
-              any_of:
-                - equals_string: spirometry
-                - equals_string: body_plesmography
+        range: HumanFvcQuantity001
 
-  HumanMeasuredFvcRecord001:
-    is_a: HumanMeasuredFvcRecord
+  HumanFvcRecord002:
+    is_a: HumanFvcRecord
     description: >-
       Total amount of air a person can forcibly exhale after taking the deepest breath
-      possible
+      possible in mL.
     slot_usage:
       measurement_value:
-        range: HumanMeasuredFvcQuantity001
-    rules:
-      - preconditions:
-          slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: spirometer
-            unit:
-              any_of:
-                - equals_string: L
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: sitting
-            context:
-              any_of:
-                - equals_string: before_bronchodilator
-                - equals_string: after_bronchodilator
-            method:
-              any_of:
-                - equals_string: spirometry
+        range: HumanFvcQuantity002
 
   HumanPredictedFvcRecord:
     is_a: ClinicalMeasurementRecord
@@ -682,12 +627,13 @@ classes:
               equals_string: decimal
             instrument:
               any_of:
-                - equals_string: GLI
-                - equals_string: GLI-Global
-                - equals_string: NHANESIII
+                - equals_string: gli
+                - equals_string: gli_global
+                - equals_string: nhanesiii
             method:
               any_of:
                 - equals_string: calculated
+                #investigate adding the calculation
 
   HumanPercentPredictedFvcRecord:
     is_a: ClinicalMeasurementRecord
@@ -709,8 +655,13 @@ classes:
                 - equals_string: "%"
             data_type:
               equals_string: decimal
+            method:
+              equals_string: calculated
             calculated_from:
-              equals_expression: "({HumanMeasuredFvcRecord001} / {HumanPredictedFvcRecord}) * 100"
+              any_of:
+                - equals_expression: "({HumanFvcRecord001} / {HumanPredictedFvcRecord}) * 100"
+                - equals_expression: "(({HumanFvcRecord002} / 1000) / {HumanPredictedFvcRecord}) * 100"
+              
 
   HumanFev1Record:
     is_a: ClinicalMeasurementRecord
@@ -749,6 +700,79 @@ classes:
               any_of:
                 - equals_string: spirometry
 
+  HumanFev1Record001:
+    is_a: HumanFev1Record
+    description: >-
+      Maximum amount of air a person can forcibly exhale in the first second of a
+      breathing test in L
+    slot_usage:
+      measurement_value:
+        range: HumanFev1Quantity001
+
+  HumanFev1Record002:
+    is_a: HumanFev1Record
+    description: >-
+      Maximum amount of air a person can forcibly exhale in the first second of a
+      breathing test in mL
+    slot_usage:
+      measurement_value:
+        range: HumanFev1Quantity002
+
+  HumanPredictedFev1Record:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Predicted maximum amount of air a person can forcibly exhale in the first second of a
+      breathing test. Predictions are based on a reference equation.
+    slot_usage:
+      measurement_value:
+        range: HumanPredictedFev1Quantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3022891
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: L
+            data_type:
+              equals_string: decimal
+            instrument:
+              any_of:
+                - equals_string: gli
+                - equals_string: gli_global
+                - equals_string: nhanesiii
+            method:
+              any_of:
+                - equals_string: calculated
+                #investigate adding the calculation
+
+  HumanPercentPredictedFev1Record:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percent of the predicted FEV1 that is achieved by the patient
+    slot_usage:
+      measurement_value:
+        range: HumanPercentPredictedFev1Quantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3011708
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            calculated_from:
+              any_of:
+                - equals_expression: "({HumanFev1Record001} / {HumanPredictedFev1Record}) * 100"
+                - equals_expression: "(({HumanFev1Record002} / 1000) / {HumanPredictedFev1Record}) * 100"
 #-----------------------------------------------
 #basophil count
 #-----------------------------------------------
@@ -778,11 +802,13 @@ classes:
                 - equals_string: flow_cytometer
                 - equals_string: microscope
                 - equals_string: particle_counter
+                - equals_string: automated_hematology_analyzer
             data_type:
               equals_string: decimal
             method:
               any_of:
                 - equals_string: cbc
+                - equals_string: manual_differential
 
   HumanBasophilCountRecord001:
     is_a: HumanBasophilCountRecord
@@ -834,7 +860,7 @@ classes:
             method:
               any_of:
                 - equals_string: lc_ms_ms
-                - equals_string: GC-MS
+                - equals_string: gc_ms
                 - equals_string: elisa
 
   Human8epiPGF2aUrineRecord001:
@@ -1086,6 +1112,3124 @@ classes:
                 - equals_expression: "({HumanAlbuminUrineQuantity003} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
                 - equals_expression: "({HumanAlbuminUrineQuantity004} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
                 - equals_expression: "({HumanAlbuminUrineQuantity005} * 10) / ({HumanCreatinineUrineRecord001} / 1000)"
+
+
+#----------------------------------------------------------
+# BDC Bulk-Created ClinicalMeasurementRecords
+#----------------------------------------------------------
+
+  ApneaHypopneaIndexRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement used to diagnose and assess the severity of sleep apnea. It is
+      calculated by counting the number of apneas and hypopneas that occur per hour
+      of sleep.
+    slot_usage:
+      measurement_value:
+        range: ApneaHypopneaIndexQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37396400
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: /h
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: polysomnography
+                - equals_string: home_sleep_apnea_test
+            instrument:
+              any_of:
+                - equals_string: polysomnograph
+                - equals_string: portable_home_sleep_apnea_monitor
+
+  HumanAlbuminBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement of albumin concentration in blood serum
+    slot_usage:
+      measurement_value:
+        range: HumanAlbuminBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2050068
+                - equals_string: OMOP:2212186
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: g/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: bcg_bcp_colorimetric
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  AlcoholConsumptionRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Servings of alcohol consumed per week
+    slot_usage:
+      measurement_value:
+        range: AlcoholConsumptionQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:35609491
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{#}/wk"
+            data_type:
+              equals_string: integer
+            method:
+              any_of:
+                - equals_string: questionnaire
+                - equals_string: survey
+                - equals_string: interview
+
+  HumanAltSgptRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of ALT (alanine transaminase / SGPT) in blood, typically measured
+      in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanAltSgptQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2050062
+                - equals_string: OMOP:4146380
+                - equals_string: OBA:VT0001573
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "[IU]/L"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: enzymatic_kinetic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanAstSgotRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of AST (aspartate aminotransferase / SGOT) in blood, typically
+      measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanAstSgotQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100047
+                - equals_string: OMOP:4263457
+                - equals_string: OMOP:3010587
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "[IU]/L"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: enzymatic_kinetic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanBilirubinConjugatedRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of conjugated (direct) bilirubin in blood, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanBilirubinConjugatedQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:44805650
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: diazo_colorimetric
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanBilirubinTotalRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of total bilirubin in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanBilirubinTotalQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4230543
+                - equals_string: OBA:VT0001569
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: diazo_colorimetric
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanBNPRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of BNP (B-type natriuretic peptide) in blood, typically measured
+      in plasma or whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanBNPQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3031569
+                - equals_string: OBA:2100274
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: chemiluminescence_immunoassay
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: automated_immunoassay_analyzer
+                - equals_string: point_of_care_cardiac_analyzer
+
+  HumanBloodUreaNitrogenRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of blood urea nitrogen (BUN) in blood, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanBloodUreaNitrogenQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0005265
+                - equals_string: OMOP:4017361
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: urease_gldh
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanBUNCreatinineRatioRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Ratio of blood urea nitrogen (BUN) to creatinine in blood, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanBUNCreatinineRatioQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100054
+                - equals_string: OMOP:4112223
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{ratio}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: calculated
+            calculated_from:
+              any_of:
+                - equals_expression: "{HumanBloodUreaNitrogenRecord} / {HumanCreatinineBloodRecord}"
+
+  HumanCReactiveProteinRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of C-reactive protein (CRP) in blood, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCReactiveProteinQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4208414
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/L
+                - equals_string: mg/dL
+                - equals_string: ug/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: immunoturbidometry
+                - equals_string: immunonephelometry
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanCReactiveProteinRecord001:
+    is_a: HumanCReactiveProteinRecord
+    description: >-
+      Concentration of C-reactive protein (CRP) in blood in mg/L, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCReactiveProteinQuantity001
+      unit:
+        any_of:
+          - equals_string: "mg/L"
+
+  HumanCReactiveProteinRecord002:
+    is_a: HumanCReactiveProteinRecord
+    description: >-
+      Concentration of C-reactive protein (CRP) in blood in mg/dL, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCReactiveProteinQuantity002
+      unit:
+        any_of:
+          - equals_string: "mg/dL"
+
+  HumanCReactiveProteinRecord003:
+    is_a: HumanCReactiveProteinRecord
+    description: >-
+      Concentration of C-reactive protein (CRP) in blood in ug/mL, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCReactiveProteinQuantity001
+      unit:
+        any_of:
+          - equals_string: "ug/mL"
+        
+  CoronaryArteryCalciumScoreRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Coronary artery calcium (CAC) Agatston score derived from a non-contrast
+      cardiac CT scan
+    slot_usage:
+      measurement_value:
+        range: CoronaryArteryCalciumScoreQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:42872742
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{score}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: agatston_scoring
+            instrument:
+              any_of:
+                - equals_string: ct_scanner
+
+  CoronaryArteryCalciumVolumeRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Volume of coronary artery calcium in the arteries of the heart as measured by
+      CT scan, reported in mm³
+    slot_usage:
+      measurement_value:
+        range: CoronaryArteryCalciumVolumeQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4166120
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mm3
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: volume_scoring
+            instrument:
+              any_of:
+                - equals_string: ct_scanner
+
+  CarotidIntimamediaThicknessRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Carotid intima-media thickness (IMT) measured as the thickness of the inner two
+      layers of the carotid artery wall using B-mode ultrasound
+    slot_usage:
+      measurement_value:
+        range: CarotidIntimamediaThicknessQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2090004
+                - equals_string: OMOP:4138462
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mm
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: carotid_ultrasound
+            instrument:
+              any_of:
+                - equals_string: carotid_ultrasound_system
+
+  CarotidStenosisLeftRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Degree of stenosis in the left carotid artery as a percentage
+    slot_usage:
+      measurement_value:
+        range: CarotidStenosisQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:43020498
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: duplex_ultrasound
+                - equals_string: ct_angiography
+            instrument:
+              any_of:
+                - equals_string: carotid_ultrasound_system
+                - equals_string: ct_scanner
+
+  CarotidStenosisRightRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Degree of stenosis in the right carotid artery as a percentage
+    slot_usage:
+      measurement_value:
+        range: CarotidStenosisQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:43021859
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: duplex_ultrasound
+                - equals_string: ct_angiography
+            instrument:
+              any_of:
+                - equals_string: carotid_ultrasound_system
+                - equals_string: ct_scanner
+
+  HumanCD40BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of CD40 (cluster of differentiation antigen 40) in blood,
+      typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCD40BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052305
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  CESDScoreRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Score from the CES-D (Center for Epidemiological Studies Depression Scale)
+      self-report questionnaire
+    slot_usage:
+      measurement_value:
+        range: CESDScoreQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:36303297
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{score}"
+            data_type:
+              equals_string: integer
+            method:
+              any_of:
+                - equals_string: questionnaire
+
+  HumanChlorideBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of chloride in blood (serum chloride), typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanChlorideBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0003018
+                - equals_string: OMOP:4188066
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mmol/L
+                - equals_string: mmol/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: ion_selective_electrode
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanChlorideBloodRecord001:
+    is_a: HumanChlorideBloodRecord
+    description: >-
+      Concentration of chloride in blood in mmol/L (serum chloride), typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanChlorideBloodQuantity001
+      unit:
+        any_of:
+          - equals_string: "mmol/L"
+
+  HumanChlorideBloodRecord002:
+    is_a: HumanChlorideBloodRecord
+    description: >-
+      Concentration of chloride in blood in mmol/dL (serum chloride), typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanChlorideBloodQuantity002
+      unit:
+        any_of:
+          - equals_string: "mmol/dL"
+
+  HumanCreatinineBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of creatinine in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCreatinineBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2050096
+                - equals_string: OMOP:2212294
+                - equals_string: OBA:VT0005328
+                - equals_string: OMOP:3051825                
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: jaffe_reaction
+                - equals_string: enzymatic_creatinine_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanCystatinCBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of cystatin C in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanCystatinCBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052375
+                - equals_string: OMOP:4136584
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: immunoturbidometry
+                - equals_string: immunonephelometry
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanDDimerRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of D-dimer in blood, measured in whole blood or plasma in
+      fibrinogen-equivalent units (FEU)
+    slot_usage:
+      measurement_value:
+        range: HumanDDimerQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100048
+                - equals_string: OMOP:37393605
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ug/mL
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: immunoturbidometry
+                - equals_string: elisa
+                - equals_string: latex_agglutination
+            instrument:
+              any_of:
+                - equals_string: automated_coagulation_analyzer
+
+  HumanDDimerRecord001:
+    is_a: HumanDDimerRecord
+    description: >-
+      Concentration of D-dimer in blood, measured in whole blood or plasma in
+      fibrinogen-equivalent units (FEU) in ug/mL
+    slot_usage:
+      measurement_value:
+        range: HumanDDimerQuantity001
+      unit:
+        any_of:
+          - equals_string: "ug/mL"
+
+  HumanDDimerRecord002:
+    is_a: HumanDDimerRecord
+    description: >-
+      Concentration of D-dimer in blood, measured in whole blood or plasma in
+      fibrinogen-equivalent units (FEU) in ng/mL
+    slot_usage:
+      measurement_value:
+        range: HumanDDimerQuantity002
+      unit:
+        any_of:
+          - equals_string: "ng/mL"
+
+  HumanDiastolicBloodPressureRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement of pressure in the arteries when the heart is at rest between beats
+      (the bottom number in a blood pressure reading)
+    slot_usage:
+      measurement_value:
+        range: HumanDiastolicBloodPressureQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4154790
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mm[Hg]
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: auscultatory
+                - equals_string: oscillometric
+            instrument:
+              any_of:
+                - equals_string: sphygmomanometer
+                - equals_string: automated_bp_monitor
+
+  HumanBloodPressureRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement of pressure in the arteries when the heart pumps blood (top number) and
+      when the heart is at rest between beats (bottom number). Typically represented as
+      a fraction rather than a decimal.
+    rules:
+      - postconditions:
+          slot_conditions:
+            data_type:
+              equals_string: string
+            calculated_from:
+              equals_expression: "str({HumanSystolicBloodPressureRecord}) + / + str({HumanDiastolicBloodPressureRecord})"
+  HumanESelectinBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of E-selectin in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanESelectinBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052778
+                - equals_string: OMOP:3010372
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanEstimatedGFRRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Estimated glomerular filtration rate (eGFR) calculated from serum creatinine
+      and/or cystatin C, age, and sex using an estimating equation such as CKD-EPI
+      or MDRD
+    slot_usage:
+      measurement_value:
+        range: HumanEstimatedGFRQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37208635
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "mL/min/{1.73_m2}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: calculated
+#Need to figure this out - will have a gate depending on gender                
+#            calculated_from:
+#              rules:
+#                - preconditions:
+#                    case statement ({HumanCreatinineBloodRecord}/0.7) < 1
+#                - equals_expression: "142str({HumanSystolicBloodPressureRecord}) + / + str({HumanDiastolicBloodPressureRecord})"
+
+  HumanEosinophilCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of eosinophil cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanEosinophilCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0002602
+                - equals_string: OMOP:3013115
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: microscope
+
+  HumanFactorVIIRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Factor VII (proconvertin) activity in plasma, expressed as percent of normal
+    slot_usage:
+      measurement_value:
+        range: HumanFactorVIIQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2041535
+                - equals_string: OMOP:4217630
+                - equals_string: OBA:2050626
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%{Normal}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: one_stage_clotting
+            instrument:
+              any_of:
+                - equals_string: automated_coagulation_analyzer
+
+  HumanFactorVIIIRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Factor VIII activity in plasma, expressed in IU/mL
+    slot_usage:
+      measurement_value:
+        range: HumanFactorVIIIQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2041536
+                - equals_string: OMOP:4148587
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "[IU]/mL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: one_stage_clotting
+                - equals_string: chromogenic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_coagulation_analyzer
+
+  HumanFastingGlucoseRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of glucose in blood after fasting for a set period, typically
+      8–12 hours
+    slot_usage:
+      measurement_value:
+        range: HumanFastingGlucoseQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2090000
+                - equals_string: OMOP:4156660
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: hexokinase_glucose_oxidase
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+                - equals_string: glucometer
+            context:
+              any_of:
+                - equals_string: fasted_8_hrs
+                - equals_string: fasted_12_hrs
+
+  HumanFastingGlucoseRecord001:
+    is_a: HumanFastingGlucoseRecord
+    description: >-
+      Concentration of glucose (mg/dL) in blood after fasting for a set period, typically
+      8–12 hours
+    slot_usage:
+      measurement_value:
+        range: HumanFastingGlucoseQuantity001
+
+  HumanFastingGlucoseRecord002:
+    is_a: HumanFastingGlucoseRecord
+    description: >-
+      Concentration of glucose (mmol/L) in blood after fasting for a set period, typically
+      8–12 hours
+    slot_usage:
+      measurement_value:
+        range: HumanFastingGlucoseQuantity002
+
+  HumanFerritinRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of ferritin in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanFerritinQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0010513
+                - equals_string: OMOP:4176561
+                - equals_string: OMOP:3001122
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: chemiluminescence_immunoassay
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: automated_immunoassay_analyzer
+
+  HumanFEV1FVCRatioRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Ratio of the forced expiratory volume in one second (FEV1) to the forced vital
+      capacity (FVC), expressed as a percentage or ratio and measured before bronchodilator
+      administration
+    slot_usage:
+      measurement_value:
+        range: HumanFEV1FVCRatioQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3011505
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+                - equals_string: "{ratio}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: calculated
+            context:
+              any_of:
+                - equals_string: before_bronchodilator
+                - equals_string: after_bronchodilator
+            calculated_from:
+              any_of:
+                - equals_expression: "{HumanFev1Record001} / {HumanFvcRecord001}"
+                - equals_expression: "{HumanFev1Record002} / {HumanFvcRecord002}"
+              
+  HumanFEV1FVCRatioRecord001:
+    is_a: HumanFEV1FVCRatioRecord
+    description: >-
+      Ratio of the forced expiratory volume in one second (FEV1) to the forced vital
+      capacity (FVC), expressed as a percentage or ratio and measured before bronchodilator
+      administration - given as a ratio
+    slot_usage:
+      measurement_value:
+        range: HumanFEV1FVCRatioQuantity001
+        
+  HumanFEV1FVCRatioRecord002:
+    is_a: HumanFEV1FVCRatioRecord
+    description: >-
+      Ratio of the forced expiratory volume in one second (FEV1) to the forced vital
+      capacity (FVC), expressed as a percentage or ratio and measured before bronchodilator
+      administration - given as a percentage
+    slot_usage:
+      measurement_value:
+        range: HumanFEV1FVCRatioQuantity002
+
+  HumanPredictedFEV1FVCRatioRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Predicted ratio of the forced expiratory volume in one second (FEV1) to the forced vital
+      capacity (FVC). Predictions are based on a reference equation.
+    slot_usage:
+      measurement_value:
+        range: HumanPredictedFEV1FVCRatioQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3024594
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{ratio}"
+            data_type:
+              equals_string: decimal
+            instrument:
+              any_of:
+                - equals_string: gli
+                - equals_string: gli_global
+                - equals_string: nhanesiii
+            method:
+              any_of:
+                - equals_string: calculated
+
+  HumanPercentPredictedFEV1FVCRatioRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Predictof the predicted ratio of the forced expiratory volume in one second (FEV1) to the forced vital
+      capacity (FVC) that is achieved by the patient.
+    slot_usage:
+      measurement_value:
+        range: HumanPercentPredictedFEV1FVCRatioQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3024594
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            instrument:
+              any_of:
+                - equals_string: gli
+                - equals_string: gli_global
+                - equals_string: nhanesiii
+            method:
+              equals_string: calculated
+            calculated_from:
+              any_of:
+                - equals_expression: "({HumanFEV1FVCRatioRecord001} / {HumanPredictedFEV1FVCRatioRecord}) * 100"
+                    
+  HumanFibrinogenRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of fibrinogen in plasma
+    slot_usage:
+      measurement_value:
+        range: HumanFibrinogenQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:0000061
+                - equals_string: OMOP:4094436
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: clauss_assay
+                - equals_string: immunoturbidometry
+            instrument:
+              any_of:
+                - equals_string: automated_coagulation_analyzer
+
+  FruitConsumptionRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Servings of fruits consumed per week (includes fruit and fruit juice)
+    slot_usage:
+      measurement_value:
+        range: FruitConsumptionQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:21493059
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{#}/wk"
+            data_type:
+              equals_string: integer
+            method:
+              any_of:
+                - equals_string: questionnaire
+                - equals_string: survey
+                - equals_string: interview
+#maybe update this as calculated from a time series of blood or urine samples with tracer
+  HumanGFRRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Glomerular filtration rate (GFR) measuring how much blood passes through the
+      glomeruli per minute
+    slot_usage:
+      measurement_value:
+        range: HumanGFRQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:0003747
+                - equals_string: OMOP:4213477
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "mL/min/{1.73_m2}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: clearance_test
+
+  HumanGlucoseBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of glucose in blood, measured in whole blood, serum, or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanGlucoseBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000188
+                - equals_string: OMOP:4149519
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: hexokinase_glucose_oxidase
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+                - equals_string: glucometer
+
+  HumanHDLRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of high-density lipoprotein (HDL) cholesterol in blood, typically
+      measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanHDLQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000184
+                - equals_string: OMOP:4076704
+                - equals_string: OBA:2045397
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: direct_homogeneous_enzymatic
+                - equals_string: precipitation_method
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+            context:
+              any_of:
+                - equals_string: no_lipid_lowering_medications
+                - equals_string: taking_lipid_lowering_medications
+
+  HumanHDLRecord001:
+    is_a: HumanHDLRecord
+    description: >-
+      Concentration of high-density lipoprotein (HDL) cholesterol in blood in mg/dL, typically
+      measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanHDLQuantity001
+      unit:
+        any_of:
+          - equals_string: "mg/dL"
+
+  HumanHDLRecord002:
+    is_a: HumanHDLRecord
+    description: >-
+      Concentration of high-density lipoprotein (HDL) cholesterol in blood in mmol/L, typically
+      measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanHDLQuantity002
+      unit:
+        any_of:
+          - equals_string: "mmol/L"
+
+  HumanHeartRateRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Number of times the heart beats per minute (pulse rate)
+    slot_usage:
+      measurement_value:
+        range: HumanHeartRateQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:1001087
+                - equals_string: OMOP:3027018
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{beats}/min"
+            data_type:
+              equals_string: integer
+            method:
+              any_of:
+                - equals_string: electrocardiography
+                - equals_string: pulse_oximetry
+                - equals_string: manual_pulse_palpation
+            instrument:
+              any_of:
+                - equals_string: electrocardiograph
+                - equals_string: pulse_oximeter
+                - equals_string: stethoscope
+
+  HumanHematocritRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percentage of whole blood volume that consists of red blood cells (packed cell
+      volume)
+    slot_usage:
+      measurement_value:
+        range: HumanHematocritQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2045381
+                - equals_string: OMOP:4151358
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: microhematocrit_centrifugation
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: hematocrit_centrifuge
+
+  HumanHemoglobinRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of hemoglobin in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanHemoglobinQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2060175
+                - equals_string: OMOP:4094758
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: g/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cyanmethemoglobin
+                - equals_string: cbc
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+
+  HumanHemoglobinA1cRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percentage of hemoglobin in red blood cells that has glucose attached to it
+      (HbA1c), reflecting average blood glucose over the preceding 2–3 months
+    slot_usage:
+      measurement_value:
+        range: HumanHemoglobinA1cQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100049
+                - equals_string: OMOP:4184637
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: hplc
+                - equals_string: chemiluminescence_immunoassay
+                - equals_string: elisa
+                - equals_string: boronate_affinity_chromatography
+            instrument:
+              any_of:
+                - equals_string: hba1c_analyzer
+                - equals_string: automated_immunoassay_analyzer
+
+  HumanHipCircumferenceRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Distance measurement taken around the fullest part of the hips in cm
+    slot_usage:
+      measurement_value:
+        range: HumanHipCircumferenceQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:1000032
+                - equals_string: OMOP:4111665
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: cm
+                - equals_string: "[in_i]"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: direct_measurement
+                - equals_string: anthropometry
+            instrument:
+              any_of:
+                - equals_string: flexible_measuring_tape
+                
+  HumanHipCircumferenceRecord001:
+    is_a: HumanHipCircumferenceRecord
+    description: >-
+      Distance measurement taken around the fullest part of the hips in cm
+    slot_usage:
+      measurement_value:
+        range: HumanHipCircumferenceQuantity001
+      unit:
+        any_of:
+          - equals_string: "cm"
+        
+  HumanHipCircumferenceRecord002:
+    is_a: HumanHipCircumferenceRecord
+    description: >-
+      Distance measurement taken around the fullest part of the hips in inches
+    slot_usage:
+      measurement_value:
+        range: HumanHipCircumferenceQuantity002
+      unit:
+        any_of:
+          - equals_string: "[in_i]"
+
+  HumanICAM1BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of intercellular adhesion molecule 1 (ICAM-1) in blood,
+      typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanICAM1BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4284103
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanInsulinBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of insulin in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInsulinBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2060174
+                - equals_string: OMOP:4060873
+                - equals_string: OMOP:3022466
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pmol/L
+                - equals_string: "u[iU]/mL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: chemiluminescence_immunoassay
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: automated_immunoassay_analyzer
+
+  HumanInsulinBloodRecord001:
+    is_a: HumanInsulinBloodRecord
+    description: >-
+      Concentration of insulin in blood (pmol/L), typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInsulinBloodQuantity001
+      unit:
+        any_of:
+          - equals_string: "pmol/L"
+
+  HumanInsulinBloodRecord002:
+    is_a: HumanInsulinBloodRecord
+    description: >-
+      Concentration of insulin in blood (u[iU]/mL), typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInsulinBloodQuantity002
+      unit:
+        any_of:
+          - equals_string: "u[iU]/mL"
+
+  HumanInterleukin18BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of interleukin-18 (IL-18) in blood, typically measured in serum
+      or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInterleukin18BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3043144
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: multiplex_bead_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: multiplex_analyzer
+
+  HumanInterleukin1BetaBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of interleukin-1 beta (IL-1β) in blood, typically measured in
+      serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInterleukin1BetaBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0008640
+                - equals_string: OMOP:3001804
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: multiplex_bead_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: multiplex_analyzer
+
+  HumanInterleukin10BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of interleukin-10 (IL-10) in blood, typically measured in serum
+      or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInterleukin10BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0008590
+                - equals_string: OMOP:3004578
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: multiplex_bead_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: multiplex_analyzer
+
+  HumanInterleukin6BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of interleukin-6 (IL-6) in blood, typically measured in serum
+      or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanInterleukin6BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052890
+                - equals_string: OMOP:4332015
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: chemiluminescence_immunoassay
+                - equals_string: multiplex_bead_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: automated_immunoassay_analyzer
+                - equals_string: multiplex_analyzer
+
+  HumanLactateDehydrogenaseRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Activity of lactate dehydrogenase (LDH) in blood, typically measured in serum
+      or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanLactateDehydrogenaseQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0010477
+                - equals_string: OMOP:4012918
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "[IU]/L"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: enzymatic_kinetic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanLactateBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of lactate in blood, typically measured in whole blood or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanLactateBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0010616
+                - equals_string: OMOP:1246795
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: hexokinase_glucose_oxidase
+                - equals_string: enzymatic_kinetic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+                - equals_string: blood_gas_analyzer
+                - equals_string: lactate_meter
+
+  HumanLDLRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of low-density lipoprotein (LDL) cholesterol in blood, typically
+      measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanLDLQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000181
+                - equals_string: OMOP:4331302
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: friedewald_calculation
+                - equals_string: direct_homogeneous_enzymatic
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+                
+  HumanLDLRecord001:
+    is_a: HumanLDLRecord
+    description: >-
+      Concentration of low-density lipoprotein (LDL) cholesterol in blood, typically
+      measured in serum derived from the Friedewald calculation
+    rules:
+      - preconditions:
+          slot_conditions:
+            method:
+              equals_string: friedewald_calculation
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              equals_expression: "{HumanTotalCholesterolRecord001} - {HumanHDLRecord001} - ({HumanTriglyceridesBloodRecord001}/5)"
+
+  HumanLymphocyteCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of lymphocytes in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanLymphocyteCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000717
+                - equals_string: OMOP:37208689
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: microscope
+
+  HumanLymphocytePercentRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percent of total leukocytes that are lymphocytes
+    slot_usage:
+      measurement_value:
+        range: HumanLymphocytePercentQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37208690
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%{WBCs}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+                - equals_string: calculated
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: microscope
+
+  HumanLymphocytePercentRecord001:
+    is_a: HumanLymphocytePercentRecord
+    description: >-
+      Calculated percent of total leukocytes that are lymphocytes
+    rules:
+      - preconditions:
+          slot_conditions:
+            method:
+              equals_string: calculated
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              equals_string: "({HumanLymphocyteCountRecord} / {HumanWhiteBloodCellCountRecord}) * 100"
+
+  HumanLPPLA2MassBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Mass concentration of Lp-PLA2 (lipoprotein-associated phospholipase A2) enzyme
+      in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanLPPLA2MassBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3041450
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanMCP1BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of monocyte chemoattractant protein-1 (MCP-1 / CCL2) in blood,
+      typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanMCP1BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052436
+                - equals_string: OMOP:1617307
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: multiplex_bead_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: multiplex_analyzer
+
+  HumanMeanArterialPressureRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Average pressure in the arteries throughout one complete cardiac cycle. Can be
+      calculated or measured directly.
+    slot_usage:
+      measurement_value:
+        range: HumanMeanArterialPressureQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT2000000
+                - equals_string: OMOP:37168599
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mm[Hg]
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: calculated
+                - equals_string: arterial_catheter
+
+  HumanMeanArterialPressureRecord001:
+    is_a: HumanMeanArterialPressureRecord
+    description: >-
+      Average pressure in the arteries throughout one complete cardiac cycle - calculated - 
+      (MAP = DBP + 1/3 × [SBP − DBP])
+    rules:
+      - preconditions:
+          slot_conditions:
+            method:
+              equals_string: calculated
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              equals_string: "{HumanDiastolicBloodPressureRecord} + ((1/3) * ({HumanSystolicBloodPressureRecord} - {HumanDiastolicBloodPressureRecord}))"
+                
+#is this average calculated or gotten from a machine?
+  HumanMCHRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Average amount of hemoglobin in each red blood cell (MCH - Mean Corpuscular Hemoglobin).
+      This can be calculated and returned by a hematology analyzer or calculated separately.
+    slot_usage:
+      measurement_value:
+        range: HumanMCHQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2045301
+                - equals_string: OMOP:37398674
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "pg/{cell}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: calculated
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+
+  HumanMCHRecord001:
+    is_a: HumanMCHRecord
+    description: >-
+      Calculated average amount of hemoglobin in each red blood cell (MCH - Mean Corpuscular Hemoglobin)
+    rules:
+      - preconditions:
+          slot_conditions:
+            method:
+              equals_string: calculated
+        postconditions:
+          slot_conditions:
+            calculated_froom:
+              equals_string: "{HumanHemoglobinRecord} / {HumanRBCCountRecord}"
+
+  HumanMCHCRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Average concentration of hemoglobin within a single red blood cell (MCHC - mean
+      corpuscular hemoglobin concentration). This value can be calculated and returned
+      by an analyzer or calculated separately.
+    slot_usage:
+      measurement_value:
+        range: HumanMCHCQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37393850
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: g/dL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: calculated
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+
+  HumanMCHCRecord001:
+    is_a: HumanMCHCRecord
+    description: >-
+      Calculated average concentration of hemoglobin within a single red blood cell (MCHC - mean
+      corpuscular hemoglobin concentration)
+    rules:
+      - preconditions:
+          slot_conditions:
+            method:
+              equals_string: calculated
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              equals_string: "{HumanHemoglobinRecord} / {HumanHematocritRecord}"
+
+  HumanMCVRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Average size/volume of a red blood cell (MCV - mean corpuscular volume). This
+      value is measured directly by analyzers, but older data may have been manually
+      calculated.
+    slot_usage:
+      measurement_value:
+        range: HumanMCVQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:0003460
+                - equals_string: OMOP:37393851
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: fL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: calculated
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+
+  HumanMCVRecord001:
+    is_a: HumanMCVRecord
+    description: >-
+      Calculated average size/volume of a red blood cell (MCV - mean corpuscular volume).
+    rules:
+      - preconditions:
+          slot_conditions:
+            method: 
+              equals_string: calculated
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              equals_string: "{HumanHematocritRecord} / {HumanRBCCountRecord}"
+
+  HumanMPVRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Average size/volume of a platelet (MPV - mean platelet volume)
+    slot_usage:
+      measurement_value:
+        range: HumanMPVQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:0003277
+                - equals_string: OMOP:37397923
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: fL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+
+  HumanMMP9BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of matrix metalloproteinase-9 (MMP-9) in blood, typically
+      measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanMMP9BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052397
+                - equals_string: OMOP:40761106
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanMonocyteCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of monocyte cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanMonocyteCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000223
+                - equals_string: OMOP:3001604
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: microscope
+
+  HumanMyeloperoxidaseBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of myeloperoxidase (MPO) in blood, typically measured in plasma
+      or serum
+    slot_usage:
+      measurement_value:
+        range: HumanMyeloperoxidaseBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052389
+                - equals_string: OMOP:1988928
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: chemiluminescence_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: automated_immunoassay_analyzer
+
+  HumanNeutrophilCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of neutrophil cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanNeutrophilCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000222
+                - equals_string: OMOP:37208699
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: microscope
+
+  HumanNeutrophilPercentRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percent of total leukocytes that are neutrophils
+    slot_usage:
+      measurement_value:
+        range: HumanNeutrophilPercentQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37208698
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%{WBCs}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+                - equals_string: calculated
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: microscope
+
+  HumanNeutrophilPercentRecord001:
+    is_a: HumanNeutrophilPercentRecord
+    description: >-
+      Calculated percent of total leukocytes that are neutrophils
+    rules:
+      - preconditions:
+          slot_conditions:
+            method:
+              equals_string: calculated
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              equals_string: "({HumanNeutrophilCountRecord} / {HumanWhiteBloodCellCountRecord}) * 100"
+
+  HumanNTproBNPRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of NT-proBNP (N-terminal prohormone of brain natriuretic peptide)
+      in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanNTproBNPQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2045349
+                - equals_string: OMOP:4189511
+                - equals_string: OMOP:44812009
+                - equals_string: OMOP:44812008
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: chemiluminescence_immunoassay
+            instrument:
+              any_of:
+                - equals_string: automated_immunoassay_analyzer
+                - equals_string: point_of_care_cardiac_analyzer
+
+  HumanOsteoprotegerinBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of osteoprotegerin (OPG) in blood, typically measured in serum
+      or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanOsteoprotegerinBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2050271
+                - equals_string: OMOP:1552124
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanPSelectinBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of P-selectin in blood, typically measured in plasma
+    slot_usage:
+      measurement_value:
+        range: HumanPSelectinBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052701
+                - equals_string: OMOP:3007356
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanPlateletCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of platelets in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanPlateletCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0003179
+                - equals_string: OMOP:4267147
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: hemocytometer
+
+  HumanPotassiumBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of potassium in blood, typically measured in whole blood or serum
+    slot_usage:
+      measurement_value:
+        range: HumanPotassiumBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0002668
+                - equals_string: OMOP:4245152
+                - equals_string: OMOP:21490733
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: ion_selective_electrode
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+                - equals_string: blood_gas_analyzer
+
+  HumanPRIntervalRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Time for electrical impulses to travel from the atria to the ventricles of the
+      heart as measured by ECG/EKG, in milliseconds
+    slot_usage:
+      measurement_value:
+        range: HumanPRIntervalQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4274406
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ms
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: electrocardiography
+            instrument:
+              any_of:
+                - equals_string: electrocardiograph
+
+  HumanQRSIntervalRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Time that elapses from the beginning of the Q wave to the end of the S wave on
+      an ECG/EKG, in milliseconds
+    slot_usage:
+      measurement_value:
+        range: HumanQRSIntervalQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:1001086
+                - equals_string: OMOP:4273021
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ms
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: electrocardiography
+            instrument:
+              any_of:
+                - equals_string: electrocardiograph
+
+  HumanQTIntervalRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Time for the ventricles of the heart to depolarize and repolarize as measured
+      by ECG/EKG, in milliseconds
+    slot_usage:
+      measurement_value:
+        range: HumanQTIntervalQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:4273023
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ms
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: electrocardiography
+            instrument:
+              any_of:
+                - equals_string: electrocardiograph
+
+  HumanRBCCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of red blood cells in whole blood - RBC
+    slot_usage:
+      measurement_value:
+        range: HumanRBCCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0001586
+                - equals_string: OMOP:4030871
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*6/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: hemocytometer
+
+  HumanRDWRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measure of the variation in size and volume of red blood cells (RDW - red cell
+      distribution width), expressed as a coefficient of variation percentage
+    slot_usage:
+      measurement_value:
+        range: HumanRDWQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37397924
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+
+  HumanSleepDurationRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Cumulative amount of time spent sleeping per night, in hours
+    slot_usage:
+      measurement_value:
+        range: HumanSleepDurationQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2040171
+                - equals_string: OMOP:40768653
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: h
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: questionnaire
+                - equals_string: survey
+                - equals_string: actigraphy
+                - equals_string: polysomnography
+            instrument:
+              any_of:
+                - equals_string: actigraph
+                - equals_string: polysomnograph
+
+  HumanSodiumBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of sodium in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanSodiumBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0001776
+                - equals_string: OMOP:4097430
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: ion_selective_electrode
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  SodiumIntakeRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Mass of sodium consumed by an individual per day
+    slot_usage:
+      measurement_value:
+        range: SodiumIntakeQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:606729
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/d
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: questionnaire
+                - equals_string: survey
+                - equals_string: interview
+
+  HumanSpO2Record:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Percentage of oxygen-carrying hemoglobin in the blood compared to the total
+      amount of hemoglobin (oxygen saturation / SpO2)
+    slot_usage:
+      measurement_value:
+        range: HumanSpO2Quantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2045443
+                - equals_string: OMOP:4020553
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: pulse_oximetry
+            instrument:
+              any_of:
+                - equals_string: pulse_oximeter
+
+  HumanSystolicBloodPressureRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Measurement of pressure in the arteries when the heart pumps blood (the top
+      number in a blood pressure reading)
+    slot_usage:
+      measurement_value:
+        range: HumanSystolicBloodPressureQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:3003205
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mm[Hg]
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: auscultatory
+                - equals_string: oscillometric
+            instrument:
+              any_of:
+                - equals_string: sphygmomanometer
+                - equals_string: automated_bp_monitor
+
+  HumanBodyTemperatureRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      An individual's internal body temperature in degrees Celsius
+    slot_usage:
+      measurement_value:
+        range: HumanBodyTemperatureQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0005535
+                - equals_string: OMOP:4302666
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: Cel
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: thermometry
+            instrument:
+              any_of:
+                - equals_string: thermometer
+                - equals_string: infrared_thermometer
+
+  HumanTNFAlphaBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of TNF-alpha (tumor necrosis factor alpha) in blood, typically
+      measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanTNFAlphaBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2051979
+                - equals_string: OMOP:3004282
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+                - equals_string: multiplex_bead_immunoassay
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+                - equals_string: multiplex_analyzer
+
+  HumanTNFAlphaR1BloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of TNF receptor 1 (TNFR1 / TNFRSF1A) in blood, typically
+      measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanTNFAlphaR1BloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2051975
+                - equals_string: OMOP:46235360
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: pg/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: elisa
+            instrument:
+              any_of:
+                - equals_string: microplate_reader
+
+  HumanTotalCholesterolRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of all cholesterol in blood (total cholesterol), including both
+      HDL and LDL, typically measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanTotalCholesterolQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000180
+                - equals_string: OMOP:4008265
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: enzymatic_kinetic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+                
+  HumanTotalCholesterolRecord001:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of all cholesterol in blood (total cholesterol in mg/dL), including both
+      HDL and LDL, typically measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanTotalCholesterolQuantity001
+      unit:
+        any_of:
+          - equals_string: "mg/dL"
+        
+  HumanTotalCholesterolRecord002:
+    is_a: HumanTotalCholesterolRecord
+    description: >-
+      Concentration of all cholesterol in blood (total cholesterol in mmol/L), including both
+      HDL and LDL, typically measured in serum
+    slot_usage:
+      measurement_value:
+        range: HumanTotalCholesterolQuantity002
+      unit:
+        any_of:
+          - equals_string: "mmol/L"
+
+  HumanTriglyceridesBloodRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of triglycerides in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanTriglyceridesBloodQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0002644
+                - equals_string: OMOP:4032789
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: mg/dL
+                - equals_string: mmol/L
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: enzymatic_kinetic_assay
+            instrument:
+              any_of:
+                - equals_string: automated_clinical_chemistry_analyzer
+
+  HumanTriglyceridesBloodRecord001:
+    is_a: HumanTriglyceridesBloodRecord
+    description: >-
+      Concentration of triglycerides in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanTriglyceridesBloodQuantity001
+      unit:
+        any_of:
+          - equals_string: "mg/dL"
+
+  HumanTriglyceridesBloodRecord002:
+    is_a: HumanTriglyceridesBloodRecord
+    description: >-
+      Concentration of triglycerides in blood, typically measured in serum or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanTriglyceridesBloodQuantity002
+      unit:
+        any_of:
+          - equals_string: "mmol/L"
+
+  HumanTroponinRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of all types of troponin in blood, typically measured in serum
+      or plasma
+    slot_usage:
+      measurement_value:
+        range: HumanTroponinQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100051
+                - equals_string: OMOP:4021291
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: ng/mL
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: chemiluminescence_immunoassay
+            instrument:
+              any_of:
+                - equals_string: automated_immunoassay_analyzer
+                - equals_string: point_of_care_cardiac_analyzer
+
+  VegetableConsumptionRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Servings of vegetables consumed per week
+    slot_usage:
+      measurement_value:
+        range: VegetableConsumptionQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OMOP:37311566
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{#}/wk"
+            data_type:
+              equals_string: integer
+            method:
+              any_of:
+                - equals_string: questionnaire
+                - equals_string: survey
+                - equals_string: interview
+
+  HumanVonWillebrandFactorRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Von Willebrand factor (VWF) antigen or activity in blood, expressed as percent
+      of normal
+    slot_usage:
+      measurement_value:
+        range: HumanVonWillebrandFactorQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2052741
+                - equals_string: OMOP:4252203
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "%{Normal}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: immunoturbidometry
+                - equals_string: ristocetin_cofactor_assay
+            instrument:
+              any_of:
+                - equals_string: automated_coagulation_analyzer
+#add subrecord
+  HumanWaistCircumferenceRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Distance measurement taken around the waist, just above the hip bone
+    slot_usage:
+      measurement_value:
+        range: HumanWaistCircumferenceQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:1001085
+                - equals_string: OMOP:4172830
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: cm
+                - equals_string: mm
+                - equals_string: "[in_i]"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: direct_measurement
+                - equals_string: anthropometry
+            instrument:
+              any_of:
+                - equals_string: flexible_measuring_tape
+
+  HumanWaistCircumferenceRecord001:
+    is_a: HumanWaistCircumferenceRecord
+    description: >-
+      Distance measurement taken around the waist, just above the hip bone, in cm
+    slot_usage:
+      measurement_value:
+        range: HumanWaistCircumferenceQuantity001
+      unit:
+        any_of:
+          - equals_string: "cm"
+    
+  HumanWaistCircumferenceRecord002:
+    is_a: HumanWaistCircumferenceRecord
+    description: >-
+      Distance measurement taken around the waist, just above the hip bone, in mm
+    slot_usage:
+      measurement_value:
+        range: HumanWaistCircumferenceQuantity002
+      unit:
+        any_of:
+          - equals_string: "mm"
+
+  HumanWaistCircumferenceRecord003:
+    is_a: HumanWaistCircumferenceRecord
+    description: >-
+      Distance measurement taken around the waist, just above the hip bone, in inches
+    slot_usage:
+      measurement_value:
+        range: HumanWaistCircumferenceQuantity003
+      unit:
+        any_of:
+          - equals_string: "[in_i]"
+
+  HumanWaistHipRatioRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Ratio of the circumference of the waist to the circumference of the hips
+    slot_usage:
+      measurement_value:
+        range: HumanWaistHipRatioQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:2100052
+                - equals_string: OMOP:4087501
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "{ratio}"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: calculated
+            calculated_from:
+              any_of:
+                - equals_string: "{HumanWaistCircumferenceRecord001} / {HumanHipCircumferenceRecord001}"
+                - equals_string: "{HumanWaistCircumferenceRecord003} / {HumanHipCircumferenceRecord002}"
+
+  HumanWhiteBloodCellCountRecord:
+    is_a: ClinicalMeasurementRecord
+    description: >-
+      Concentration of white blood cells in whole blood
+    slot_usage:
+      measurement_value:
+        range: HumanWBCCountQuantity
+    rules:
+      - preconditions:
+          slot_conditions:
+            measurement_type:
+              any_of:
+                - equals_string: OBA:VT0000217
+                - equals_string: OMOP:4298431
+        postconditions:
+          slot_conditions:
+            unit:
+              any_of:
+                - equals_string: "10*3/uL"
+            data_type:
+              equals_string: decimal
+            method:
+              any_of:
+                - equals_string: cbc
+                - equals_string: manual_differential
+            instrument:
+              any_of:
+                - equals_string: automated_hematology_analyzer
+                - equals_string: hemocytometer
 
 #-------------------------------------------------
 # Conditions
@@ -1688,22 +4832,21 @@ classes:
 
   HumanFvcQuantity:
     is_a: Quantity
-    description: FVC measurement, bounded 0–12000.
+    description: FVC measurement, negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanFvcQuantity002:
+    is_a: HumanFvcQuantity
+    description: Measured FVC in mL, bounded 0–12000.
     slot_usage:
       quantity_value:
         minimum_value: 0
         maximum_value: 12000
 
-  HumanMeasuredFvcQuantity:
-    is_a: Quantity
-    description: Measured FVC, bounded 0–12000.
-    slot_usage:
-      quantity_value:
-        minimum_value: 0
-        maximum_value: 12000
-
-  HumanMeasuredFvcQuantity001:
-    is_a: HumanMeasuredFvcQuantity
+  HumanFvcQuantity001:
+    is_a: HumanFvcQuantity
     description: Measured FVC in L, bounded 0–12.
     slot_usage:
       quantity_value:
@@ -1728,12 +4871,42 @@ classes:
 
   HumanFev1Quantity:
     is_a: Quantity
-    description: FEV1 measurement, bounded 0–12000.
+    description: FEV1 measurement, negative values are impossible
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanFev1Quantity002:
+    is_a: Quantity
+    description: Measured FEV1 in mL, bounded 0–12000.
     slot_usage:
       quantity_value:
         minimum_value: 0
         maximum_value: 12000
 
+  HumanFev1Quantity001:
+    is_a: HumanFev1Quantity
+    description: Measured FEV1 in L, bounded 0–12.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12
+
+  HumanPredictedFev1Quantity:
+    is_a: Quantity
+    description: Predicted FEV1 in L, bounded 0–12.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 12
+
+  HumanPercentPredictedFev1Quantity:
+    is_a: Quantity
+    description: Percent-predicted FEV1, bounded 0–150.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 150
 #-------------------------------------
 #basophil count
 #--------------------------------------  
@@ -1895,6 +5068,1025 @@ classes:
     slot_usage:
       quantity_value:
         minimum_value: 3
+
+#----------------------------------------------------------
+# BDC Bulk-Created Quantities
+#----------------------------------------------------------
+
+  ApneaHypopneaIndexQuantity:
+    is_a: Quantity
+    description: >-
+      Apnea-hypopnea index (AHI) in events per hour. Bounded 0–150 based on
+      biologically plausible limits.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 150
+
+  HumanAlbuminBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Albumin concentration in blood, bounded 1.0–6.0 g/dL.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1.0
+        maximum_value: 6.0
+
+  AlcoholConsumptionQuantity:
+    is_a: Quantity
+    description: >-
+      Alcohol servings per week. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanAltSgptQuantity:
+    is_a: Quantity
+    description: >-
+      ALT/SGPT activity in blood in IU/L. Bounded 0–2000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 2000
+
+  HumanAstSgotQuantity:
+    is_a: Quantity
+    description: >-
+      AST/SGOT activity in blood in IU/L. Bounded 0–2000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 2000
+
+  HumanBilirubinConjugatedQuantity:
+    is_a: Quantity
+    description: >-
+      Conjugated (direct) bilirubin concentration in blood in mg/dL. Bounded 0–30.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 30
+
+  HumanBilirubinTotalQuantity:
+    is_a: Quantity
+    description: >-
+      Total bilirubin concentration in blood in mg/dL. Bounded 0–40.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 40
+
+  HumanBNPQuantity:
+    is_a: Quantity
+    description: >-
+      BNP concentration in blood in pg/mL. Bounded 0–5000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 5000
+
+  HumanBloodUreaNitrogenQuantity:
+    is_a: Quantity
+    description: >-
+      Blood urea nitrogen (BUN) concentration in mg/dL. Bounded 1–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1
+        maximum_value: 200
+
+  HumanBUNCreatinineRatioQuantity:
+    is_a: Quantity
+    description: >-
+      Ratio of blood urea nitrogen to creatinine. Bounded 1–50.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1
+        maximum_value: 50
+
+  HumanCReactiveProteinQuantity:
+    is_a: Quantity
+    description: >-
+      C-reactive protein (CRP) concentration in blood. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        
+  HumanCReactiveProteinQuantity001:
+    is_a: HumanCReactiveProteinQuantity
+    description: >-
+      C-reactive protein (CRP) concentration in blood in mg/L or ug/mL
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 300
+        
+  HumanCReactiveProteinQuantity002:
+    is_a: HumanCReactiveProteinQuantity
+    description: >-
+      C-reactive protein (CRP) concentration in blood in mg/dL
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 30
+                        
+  CoronaryArteryCalciumScoreQuantity:
+    is_a: Quantity
+    description: >-
+      Coronary artery calcium (CAC) Agatston score. Bounded 0–5000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 5000
+
+  CoronaryArteryCalciumVolumeQuantity:
+    is_a: Quantity
+    description: >-
+      Volume of coronary artery calcium in mm³. Bounded 0–3000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 3000
+
+  CarotidIntimamediaThicknessQuantity:
+    is_a: Quantity
+    description: >-
+      Carotid intima-media thickness in mm. Bounded 0.3–2.0.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.3
+        maximum_value: 2.0
+
+  CarotidStenosisQuantity:
+    is_a: Quantity
+    description: >-
+      Carotid artery stenosis as a percentage. Bounded 0–100.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 100
+
+  HumanCD40BloodQuantity:
+    is_a: Quantity
+    description: >-
+      CD40 concentration in blood in pg/mL. Bounded 0–2000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 2000
+
+  CESDScoreQuantity:
+    is_a: Quantity
+    description: >-
+      CES-D depression scale score. Bounded 0–60.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 60
+
+  HumanChlorideBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Chloride concentration in blood. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanChlorideBloodQuantity001:
+    is_a: HumanChlorideBloodQuantity
+    description: >-
+      Chloride concentration in blood in mmol/L
+    slot_usage:
+      quantity_value:
+        minimum_value: 70
+        maximum_value: 130
+
+  HumanChlorideBloodQuantity002:
+    is_a: HumanChlorideBloodQuantity
+    description: >-
+      Chloride concentration in blood in mmol/dL
+    slot_usage:
+      quantity_value:
+        minimum_value: 7
+        maximum_value: 13
+                
+  HumanCreatinineBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Creatinine concentration in blood in mg/dL. Bounded 0.1–20.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.1
+        maximum_value: 20
+
+  HumanCystatinCBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Cystatin C concentration in blood in mg/L. Bounded 0.3–10.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.3
+        maximum_value: 10
+
+  HumanDDimerQuantity:
+    is_a: Quantity
+    description: >-
+      D-dimer concentration in blood. Negative values are impossible
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanDDimerQuantity001:
+    is_a: Quantity
+    description: >-
+      D-dimer concentration in blood in ug/mL
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 20
+
+  HumanDDimerQuantity002:
+    is_a: Quantity
+    description: >-
+      D-dimer concentration in blood in ng/mL
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 20000
+                
+  HumanDiastolicBloodPressureQuantity:
+    is_a: Quantity
+    description: >-
+      Diastolic blood pressure in mm[Hg]. Bounded 20–180.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 180
+
+  HumanESelectinBloodQuantity:
+    is_a: Quantity
+    description: >-
+      E-selectin concentration in blood in ng/mL. Bounded 5–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 5
+        maximum_value: 200
+
+  HumanEstimatedGFRQuantity:
+    is_a: Quantity
+    description: >-
+      Estimated glomerular filtration rate (eGFR) in mL/min/1.73m². Bounded 0–150.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 150
+
+  HumanEosinophilCountQuantity:
+    is_a: Quantity
+    description: >-
+      Eosinophil count in whole blood in 10*3/uL. Bounded 0–20.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 20
+
+  HumanFactorVIIQuantity:
+    is_a: Quantity
+    description: >-
+      Factor VII activity in plasma as % of normal. Bounded 0–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 200
+
+  HumanFactorVIIIQuantity:
+    is_a: Quantity
+    description: >-
+      Factor VIII activity in plasma in IU/mL. Bounded 0–3.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 3
+
+  HumanFastingGlucoseQuantity:
+    is_a: Quantity
+    description: >-
+      Fasting blood glucose concentration. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanFastingGlucoseQuantity001:
+    is_a: HumanFastingGlucoseQuantity
+    description: >-
+      Fasting blood glucose concentration in mg/dL. Bounded 20–800.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 800
+
+  HumanFastingGlucoseQuantity002:
+    is_a: HumanFastingGlucoseQuantity
+    description: >-
+      Fasting blood glucose concentration in mmol/L. Bounded 20–800.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1
+        maximum_value: 45  
+        
+  HumanFerritinQuantity:
+    is_a: Quantity
+    description: >-
+      Ferritin concentration in blood in ng/mL. Bounded 1–5000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1
+        maximum_value: 5000
+
+  HumanFEV1FVCRatioQuantity:
+    is_a: Quantity
+    description: >-
+      FEV1/FVC ratio as a percentage. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanFEV1FVCRatioQuantity001:
+    is_a: HumanFEV1FVCRatioQuantity
+    description: >-
+      FEV1/FVC given as a ratio. Bounded 0.2–1.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.2
+        maximum_value: 1
+
+  HumanFEV1FVCRatioQuantity002:
+    is_a: HumanFEV1FVCRatioQuantity
+    description: >-
+      FEV1/FVC given as a percentage. Bounded 20–100.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 100  
+        
+  HumanPredictedFEV1FVCRatioQuantity:
+    is_a: Quantity
+    description: >-
+      Predicted FEV1/FVC given as a ratio
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 1 
+
+  HumanPercentPredictedFEV1FVCRatioQuantity:
+    is_a: Quantity
+    description: >-
+      Percent of predicted FEV1/FVC that the patient achieves given as a percent
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 100 
+
+  HumanFibrinogenQuantity:
+    is_a: Quantity
+    description: >-
+      Fibrinogen concentration in plasma in mg/dL. Bounded 100–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 100
+        maximum_value: 1000
+
+  FruitConsumptionQuantity:
+    is_a: Quantity
+    description: >-
+      Fruit servings per week. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanGFRQuantity:
+    is_a: Quantity
+    description: >-
+      Glomerular filtration rate (GFR) in mL/min/1.73m². Bounded 0–150.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 150
+
+  HumanGlucoseBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Glucose concentration in blood in mg/dL. Bounded 20–800.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 800
+
+  HumanHDLQuantity:
+    is_a: Quantity
+    description: >-
+      HDL cholesterol concentration in blood. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanHDLQuantity001:
+    is_a: HumanHDLQuantity
+    description: >-
+      HDL cholesterol concentration in blood in mg/dL. Bounded 10–150.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 150
+
+  HumanHDLQuantity002:
+    is_a: HumanHDLQuantity
+    description: >-
+      HDL cholesterol concentration in blood in mmol/L. Bounded 10–150.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.2
+        maximum_value: 4
+                
+  HumanHeartRateQuantity:
+    is_a: Quantity
+    description: >-
+      Heart rate in beats per minute. Bounded 20–300.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 300
+
+  HumanHematocritQuantity:
+    is_a: Quantity
+    description: >-
+      Hematocrit (packed cell volume) as a percentage. Bounded 10–70.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 70
+
+  HumanHemoglobinQuantity:
+    is_a: Quantity
+    description: >-
+      Hemoglobin concentration in whole blood in g/dL. Bounded 2–24.
+    slot_usage:
+      quantity_value:
+        minimum_value: 2
+        maximum_value: 24
+
+  HumanHemoglobinA1cQuantity:
+    is_a: Quantity
+    description: >-
+      Hemoglobin A1c (HbA1c) as a percentage of total hemoglobin. Bounded 3–20.
+    slot_usage:
+      quantity_value:
+        minimum_value: 3
+        maximum_value: 20
+
+  HumanHipCircumferenceQuantity:
+    is_a: Quantity
+    description: >-
+      Hip circumference. Negative values are impossible
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        
+  HumanHipCircumferenceQuantity001:
+    is_a: HumanHipCircumferenceQuantity
+    description: >-
+      Hip circumference in cm. Bounded 50–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 254
+
+  HumanHipCircumferenceQuantity002:
+    is_a: HumanHipCircumferenceQuantity
+    description: >-
+      Hip circumference in inches. Bounded 50–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 19
+        maximum_value: 100
+
+  HumanICAM1BloodQuantity:
+    is_a: Quantity
+    description: >-
+      ICAM-1 concentration in blood in ng/mL. Bounded 50–1500.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 1500
+
+  HumanInsulinBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Insulin concentration in blood. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanInsulinBloodQuantity001:
+    is_a: HumanInsulinBloodQuantity
+    description: >-
+      Insulin concentration in blood in pmol/L. Bounded 0–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 1000
+        
+  HumanInsulinBloodQuantity002:
+    is_a: HumanInsulinBloodQuantity
+    description: >-
+      Insulin concentration in blood in u[iU]/mL. Bounded 0–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 168
+        
+  HumanInterleukin18BloodQuantity:
+    is_a: Quantity
+    description: >-
+      IL-18 concentration in blood in pg/mL. Bounded 10–2000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 2000
+
+  HumanInterleukin1BetaBloodQuantity:
+    is_a: Quantity
+    description: >-
+      IL-1β concentration in blood in pg/mL. Bounded 0–50.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 50
+
+  HumanInterleukin10BloodQuantity:
+    is_a: Quantity
+    description: >-
+      IL-10 concentration in blood in pg/mL. Bounded 0–100.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 100
+
+  HumanInterleukin6BloodQuantity:
+    is_a: Quantity
+    description: >-
+      IL-6 concentration in blood in pg/mL. Bounded 0–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 1000
+
+  HumanLactateDehydrogenaseQuantity:
+    is_a: Quantity
+    description: >-
+      Lactate dehydrogenase (LDH) activity in blood in IU/L. Bounded 50–3000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 3000
+
+  HumanLactateBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Lactate concentration in blood in mmol/L. Bounded 0.3–30.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.3
+        maximum_value: 30
+
+  HumanLDLQuantity:
+    is_a: Quantity
+    description: >-
+      LDL cholesterol concentration in blood in mg/dL. Bounded 10–400.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 400
+
+  HumanLymphocyteCountQuantity:
+    is_a: Quantity
+    description: >-
+      Lymphocyte count in whole blood in 10*3/uL. Bounded 0.1–20.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.1
+        maximum_value: 20
+
+  HumanLymphocytePercentQuantity:
+    is_a: Quantity
+    description: >-
+      Lymphocyte percent of total leukocytes. Bounded 5–90.
+    slot_usage:
+      quantity_value:
+        minimum_value: 5
+        maximum_value: 90
+
+  HumanLPPLA2MassBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Lp-PLA2 mass concentration in blood in ng/mL. Bounded 50–700.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 700
+
+  HumanMCP1BloodQuantity:
+    is_a: Quantity
+    description: >-
+      MCP-1/CCL2 concentration in blood in pg/mL. Bounded 20–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 1000
+
+  HumanMeanArterialPressureQuantity:
+    is_a: Quantity
+    description: >-
+      Mean arterial pressure (MAP) in mm[Hg]. Bounded 30–180.
+    slot_usage:
+      quantity_value:
+        minimum_value: 30
+        maximum_value: 180
+
+  HumanMCHQuantity:
+    is_a: Quantity
+    description: >-
+      Mean corpuscular hemoglobin (MCH) in pg/cell. Bounded 15–40.
+    slot_usage:
+      quantity_value:
+        minimum_value: 15
+        maximum_value: 40
+
+  HumanMCHCQuantity:
+    is_a: Quantity
+    description: >-
+      Mean corpuscular hemoglobin concentration (MCHC) in g/dL. Bounded 25–40.
+    slot_usage:
+      quantity_value:
+        minimum_value: 25
+        maximum_value: 40
+
+  HumanMCVQuantity:
+    is_a: Quantity
+    description: >-
+      Mean corpuscular volume (MCV) in fL. Bounded 50–130.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 130
+
+  HumanMPVQuantity:
+    is_a: Quantity
+    description: >-
+      Mean platelet volume (MPV) in fL. Bounded 5–15.
+    slot_usage:
+      quantity_value:
+        minimum_value: 5
+        maximum_value: 15
+
+  HumanMMP9BloodQuantity:
+    is_a: Quantity
+    description: >-
+      MMP-9 concentration in blood in ng/mL. Bounded 10–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 1000
+
+  HumanMonocyteCountQuantity:
+    is_a: Quantity
+    description: >-
+      Monocyte count in whole blood in 10*3/uL. Bounded 0–3.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 3
+
+  HumanMyeloperoxidaseBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Myeloperoxidase (MPO) concentration in blood in ng/mL. Bounded 0–1000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 1000
+
+  HumanNeutrophilCountQuantity:
+    is_a: Quantity
+    description: >-
+      Neutrophil count in whole blood in 10*3/uL. Bounded 0–30.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 30
+
+  HumanNeutrophilPercentQuantity:
+    is_a: Quantity
+    description: >-
+      Neutrophil percent of total leukocytes. Bounded 10–95.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 95
+
+  HumanNTproBNPQuantity:
+    is_a: Quantity
+    description: >-
+      NT-proBNP concentration in blood in pg/mL. Bounded 0–35000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 35000
+
+  HumanOsteoprotegerinBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Osteoprotegerin (OPG) concentration in blood in ng/mL. Bounded 1–20.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1
+        maximum_value: 20
+
+  HumanPSelectinBloodQuantity:
+    is_a: Quantity
+    description: >-
+      P-selectin concentration in blood in ng/mL. Bounded 10–300.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 300
+
+  HumanPlateletCountQuantity:
+    is_a: Quantity
+    description: >-
+      Platelet count in whole blood in 10*3/uL. Bounded 5–1500.
+    slot_usage:
+      quantity_value:
+        minimum_value: 5
+        maximum_value: 1500
+
+  HumanPotassiumBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Potassium concentration in blood in mmol/L. Bounded 1.5–9.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1.5
+        maximum_value: 9
+
+  HumanPRIntervalQuantity:
+    is_a: Quantity
+    description: >-
+      PR interval duration in ms. Bounded 80–400.
+    slot_usage:
+      quantity_value:
+        minimum_value: 80
+        maximum_value: 400
+
+  HumanQRSIntervalQuantity:
+    is_a: Quantity
+    description: >-
+      QRS interval duration in ms. Bounded 40–200.
+    slot_usage:
+      quantity_value:
+        minimum_value: 40
+        maximum_value: 200
+
+  HumanQTIntervalQuantity:
+    is_a: Quantity
+    description: >-
+      QT interval duration in ms. Bounded 200–700.
+    slot_usage:
+      quantity_value:
+        minimum_value: 200
+        maximum_value: 700
+
+  HumanRBCCountQuantity:
+    is_a: Quantity
+    description: >-
+      Red blood cell count in whole blood in 10*6/uL. Bounded 1–8.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1
+        maximum_value: 8
+
+  HumanRDWQuantity:
+    is_a: Quantity
+    description: >-
+      Red cell distribution width (RDW) as a percentage. Bounded 10–30.
+    slot_usage:
+      quantity_value:
+        minimum_value: 10
+        maximum_value: 30
+
+  HumanSleepDurationQuantity:
+    is_a: Quantity
+    description: >-
+      Sleep duration in hours per night. Bounded 0–16.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 16
+
+  HumanSodiumBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Sodium concentration in blood in mmol/L. Bounded 100–180.
+    slot_usage:
+      quantity_value:
+        minimum_value: 100
+        maximum_value: 180
+
+  SodiumIntakeQuantity:
+    is_a: Quantity
+    description: >-
+      Dietary sodium intake in mg/day. Bounded 200–15000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 200
+        maximum_value: 15000
+
+  HumanSpO2Quantity:
+    is_a: Quantity
+    description: >-
+      Arterial oxygen saturation (SpO2) as a percentage. Bounded 50–100.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 100
+
+  HumanSystolicBloodPressureQuantity:
+    is_a: Quantity
+    description: >-
+      Systolic blood pressure in mm[Hg]. Bounded 40–300.
+    slot_usage:
+      quantity_value:
+        minimum_value: 40
+        maximum_value: 300
+
+  HumanBodyTemperatureQuantity:
+    is_a: Quantity
+    description: >-
+      Body temperature in degrees Celsius. Bounded 25–43.
+    slot_usage:
+      quantity_value:
+        minimum_value: 25
+        maximum_value: 43
+
+  HumanTNFAlphaBloodQuantity:
+    is_a: Quantity
+    description: >-
+      TNF-alpha concentration in blood in pg/mL. Bounded 0–100.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 100
+
+  HumanTNFAlphaR1BloodQuantity:
+    is_a: Quantity
+    description: >-
+      TNF receptor 1 (TNFR1) concentration in blood in pg/mL. Bounded 200–5000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 200
+        maximum_value: 5000
+
+  HumanTotalCholesterolQuantity:
+    is_a: Quantity
+    description: >-
+      Total cholesterol concentration in blood. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanTotalCholesterolQuantity001:
+    is_a: HumanTotalCholesterolQuantity
+    description: >-
+      Total cholesterol concentration in blood in mg/dL. Bounded 50–500.
+    slot_usage:
+      quantity_value:
+        minimum_value: 50
+        maximum_value: 500
+
+  HumanTotalCholesterolQuantity002:
+    is_a: HumanTotalCholesterolQuantity
+    description: >-
+      Total cholesterol concentration in blood in mmol/L. Bounded 50–500.
+    slot_usage:
+      quantity_value:
+        minimum_value: 1.3
+        maximum_value: 13
+
+  HumanTriglyceridesBloodQuantity:
+    is_a: Quantity
+    description: >-
+      Triglycerides concentration in blood. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanTriglyceridesBloodQuantity001:
+    is_a: HumanTriglyceridesBloodQuantity
+    description: >-
+      Triglycerides concentration in blood in mg/dL. Bounded 20–2000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 20
+        maximum_value: 2000
+
+  HumanTriglyceridesBloodQuantity002:
+    is_a: HumanTriglyceridesBloodQuantity
+    description: >-
+      Triglycerides concentration in blood in mmol/L. Bounded 20–2000.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.2
+        maximum_value: 20
+
+  HumanTroponinQuantity:
+    is_a: Quantity
+    description: >-
+      Troponin concentration in blood in ng/mL. Bounded 0–50.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 50
+
+  VegetableConsumptionQuantity:
+    is_a: Quantity
+    description: >-
+      Vegetable servings per week. Bounded 0–70.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 70
+
+  HumanVonWillebrandFactorQuantity:
+    is_a: Quantity
+    description: >-
+      Von Willebrand factor (VWF) activity or antigen as % of normal. Bounded 0–300.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+        maximum_value: 300
+
+  HumanWaistCircumferenceQuantity:
+    is_a: Quantity
+    description: >-
+      Waist circumference in cm. Negative values are impossible.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0
+
+  HumanWaistCircumferenceQuantity001:
+    is_a: HumanWaistCircumferenceQuantity
+    description: >-
+      Waist circumference in cm. Bounded 33-302.
+    slot_usage:
+      quantity_value:
+        minimum_value: 33
+        maximum_value: 302
+
+  HumanWaistCircumferenceQuantity002:
+    is_a: HumanWaistCircumferenceQuantity
+    description: >-
+      Waist circumference in mm. Bounded 330-3020.
+    slot_usage:
+      quantity_value:
+        minimum_value: 330
+        maximum_value: 3020
+
+  HumanWaistCircumferenceQuantity003:
+    is_a: HumanWaistCircumferenceQuantity
+    description: >-
+      Waist circumference in inches. Bounded 13-119.
+    slot_usage:
+      quantity_value:
+        minimum_value: 13
+        maximum_value: 119
+                
+  HumanWaistHipRatioQuantity:
+    is_a: Quantity
+    description: >-
+      Waist-to-hip ratio. Bounded 0.5–1.5.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.5
+        maximum_value: 1.5
+
+  HumanWBCCountQuantity:
+    is_a: Quantity
+    description: >-
+      White blood cell (WBC) count in whole blood in 10*3/uL. Bounded 0.1–100.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.1
+        maximum_value: 100
+
 #────────────────────────────────────────────────────────────────
 # SLOTS
 #────────────────────────────────────────────────────────────────
@@ -2331,6 +6523,160 @@ enums:
           high-performance liquid chromatography; a chromatographic technique
           used to separate, identify, and quantify analytes in a mixture
 
+      polysomnography:
+        description: >-
+          in-laboratory polysomnography; comprehensive multi-channel sleep study
+          recording brain activity, eye movements, muscle activity, and cardiorespiratory signals
+      home_sleep_apnea_test:
+        description: >-
+          portable, simplified sleep monitoring performed at home to detect obstructive sleep apnea
+      bcg_bcp_colorimetric:
+        description: >-
+          bromocresol green (BCG) or bromocresol purple (BCP) dye-binding colorimetric assay
+          for measuring albumin concentration
+      questionnaire:
+        description: >-
+          self-report questionnaire or structured interview instrument used to collect
+          behavioral, dietary, or symptom data
+      enzymatic_kinetic_assay:
+        description: >-
+          enzymatic kinetic (rate) assay standardized by the IFCC; measures the rate of
+          an enzymatic reaction to quantify substrate or enzyme concentration
+      diazo_colorimetric:
+        description: >-
+          diazo (van den Bergh) colorimetric method for measuring bilirubin fractions
+          in serum or plasma
+      urease_gldh:
+        description: >-
+          enzymatic urease/glutamate dehydrogenase (GLDH) coupled assay for measuring
+          blood urea nitrogen (BUN) or urea
+      ion_selective_electrode:
+        description: >-
+          potentiometric method using ion-selective electrodes to measure electrolyte
+          concentrations such as sodium, potassium, and chloride
+      agatston_scoring:
+        description: >-
+          Agatston scoring algorithm applied to non-contrast cardiac CT images to
+          quantify coronary artery calcium
+      volume_scoring:
+        description: >-
+          volume-based calcium scoring from non-contrast cardiac CT; reports total
+          calcium volume in mm³
+      carotid_ultrasound:
+        description: >-
+          B-mode (2-D) carotid ultrasound imaging used to measure intima-media thickness
+          and detect plaques
+      duplex_ultrasound:
+        description: >-
+          duplex ultrasound combining B-mode imaging with Doppler velocity measurements
+          to grade arterial stenosis
+      ct_angiography:
+        description: >-
+          computed tomography angiography; contrast-enhanced CT imaging of blood vessels
+      automated_hematology:
+        description: >-
+          automated hematology analysis using impedance, electrical resistance, or
+          light-scatter technologies to count and characterize blood cells
+      manual_differential:
+        description: >-
+          manual microscopic differential cell count performed by a trained laboratory
+          technician or pathologist on a stained blood smear
+      one_stage_clotting:
+        description: >-
+          one-stage clotting assay (PT-based for Factor VII or aPTT-based for Factor VIII)
+          measuring coagulation factor activity
+      chromogenic_assay:
+        description: >-
+          chromogenic substrate assay measuring coagulation factor activity via
+          colorimetric detection of a chromogenic substrate cleavage product
+      hexokinase_glucose_oxidase:
+        description: >-
+          enzymatic assay using hexokinase or glucose oxidase to measure glucose
+          concentration; the reference method for glucose measurement
+      clauss_assay:
+        description: >-
+          Clauss functional clotting assay for fibrinogen; measures the time to clot
+          formation after adding thrombin to diluted plasma
+      electrocardiography:
+        description: >-
+          electrocardiography; recording of the heart's electrical activity over time
+          to measure intervals and waveforms
+      pulse_oximetry:
+        description: >-
+          non-invasive photoplethysmographic method for measuring blood oxygen saturation
+          and pulse rate
+      auscultatory:
+        description: >-
+          auscultatory method for blood pressure measurement using a stethoscope and
+          sphygmomanometer (Korotkoff sounds)
+      oscillometric:
+        description: >-
+          oscillometric method for blood pressure measurement detecting arterial wall
+          oscillations via an automated cuff
+      actigraphy:
+        description: >-
+          actigraphy; continuous monitoring of movement and rest-activity cycles using
+          a wrist-worn accelerometer to estimate sleep duration and quality
+      thermometry:
+        description: >-
+          thermometry; measurement of body temperature using a thermometer placed at
+          an oral, rectal, tympanic, temporal, or axillary site
+      multiplex_bead_immunoassay:
+        description: >-
+          multiplex bead-based immunoassay (e.g., Luminex xMAP) simultaneously
+          quantifying multiple cytokines or proteins in a single sample
+      microhematocrit_centrifugation:
+        description: >-
+          microhematocrit centrifugation method; capillary blood tubes are centrifuged
+          and the packed cell volume fraction read directly
+      cyanmethemoglobin:
+        description: >-
+          cyanmethemoglobin (Drabkin) spectrophotometric method for measuring whole-blood
+          hemoglobin concentration
+      precipitation_method:
+        description: >-
+          precipitation method for HDL cholesterol; LDL and VLDL are precipitated with
+          a chemical agent and HDL is measured in the supernatant
+      direct_homogeneous_enzymatic:
+        description: >-
+          direct homogeneous enzymatic assay for HDL or LDL cholesterol; uses selective
+          detergents and enzymatic reactions without prior precipitation
+      friedewald_calculation:
+        description: >-
+          Friedewald equation calculation of LDL cholesterol from total cholesterol,
+          HDL cholesterol, and triglycerides
+      manual_pulse_palpation:
+        description: >-
+          manual palpation or auscultation of the pulse at a peripheral artery or
+          cardiac apex to count heart rate
+      latex_agglutination:
+        description: >-
+          latex particle agglutination immunoassay for detecting and semi-quantifying
+          analytes such as D-dimer
+      ristocetin_cofactor_assay:
+        description: >-
+          ristocetin cofactor activity assay (VWF:RCo) measuring the ability of von
+          Willebrand factor to agglutinate platelets in the presence of ristocetin
+      boronate_affinity_chromatography:
+        description: >-
+          boronate affinity chromatography for HbA1c measurement; glycated hemoglobin
+          binds selectively to boronate-coupled resin
+      direct_measurement:
+        description: >-
+          direct physical measurement using a measuring tape, ruler, or caliper applied
+          to the body surface
+      gc_ms:
+        description: >-
+          gas chromatography-mass spectrometry; a combined technique for separating
+          and identifying volatile compounds with high specificity
+      arterial_catheter:
+        description: >-
+          invasive intra-arterial catheter measurement using a pressure transducer
+          placed directly in an artery to continuously measure blood pressure
+      clearance_test:
+        description: >-
+          renal clearance test measuring the rate at which the kidneys filter a marker
+          substance (e.g., iothalamate, inulin) from plasma
   InstrumentEnum:
     description: The instrument used for a measurement
     permissible_values:
@@ -2397,6 +6743,134 @@ enums:
           the instrument used for the measurement is not known or was not
           recorded
 
+      polysomnograph:
+        description: >-
+          multi-channel laboratory instrument for polysomnography recording EEG, EOG,
+          EMG, ECG, airflow, respiratory effort, and oxygen saturation
+      portable_home_sleep_apnea_monitor:
+        description: >-
+          portable simplified device used for home sleep apnea testing, recording
+          airflow, respiratory effort, and oximetry
+      automated_clinical_chemistry_analyzer:
+        description: >-
+          automated benchtop or modular analyzer performing photometric, potentiometric,
+          and immunological assays on serum, plasma, or urine
+      microplate_reader:
+        description: >-
+          spectrophotometric instrument that reads absorbance, fluorescence, or
+          luminescence in microwell plates for immunoassays such as ELISA
+      automated_immunoassay_analyzer:
+        description: >-
+          dedicated automated platform for chemiluminescent, fluorescent, or
+          electrochemiluminescent immunoassays
+      automated_hematology_analyzer:
+        description: >-
+          automated instrument using impedance, light scatter, or flow cytometry to
+          count and characterize blood cell populations in a complete blood count
+      automated_coagulation_analyzer:
+        description: >-
+          automated instrument measuring clot formation times and coagulation factor
+          activities via optical or mechanical detection
+      carotid_ultrasound_system:
+        description: >-
+          duplex ultrasound system with a high-frequency linear transducer for B-mode
+          carotid artery imaging and Doppler flow measurement
+      ct_scanner:
+        description: >-
+          computed tomography scanner; cardiac-gated CT used for coronary artery calcium
+          scoring and CT angiography
+      electrocardiograph:
+        description: >-
+          electrocardiograph (ECG/EKG machine) recording the heart's electrical activity
+          via surface electrodes for interval and waveform measurements
+      pulse_oximeter:
+        description: >-
+          non-invasive photoplethysmographic device placed on a finger or earlobe to
+          measure arterial oxygen saturation (SpO2) and pulse rate
+      sphygmomanometer:
+        description: >-
+          manual aneroid or mercury sphygmomanometer with an inflatable cuff and
+          stethoscope for auscultatory blood pressure measurement
+      automated_bp_monitor:
+        description: >-
+          automated oscillometric blood pressure monitor measuring systolic and diastolic
+          pressure with an inflatable upper-arm or wrist cuff
+      glucometer:
+        description: >-
+          point-of-care electrochemical glucometer for rapid whole-blood glucose
+          measurement using a glucose oxidase or glucose dehydrogenase test strip
+      actigraph:
+        description: >-
+          wrist-worn or hip-worn accelerometer device recording continuous movement
+          data to estimate sleep and physical activity patterns
+      thermometer:
+        description: >-
+          digital electronic thermometer for oral, rectal, or axillary body temperature
+          measurement
+      infrared_thermometer:
+        description: >-
+          non-contact infrared or tympanic thermometer measuring body temperature
+          from emitted thermal radiation at the ear canal or skin surface
+      multiplex_analyzer:
+        description: >-
+          bead-based multiplex immunoassay platform (e.g., Luminex xMAP) capable of
+          simultaneously quantifying multiple analytes in a single sample
+      blood_gas_analyzer:
+        description: >-
+          point-of-care or laboratory instrument measuring pH, blood gases (pO2, pCO2),
+          electrolytes, and metabolites in whole blood
+      hemocytometer:
+        description: >-
+          ruled counting chamber used with a light microscope for manual cell counting
+          of blood or other cell suspensions
+      hematocrit_centrifuge:
+        description: >-
+          microhematocrit centrifuge spinning capillary blood tubes at high speed to
+          pack red blood cells for packed cell volume (hematocrit) measurement
+      point_of_care_cardiac_analyzer:
+        description: >-
+          bedside or point-of-care immunoassay device for rapid quantitative measurement
+          of cardiac biomarkers such as BNP, NT-proBNP, or troponin
+      hba1c_analyzer:
+        description: >-
+          dedicated ion-exchange HPLC or immunoassay analyzer for HbA1c measurement,
+          reporting the percentage of glycated hemoglobin
+      lactate_meter:
+        description: >-
+          handheld electrochemical point-of-care device for rapid whole-blood or plasma
+          lactate measurement
+      stethoscope:
+        description: >-
+          acoustic medical device used for auscultation of heart sounds and Korotkoff
+          sounds during manual blood pressure measurement
+      infantometer:
+        description: >-
+          flat-surface board with a fixed headpiece and sliding footpiece used to
+          measure recumbent length in infants
+      bariatric_scale:
+        description: >-
+          heavy-duty scale with an extended weight capacity designed to measure body
+          weight in bariatric patients
+      body_composition_analyzer:
+        description: >-
+          device using bioelectrical impedance analysis (BIA) or dual-energy X-ray
+          absorptiometry (DXA) to measure body weight and body composition
+      digital_baby_scale:
+        description: >-
+          digital electronic scale designed to accurately measure the weight of infants
+          and young children
+      gli:
+        description: >-
+          Global Lung Function Initiative 2012 reference equations for spirometry;
+          used to derive predicted lung function values
+      gli_global:
+        description: >-
+          Global Lung Function Initiative 2022 multi-ethnic global reference equations
+          for spirometry; an update of the 2012 GLI equations
+      nhanesiii:
+        description: >-
+          NHANES III (1999) reference equations for spirometry derived from the Third
+          National Health and Nutrition Examination Survey
   ReagentKitEnum:
     description: The reagent kit used for a measurement
     permissible_values:
@@ -2426,6 +6900,8 @@ enums:
         description: After bronchodilator administration
       taking_lipid_lowering_medications:
         description: While taking lipid-lowering medications
+      no_lipid_lowering_medications:
+        description: No lipid-lowering medications taken at that time
       before_physical_activity:
         description: Before physical activity
       during_physical_activity:
