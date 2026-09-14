@@ -1,0 +1,6 @@
+extends: recommended
+rules:
+  standard_naming:
+    level: warning
+    exclude_type:
+      - permissible_value
