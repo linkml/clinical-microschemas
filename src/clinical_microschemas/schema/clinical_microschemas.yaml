@@ -208,159 +208,67 @@ classes:
                 - equals_string: anthropometry
                 - equals_string: survey
                 - equals_string: interview
+      - preconditions:
+          slot_conditions:
+            age_at_measurement:
+              minimum_value: 18
+        postconditions:
+          slot_conditions:
+            instrument:
+              none_of:
+                - equals_string: infantometer
 
   HumanBodyHeightRecord001:
     is_a: HumanBodyHeightRecord
     description: >-
-      Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured in centimeters with a wall-mounted stadiometer
+      Measurement of linear distance of a standing human body (adult) from the bottom of a flat foot
+      to the top-most point of the head measured in centimeters
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity001
-    rules:
-      - preconditions:
-          slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: wall_mounted_stadiometer
-            unit:
-              any_of:
-                - equals_string: cm
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-            method:
-              any_of:
-                - equals_string: anthropometry
+      unit:
+        equals_string: cm
+      age_at_measurement:
+        minimum_value: 18
               
   HumanBodyHeightRecord002:
     is_a: HumanBodyHeightRecord
     description: >-
-      Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured in inches with a wall-mounted stadiometer
+      Measurement of linear distance of a standing human body (adult) from the bottom of a flat foot
+      to the top-most point of the head measured in inches
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity002
-    rules:
-      - preconditions:
-          slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: wall_mounted_stadiometer
-            unit:
-              any_of:
-                - equals_string: "[in_i]"
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-            method:
-              any_of:
-                - equals_string: anthropometry                
-
+      unit:
+        equals_string: "[in_i]"
+      age_at_measurement:
+        minimum_value: 18
+                         
   HumanBodyHeightRecord003:
     is_a: HumanBodyHeightRecord
     description: >-
-      Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured in inches with a portable stadiometer
+      Measurement of linear distance of a standing human body (adult) from the bottom of a flat foot
+      to the top-most point of the head measured in feet
     slot_usage:
       measurement_value:
-        range: HumanBodyHeightQuantity002
-    rules:
-      - preconditions:
-          slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: portable_stadiometer
-            unit:
-              any_of:
-                - equals_string: "[in_i]"
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-            method:
-              any_of:
-                - equals_string: anthropometry                
+        range: HumanBodyHeightQuantity003
+      unit:
+        equals_string: "[ft_i]"
+      age_at_measurement:
+        minimum_value: 18
 
   HumanBodyHeightRecord004:
     is_a: HumanBodyHeightRecord
     description: >-
-      Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured in centimeters with an 
-      anthropometer
-    slot_usage:
-      measurement_value:
-        range: HumanBodyHeightQuantity003
-    rules:
-      - preconditions:
-          slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: anthropometer_rod
-            unit:
-              any_of:
-                - equals_string: cm
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-            method:
-              any_of:
-                - equals_string: anthropometry                
-
-  HumanBodyHeightRecord005:
-    is_a: HumanBodyHeightRecord
-    description: >-
-      Measurement of linear distance of a standing human body from the bottom of a flat foot
-      to the top-most point of the head measured in feet with a wall-mounted stadiometer
+      Measurement of linear distance of a standing human body (adult) from the bottom of a flat foot
+      to the top-most point of the head measured in meters
     slot_usage:
       measurement_value:
         range: HumanBodyHeightQuantity004
-    rules:
-      - preconditions:
-          slot_conditions:
-            instrument:
-              any_of:
-                - equals_string: wall_mounted_stadiometer
-            unit:
-              any_of:
-                - equals_string: "[ft_i]"
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-            method:
-              any_of:
-                - equals_string: anthropometry                
-
-  HumanBodyHeightRecord006:
-    is_a: HumanBodyHeightRecord
-    description: >-
-      Measurement of linear distance of a human body from the bottom of a flat foot
-      to the top-most point of the head in cm
-    slot_usage:
-      measurement_value:
-        range: HumanBodyHeightQuantity005
-    rules:
-      - postconditions:
-          slot_conditions:
-            unit:
-              equals_string: cm
-            instrument:
-              equals_string: unknown
-            method:
-              any_of:
-                - equals_string: anthropometry
-                - equals_string: survey
-                - equals_string: interview              
-
+      unit:
+        equals_string: m
+      age_at_measurement:
+        minimum_value: 18                      
   #────────────────────────────────────────────────────────────────
   # Body Weight Microschemas
   #────────────────────────────────────────────────────────────────
@@ -393,6 +301,7 @@ classes:
                 - equals_string: kg
                 - equals_string: "[lb_av]"
                 - equals_string: g
+                - equals_string: "[oz_av]"
             instrument:
               any_of:
                 - equals_string: mechanical_beam_balance_scale
@@ -408,97 +317,101 @@ classes:
               any_of:
                 - equals_string: anthropometry 
                 
-  HumanBodyWeightRecord001:
+  AdultHumanBodyWeightRecord:
     is_a: HumanBodyWeightRecord
     description: >-
-      Measurement of the force exerted by a human body on a mechanical beam balance due
+      Measurement of the force exerted by a human body (adult) on the earth due
       to gravity
+    rules:
+      - preconditions:
+          slot_conditions:
+            age_at_measurement:
+              minimum_value: 18
+        postconditions:
+          slot_conditions:
+            instrument:
+              none_of:
+                - equals_string: digital_baby_scale
+                - equals_string: mechanical_baby_scale
+            unit:
+              any_of:
+                - equals_string: kg
+                - equals_string: "[lb_av]"
+                
+  AdultHumanBodyWeightRecord001:
+    is_a: AdultHumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body (adult) on the earth due
+      to gravity in kg
     slot_usage:
       measurement_value:
         range: HumanBodyWeightQuantity001
-    rules:
-      - preconditions:
-          slot_conditions:
-            unit:
-              any_of:
-                - equals_string: kg
-            instrument:
-              any_of:
-                - equals_string: mechanical_beam_balance_scale
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-
-  HumanBodyWeightRecord002:
-    is_a: HumanBodyWeightRecord
+      unit:
+        equals_string: kg
+                
+  AdultHumanBodyWeightRecord002:
+    is_a: AdultHumanBodyWeightRecord
     description: >-
-      Measurement of the force exerted by a human body on a mechanical beam balance due
-      to gravity
+      Measurement of the force exerted by a human body (adult) on the earth due
+      to gravity in lbs
     slot_usage:
       measurement_value:
         range: HumanBodyWeightQuantity002
-    rules:
-      - preconditions:
-          slot_conditions:
-            unit:
-              any_of:
-                - equals_string: "[lb_av]"
-            instrument:
-              any_of:
-                - equals_string: mechanical_beam_balance_scale
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
+      unit:
+        equals_string: "[lb_av]"
 
-  HumanBodyWeightRecord003:
+  ChildHumanBodyWeightRecord:
     is_a: HumanBodyWeightRecord
     description: >-
-      Measurement of the force exerted by a human body on a body composition analyzer due
+      Measurement of the force exerted by a human body (child) on the earth due
       to gravity
+    slot_usage:
+      age_at_measurement:
+        maximum_value: 18
+
+  ChildHumanBodyWeightRecord001:
+    is_a: ChildHumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body (child) on the earth due
+      to gravity in g
     slot_usage:
       measurement_value:
         range: HumanBodyWeightQuantity003
-    rules:
-      - preconditions:
-          slot_conditions:
-            unit:
-              any_of:
-                - equals_string: kg
-            instrument:
-              any_of:
-                - equals_string: body_composition_analyzer
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
-                
-  HumanBodyWeightRecord004:
-    is_a: HumanBodyWeightRecord
+      unit:
+        equals_string: g
+
+  ChildHumanBodyWeightRecord002:
+    is_a: ChildHumanBodyWeightRecord
     description: >-
-      Measurement of the force exerted by a human body on a digital scale due
-      to gravity
+      Measurement of the force exerted by a human body (child) on the earth due
+      to gravity in kg
     slot_usage:
       measurement_value:
         range: HumanBodyWeightQuantity004
-    rules:
-      - preconditions:
-          slot_conditions:
-            unit:
-              any_of:
-                - equals_string: kg
-            instrument:
-              any_of:
-                - equals_string: digital_scale
-        postconditions:
-          slot_conditions:
-            body_position:
-              any_of:
-                - equals_string: standing
+      unit:
+        equals_string: kg
+
+  ChildHumanBodyWeightRecord003:
+    is_a: ChildHumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body (child) on the earth due
+      to gravity in lbs
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity005
+      unit:
+        equals_string: "[lb_av]"
+
+  ChildHumanBodyWeightRecord004:
+    is_a: ChildHumanBodyWeightRecord
+    description: >-
+      Measurement of the force exerted by a human body (child) on the earth due
+      to gravity in oz
+    slot_usage:
+      measurement_value:
+        range: HumanBodyWeightQuantity006
+      unit:
+        equals_string: "[oz_av]"
 
   #────────────────────────────────────────────────────────────────
   # Body Mass Index (BMI) Microschemas
@@ -537,16 +450,60 @@ classes:
                 - equals_string: calculated
             data_type:
               equals_string: decimal
+
+  AdultBodyMassIndexRecord:
+    is_a: BodyMassIndexRecord
+    description: >-
+      A calculated numerical quantity representing an adult's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+    rules:
+      - preconditions:
+          slot_conditions:
+            age_at_measurement: 
+              minimum_value: 18
+        postconditions:
+          slot_conditions:
             calculated_from:
               any_of:
-                - equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
-                - equals_expression: "{HumanBodyWeightRecord001} / ({HumanBodyHeightRecord003} / 100)^2"
-                - equals_expression: "{HumanBodyWeightRecord003} / ({HumanBodyHeightRecord001} / 100)^2"
-                - equals_expression: "{HumanBodyWeightRecord004} / ({HumanBodyHeightRecord001} / 100)^2" 
-                - equals_expression: "{HumanBodyWeightRecord003} / ({HumanBodyHeightRecord003} / 100)^2"
-                - equals_expression: "{HumanBodyWeightRecord004} / ({HumanBodyHeightRecord003} / 100)^2"           
-                - equals_expression: "({HumanBodyWeightRecord002} / 2.2) / ({HumanBodyHeightRecord002} / 39.37)^2"              
+                - equals_expression: "{AdultHumanBodyWeightRecord001} / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "{AdultHumanBodyWeightRecord001} / ({HumanBodyHeightRecord002} * 0.0254)^2"
+                - equals_expression: "{AdultHumanBodyWeightRecord001} / ({HumanBodyHeightRecord003} * 0.03048)^2"
+                - equals_expression: "{AdultHumanBodyWeightRecord001} / {HumanBodyHeightRecord004}^2" 
+                - equals_expression: "({AdultHumanBodyWeightRecord002} * 0.453592) / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "({AdultHumanBodyWeightRecord002} * 0.453592) / ({HumanBodyHeightRecord002} * 0.0254)^2"
+                - equals_expression: "({AdultHumanBodyWeightRecord002} * 0.453592) / ({HumanBodyHeightRecord003} * 0.03048)^2"
+                - equals_expression: "({AdultHumanBodyWeightRecord002} * 0.453592) / {HumanBodyHeightRecord004}^2"             
 
+  ChildBodyMassIndexRecord:
+    is_a: BodyMassIndexRecord
+    description: >-
+      A calculated numerical quantity representing an child's weight-to-height
+      ratio. BMI is calculated as weight (kg) divided by height (m) squared.
+    rules:
+      - preconditions:
+          slot_conditions:
+            age_at_measurement: 
+              maximum_value: 18
+        postconditions:
+          slot_conditions:
+            calculated_from:
+              any_of:
+                - equals_expression: "({ChildHumanBodyWeightRecord001} / 1000) / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord001} / 1000) / ({HumanBodyHeightRecord002} * 0.0254)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord001} / 1000) / ({HumanBodyHeightRecord003} * 0.03048)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord001} / 1000) / {HumanBodyHeightRecord004}^2" 
+                - equals_expression: "{ChildHumanBodyWeightRecord002} / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "{ChildHumanBodyWeightRecord002} / ({HumanBodyHeightRecord002} * 0.0254)^2"
+                - equals_expression: "{ChildHumanBodyWeightRecord002} / ({HumanBodyHeightRecord003} * 0.03048)^2"
+                - equals_expression: "{ChildHumanBodyWeightRecord002} / {HumanBodyHeightRecord004}^2"    
+                - equals_expression: "({ChildHumanBodyWeightRecord003} * 0.453592) / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord003} * 0.453592) / ({HumanBodyHeightRecord002} * 0.0254)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord003} * 0.453592) / ({HumanBodyHeightRecord003} * 0.03048)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord003} * 0.453592) / {HumanBodyHeightRecord004}^2" 
+                - equals_expression: "({ChildHumanBodyWeightRecord004} * 0.0283495) / ({HumanBodyHeightRecord001} / 100)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord004} * 0.0283495) / ({HumanBodyHeightRecord002} * 0.0254)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord004} * 0.0283495) / ({HumanBodyHeightRecord003} * 0.03048)^2"
+                - equals_expression: "({ChildHumanBodyWeightRecord004} * 0.0283495) / {HumanBodyHeightRecord004}^2"                 
 #--------------------------------------------------------------  
 #SPIROMETRY
 #-------------------------------------------------------------
@@ -4709,57 +4666,42 @@ classes:
   HumanBodyHeightQuantity001:
     is_a: HumanBodyHeightQuantity
     description: >-
-      Standing wall-mounted or portable stadiometer human body height in cm, bounded 30–230. 
-      Minimum represents observed limits on human height. Maximum represents
-      limit of a wall-mounted stadiometer.
+      Human body height in cm, bounded 30–273. 
+      Minimum and maximum represent observed limits on human height.
     slot_usage:
       quantity_value:
         minimum_value: 30
-        maximum_value: 230
+        maximum_value: 273
 
   HumanBodyHeightQuantity002:
     is_a: HumanBodyHeightQuantity
     description: >-
-      Standing wall-mounted or portable stadiometer human body height in inches, bounded 20–90. 
-      Minimum represents observed limits on human height. Maximum represents
-      limit of a wall-mounted and a portable stadiometer.
+      Human body height in inches, bounded 20–108. 
+      Minimum and maximum represent observed limits on human height.
     slot_usage:
       quantity_value:
         minimum_value: 20
-        maximum_value: 90
+        maximum_value: 108
 
   HumanBodyHeightQuantity003:
     is_a: HumanBodyHeightQuantity
     description: >-
-      Standing anthropometer human body height in cm, bounded 30-250. 
-      Minimum represents observed limits on human height. Maximum represents
-      limit of anthropometer rod.
+      Human body height in ft, bounded 0.98-9.0. 
+      Minimum and maximum represent observed limits on human height.
     slot_usage:
       quantity_value:
-        minimum_value: 30
-        maximum_value: 250
+        minimum_value: 0.98
+        maximum_value: 9.0
 
   HumanBodyHeightQuantity004:
     is_a: HumanBodyHeightQuantity
     description: >-
-      Standing wall-mounted or portable stadiometer human body height in ft, bounded 0.98-8.2. 
-      Minimum represents observed limits on human height. Maximum represents
-      limit of a wall-mounted stadiometer.
+      Human body height in m, bounded 0.3-2.8. 
+      Minimum and maximum represent observed limits on human height.
     slot_usage:
       quantity_value:
-        minimum_value: 0.98
-        maximum_value: 8.2
-  
-  HumanBodyHeightQuantity005:
-    is_a: HumanBodyHeightQuantity
-    description: >-
-      Minimum and maximum represent biologically plausible values for adults. Use this
-      Quantity when instrument is unknown or the method is a survey or interview. Unit
-      is cm.
-    slot_usage:
-      quantity_value:
-        minimum_value: 54
-        maximum_value: 273
+        minimum_value: 0.30
+        maximum_value: 2.8
 
 #-------------------------------------------------
 #Weight
@@ -4775,42 +4717,62 @@ classes:
   HumanBodyWeightQuantity001:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Mechanical-beam-balance human body weight in kg. Minimum weight based on biological
-      limits for adults. Maximum weight set based on limits of measurement device.
+      Human body weight in kg. Minimum and maximum weight based on biological
+      limits for adults.
     slot_usage:
       quantity_value:
         minimum_value: 2
-        maximum_value: 230
+        maximum_value: 636
 
   HumanBodyWeightQuantity002:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Mechanical-beam-balance human body weight in lbs. Minimum weight based on biological
-      limits for adults. Maximum weight set based on limits of measurement device.
+      Human body weight in lbs. Minimum and maximum weight based on biological
+      limits for adults.
     slot_usage:
       quantity_value:
         minimum_value: 4
-        maximum_value: 500
+        maximum_value: 1400
 
   HumanBodyWeightQuantity003:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Body composition analyzer human body weight in kg. Minimum weight based on biological
-      limits for adults. Maximum weight set based on limits of measurement device.
+      Human body weight in g. Minimum and maximum weight based on biological
+      limits for children.
     slot_usage:
       quantity_value:
-        minimum_value: 2
-        maximum_value: 270
+        minimum_value: 212
+        maximum_value: 192000
 
   HumanBodyWeightQuantity004:
     is_a: HumanBodyWeightQuantity
     description: >-
-      Digital scale human body weight in kg. Minimum weight based on biological
-      limits for adults. Maximum weight set based on limits of measurement device.
+      Human body weight in kg. Minimum and maximum weight based on biological
+      limits for children.
     slot_usage:
       quantity_value:
-        minimum_value: 2
-        maximum_value: 180
+        minimum_value: 0.2
+        maximum_value: 192
+
+  HumanBodyWeightQuantity005:
+    is_a: HumanBodyWeightQuantity
+    description: >-
+      Human body weight in lb. Minimum and maximum weight based on biological
+      limits for children.
+    slot_usage:
+      quantity_value:
+        minimum_value: 0.4
+        maximum_value: 425
+
+  HumanBodyWeightQuantity006:
+    is_a: HumanBodyWeightQuantity
+    description: >-
+      Human body weight in oz. Minimum and maximum weight based on biological
+      limits for children.
+    slot_usage:
+      quantity_value:
+        minimum_value: 7
+        maximum_value: 6773
 
 #-----------------------------------------------
 #BMI
@@ -6109,7 +6071,7 @@ slots:
     slot_uri: bdchm:observation_type
     description: A CURIE from OBA, OMOP, or LOINC
   unit:
-    range: uriorcurie
+    range: string
     slot_uri: bdchm:unit
     description: A unit from UCUM
   method:
@@ -6117,7 +6079,7 @@ slots:
     slot_uri: bdchm:method_type
     description: The method used for the measurement
   instrument:
-    range: InstrumentEnum
+    range: string
     description: The instrument used for the measurement
   reagent_kit:
     range: ReagentKitEnum
@@ -6258,6 +6220,104 @@ slots:
 #────────────────────────────────────────────────────────────────
 
 enums:
+  UCUMEnum:
+    description: Unified Code for Units of Measure (UCUM) codes used in this schema
+    permissible_values:
+      "%":
+        description: Percent
+      "%{Normal}":
+        description: Percent of normal
+      "%{WBCs}":
+        description: Percent of white blood cells
+      "/h":
+        description: Per hour
+      "10*3/uL":
+        description: Thousands per microliter
+      "10*6/uL":
+        description: Millions per microliter
+      Cel:
+        description: Degrees Celsius
+      L:
+        description: Liters
+      "[IU]/L":
+        description: International units per liter
+      "[IU]/mL":
+        description: International units per milliliter
+      "[ft_i]":
+        description: Feet (international)
+      "[in_i]":
+        description: Inches (international)
+      "[lb_av]":
+        description: Pounds (avoirdupois)
+      "[oz_av]":
+        description: Ounces (avoirdupois)
+      cm:
+        description: Centimeters
+      fL:
+        description: Femtoliters
+      g:
+        description: Grams
+      g/L:
+        description: Grams per liter
+      g/dL:
+        description: Grams per deciliter
+      h:
+        description: Hours
+      kg:
+        description: Kilograms
+      kg/m2:
+        description: Kilograms per square meter (body mass index)
+      m:
+        description: Meters
+      mL:
+        description: Milliliters
+      "mL/min/{1.73_m2}":
+        description: Milliliters per minute per 1.73 square meters (eGFR)
+      mg/L:
+        description: Milligrams per liter
+      mg/d:
+        description: Milligrams per day
+      mg/dL:
+        description: Milligrams per deciliter
+      "mg/g{creat}":
+        description: Milligrams per gram of creatinine
+      mm:
+        description: Millimeters
+      mm3:
+        description: Cubic millimeters
+      "mm[Hg]":
+        description: Millimeters of mercury
+      mmol/L:
+        description: Millimoles per liter
+      mmol/dL:
+        description: Millimoles per deciliter
+      ms:
+        description: Milliseconds
+      ng/mL:
+        description: Nanograms per milliliter
+      nmol/min/mL:
+        description: Nanomoles per minute per milliliter
+      pg/mL:
+        description: Picograms per milliliter
+      "pg/{cell}":
+        description: Picograms per cell
+      pmol/L:
+        description: Picomoles per liter
+      "u[iU]/mL":
+        description: Micro international units per milliliter
+      ug/mL:
+        description: Micrograms per milliliter
+      "{#}/uL":
+        description: Number per microliter
+      "{#}/wk":
+        description: Number per week
+      "{beats}/min":
+        description: Beats per minute
+      "{ratio}":
+        description: Ratio (dimensionless)
+      "{score}":
+        description: Score (dimensionless)
+
   HistoricalStatusEnum:
     description: >-
       Indicates whether something is present, absent, historical, or its status is unknown.
