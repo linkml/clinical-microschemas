@@ -424,6 +424,139 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#9-unblock-enum-ranges-for-unit-and-instrument-via-slot_conditions-migration-meaning-uris" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Unblock Enum Ranges for unit and instrument via slot_conditions Migration + meaning: URIs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Unblock Enum Ranges for unit and instrument via slot_conditions Migration + meaning: URIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background-why-these-two-changes-might-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Background: why these two changes might work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-add-meaning-uris-to-instrumentenum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Add meaning: URIs to InstrumentEnum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-change-instrument-slot-to-range-instrumentenum-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Change instrument slot to range: InstrumentEnum and test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-migrate-unit-constraints-from-slot_usage-to-postcondition-slot_conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Migrate unit constraints from slot_usage to postcondition slot_conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-add-meaning-uris-to-ucumenum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Add meaning: URIs to UCUMEnum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-change-unit-slot-to-range-ucumenum-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Change unit slot to range: UCUMEnum and test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#summary-by-priority" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -610,6 +743,80 @@ HumanBasophilCountRecord002:
 2. <strong><code>equals_string</code> incompatible with enum range in LinkML schemaloader</strong>: Setting <code>range: UCUMEnum</code> causes <code>gen-project</code>/<code>gen-python</code> to fail with <code>ValueError: slot: ... 'equals_string' requires range 'string' and not range 'UCUMEnum'</code>. The <code>equals_string</code> constraints in <code>slot_usage.unit</code> and postcondition <code>slot_conditions.unit</code> across all Record classes are incompatible with an enum-ranged <code>unit</code> slot. This would require removing all per-record unit <code>equals_string</code> rules and replacing them with a different validation approach.
 3. <strong>OWL gen incompatibility</strong> (same root cause as item 4): enum-ranged slots with <code>equals_string</code> constraints cause <code>gen-owl</code> to fail with <code>AssertionError</code>.</p>
 <hr />
+<h2 id="9-unblock-enum-ranges-for-unit-and-instrument-via-slot_conditions-migration-meaning-uris">9. Unblock Enum Ranges for <code>unit</code> and <code>instrument</code> via <code>slot_conditions</code> Migration + <code>meaning:</code> URIs</h2>
+<p>Items 4 and 8 are both blocked by LinkML implementation limitations around <code>equals_string</code> on enum-ranged slots. This item is an investigation plan to determine whether both can be unblocked by two targeted changes:</p>
+<ol>
+<li><strong>Move unit/instrument constraints from <code>slot_usage</code> into postcondition <code>slot_conditions</code></strong></li>
+<li><strong>Add <code>meaning:</code> URIs to <code>UCUMEnum</code> and <code>InstrumentEnum</code></strong></li>
+</ol>
+<h3 id="background-why-these-two-changes-might-work">Background: why these two changes might work</h3>
+<p><strong>Schemaloader blocker (item 8)</strong>: The <code>ValueError</code> fires on <code>slot_usage</code> constraints — the schemaloader validates <code>slot_usage</code> expressions against the slot's declared range and rejects <code>equals_string</code> on enum-ranged slots. Postcondition <code>slot_conditions</code> constraints appear to follow a different validation path and did not trigger this error (as observed with <code>instrument: InstrumentEnum</code>).</p>
+<p><strong>OWL gen blocker (items 4 and 8)</strong>: The <code>AssertionError: Object None must be an rdflib term</code> fires because the OWL generator has no URI to use for enum values in a restriction expression. Adding <code>meaning:</code> URIs gives the generator concrete RDF terms to emit.</p>
+<h3 id="plan">Plan</h3>
+<h4 id="step-1-add-meaning-uris-to-instrumentenum">Step 1: Add <code>meaning:</code> URIs to <code>InstrumentEnum</code></h4>
+<p>Each permissible value in <code>InstrumentEnum</code> needs a <code>meaning:</code> URI. These can be minted as local CURIEs under the <code>cms:</code> prefix (e.g., <code>cms:stadiometer</code>) since no external ontology covers all instrument types. Alternatively, where OBO ontologies have terms (e.g., OBI for measurement instruments), use those.</p>
+<pre><code class="language-yaml">InstrumentEnum:
+  permissible_values:
+    stadiometer:
+      meaning: OBI:0002445   # example — verify actual OBI terms
+    scale:
+      meaning: OBI:0000weighing_device  # etc.
+</code></pre>
+<p>Test after this step: run <code>gen-owl</code> with <code>instrument: range: InstrumentEnum</code> and verify the AssertionError is gone.</p>
+<h4 id="step-2-change-instrument-slot-to-range-instrumentenum-and-test">Step 2: Change <code>instrument</code> slot to <code>range: InstrumentEnum</code> and test</h4>
+<p>Restore <code>range: InstrumentEnum</code> on the <code>instrument</code> slot. Run <code>gen-python</code> and <code>gen-owl</code>. If no errors, item 4 is unblocked and can be marked done.</p>
+<h4 id="step-3-migrate-unit-constraints-from-slot_usage-to-postcondition-slot_conditions">Step 3: Migrate <code>unit</code> constraints from <code>slot_usage</code> to postcondition <code>slot_conditions</code></h4>
+<p>Currently, numbered Record variants pin their unit via <code>slot_usage</code>:</p>
+<pre><code class="language-yaml">HumanBodyHeightRecord001:
+  slot_usage:
+    unit:
+      equals_string: cm
+</code></pre>
+<p>Migrate this to a postcondition rule on each variant:</p>
+<pre><code class="language-yaml">HumanBodyHeightRecord001:
+  rules:
+    - postconditions:
+        slot_conditions:
+          unit:
+            equals_string: cm
+</code></pre>
+<p>This removes the <code>slot_usage</code> constraint that triggers the schemaloader ValueError. The parent <code>HumanBodyHeightRecord</code> already has a rule with <code>any_of</code> unit constraints, so the postcondition on the numbered variant is an additional narrowing constraint — semantically equivalent.</p>
+<p><strong>Scope</strong>: ~45 numbered Record classes (matching the BDC reference count), each with one <code>slot_usage.unit</code> block to migrate.</p>
+<h4 id="step-4-add-meaning-uris-to-ucumenum">Step 4: Add <code>meaning:</code> URIs to <code>UCUMEnum</code></h4>
+<p>UCUM has no official OWL file. Use QUDT as the <code>meaning:</code> source where available — QUDT has <code>qudt:ucumCode</code> annotations that map QUDT unit URIs to UCUM strings. For example:</p>
+<pre><code class="language-yaml">UCUMEnum:
+  permissible_values:
+    cm:
+      meaning: QUDT:CentiM      # http://qudt.org/vocab/unit/CentiM
+    &quot;[in_i]&quot;:
+      meaning: QUDT:IN          # http://qudt.org/vocab/unit/IN
+    kg:
+      meaning: QUDT:KiloGM
+</code></pre>
+<p>Not all UCUM strings used in this schema will have QUDT equivalents — document gaps. Strings without a QUDT match can use a locally minted <code>cms:</code> URI as a placeholder.</p>
+<h4 id="step-5-change-unit-slot-to-range-ucumenum-and-test">Step 5: Change <code>unit</code> slot to <code>range: UCUMEnum</code> and test</h4>
+<p>Restore <code>range: UCUMEnum</code> on the <code>unit</code> slot. Run <code>gen-python</code>, <code>gen-owl</code>, and <code>just lint</code>. If all pass, items 4 and 8 are both unblocked.</p>
+<h3 id="success-criteria">Success criteria</h3>
+<ul>
+<li><code>just lint</code> passes with no <code>standard_naming</code> or other warnings</li>
+<li><code>gen-python</code> completes without <code>ValueError</code></li>
+<li><code>gen-owl</code> completes without <code>AssertionError</code></li>
+<li><code>uv run pytest tests/ -v</code> passes (6/6)</li>
+</ul>
+<h3 id="rollback">Rollback</h3>
+<p>If step 3 or 5 fails, revert:
+- <code>unit</code> slot back to <code>range: string</code>
+- <code>instrument</code> slot back to <code>range: string</code>
+- Numbered Record <code>slot_conditions</code> back to <code>slot_usage</code></p>
+<p>The <code>meaning:</code> additions to the enums are harmless and can be kept regardless.</p>
+<h3 id="risk">Risk</h3>
+<ul>
+<li>The QUDT mapping for all 47 UCUM values in <code>UCUMEnum</code> requires manual research — some may not have QUDT equivalents</li>
+<li>If the schemaloader validates postcondition <code>slot_conditions</code> the same way as <code>slot_usage</code>, step 3 will not fix the blocker and a different approach is needed</li>
+<li>Migrating <code>slot_usage</code> to postcondition rules changes validation semantics slightly (postconditions are conditional; <code>slot_usage</code> always applies) — verify that the parent record's preconditions correctly scope the postcondition</li>
+</ul>
+<p><strong>BDC impact</strong>: None. These are internal schema structural changes only.</p>
+<hr />
 <h2 id="summary-by-priority">Summary by Priority</h2>
 <table>
 <thead>
@@ -649,6 +856,13 @@ HumanBasophilCountRecord002:
 <td>0 classes</td>
 <td>None</td>
 <td>~~Low~~ <strong>Blocked</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Unblock 4 + 8 via <code>slot_conditions</code> migration + <code>meaning:</code> URIs</td>
+<td>—</td>
+<td>None</td>
+<td>Medium</td>
 </tr>
 <tr>
 <td>5</td>
