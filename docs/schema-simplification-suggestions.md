@@ -83,7 +83,7 @@ This combinatorial explosion is a direct consequence of unit-pinned record class
 
 ---
 
-## 4. Promote `instrument` to an Enum
+## 4. Promote `instrument` to an Enum *(blocked — OWL gen incompatibility)*
 
 The `instrument` slot is typed as `string`, but every record enumerates valid values via inline `equals_string` rules. This is inconsistent with `method` (uses `MethodEnum`), `collected_by` (uses `CollectedByEnum`), etc.
 
@@ -93,6 +93,8 @@ Creating an `InstrumentEnum` would:
 - Remove duplicated instrument value lists across records
 
 **BDC impact**: None. BDC does not set `instrument` values directly; it only references Record classes via `instantiates:`.
+
+**Blocker**: Setting `range: InstrumentEnum` on the `instrument` slot causes `gen-owl` to fail with `AssertionError: Object None must be an rdflib term`. The LinkML OWL generator cannot handle `equals_string` constraints (used in postcondition `slot_conditions`) on a slot with an enum range. This is the same root cause as the item 8 blocker. The change was attempted and reverted. Until the LinkML OWL generator is fixed upstream, the `instrument` slot must remain `range: string`.
 
 ---
 
@@ -133,7 +135,7 @@ HumanBasophilCountRecord002:
 
 ---
 
-## 7. Audit Unused Slots
+## 7. Audit Unused Slots *(skipped)*
 
 The following slots are defined in the `slots:` section but do not appear in any class's `slots:` list:
 
@@ -150,7 +152,7 @@ If these are aspirational or planned for future use, document them as such with 
 
 ---
 
-## 8. Typed `unit` Slot via `UCUMEnum`
+## 8. Typed `unit` Slot via `UCUMEnum` *(blocked — two independent blockers)*
 
 `UCUMEnum` exists and is well-maintained, but the `unit` slot is typed as `string`. Changing it to `range: UCUMEnum` would:
 
@@ -161,6 +163,11 @@ Per-measurement unit restrictions would still stay as rules to constrain which u
 
 **BDC impact**: None.
 
+**Blockers**:
+1. **No canonical UCUM OWL/URI resource**: UCUM is a character-based syntax standard (not an ontology). There is no official OWL file or per-unit canonical URIs. QUDT has `qudt:ucumCode` mappings but is not a drop-in `meaning:` source for all UCUM strings used here.
+2. **`equals_string` incompatible with enum range in LinkML schemaloader**: Setting `range: UCUMEnum` causes `gen-project`/`gen-python` to fail with `ValueError: slot: ... 'equals_string' requires range 'string' and not range 'UCUMEnum'`. The `equals_string` constraints in `slot_usage.unit` and postcondition `slot_conditions.unit` across all Record classes are incompatible with an enum-ranged `unit` slot. This would require removing all per-record unit `equals_string` rules and replacing them with a different validation approach.
+3. **OWL gen incompatibility** (same root cause as item 4): enum-ranged slots with `equals_string` constraints cause `gen-owl` to fail with `AssertionError`.
+
 ---
 
 ## Summary by Priority
@@ -169,11 +176,11 @@ Per-measurement unit restrictions would still stay as rules to constrain which u
 |---|---|---|---|---|
 | 1 | Collapse Quantity subclasses | ~100 classes | None | High |
 | 3 | Simplify `calculated_from` | ~20 rules | None | Medium |
-| 4 | `instrument` enum | ~50 rules shortened | None | Low–Medium |
-| 8 | `unit` → `UCUMEnum` range | 0 classes | None | Low |
+| 4 | `instrument` enum | ~50 rules shortened | None | ~~Low–Medium~~ **Blocked** |
+| 8 | `unit` → `UCUMEnum` range | 0 classes | None | ~~Low~~ **Blocked** |
 | 5 | Remove `data_type` postconditions | ~40 rules | None | Low |
 | 6 | Fix duplicate descriptions | 0 classes | None | Trivial |
-| 7 | Remove unused slots | 6 slots | None | Trivial |
+| 7 | ~~Remove unused slots~~ *(skipped)* | 6 slots | None | Trivial |
 | 2 | Collapse/rename Record variants | ~30 classes | **Breaking — requires BDC coordination** | High |
 
 ### Recommended sequencing
