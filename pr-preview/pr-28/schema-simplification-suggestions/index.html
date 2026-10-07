@@ -1,0 +1,960 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://linkml.github.io/clinical-microschemas/schema-simplification-suggestions/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Schema Simplification Suggestions - clinical-microschemas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../css/pandas-dataframe.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#schema-simplification-suggestions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="clinical-microschemas" class="md-header__button md-logo" aria-label="clinical-microschemas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            clinical-microschemas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Schema Simplification Suggestions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/linkml/clinical-microschemas" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="clinical-microschemas" class="md-nav__button md-logo" aria-label="clinical-microschemas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    clinical-microschemas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/linkml/clinical-microschemas" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../elements/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bdc-variable-library-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BDC Variable Library Dependency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-collapse-numbered-quantity-subclasses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Collapse Numbered Quantity Subclasses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-collapse-numbered-record-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Collapse Numbered Record Variants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-simplify-calculated_from-explosion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Simplify calculated_from Explosion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-promote-instrument-to-an-enum-blocked-owl-gen-incompatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Promote instrument to an Enum (blocked — OWL gen incompatibility)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-remove-redundant-data_type-postconditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Remove Redundant data_type Postconditions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-fix-duplicate-descriptions-on-numbered-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Fix Duplicate Descriptions on Numbered Variants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-audit-unused-slots-skipped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Audit Unused Slots (skipped)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-typed-unit-slot-via-ucumenum-blocked-two-independent-blockers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Typed unit Slot via UCUMEnum (blocked — two independent blockers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-unblock-enum-ranges-for-unit-and-instrument-via-slot_conditions-migration-meaning-uris" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Unblock Enum Ranges for unit and instrument via slot_conditions Migration + meaning: URIs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Unblock Enum Ranges for unit and instrument via slot_conditions Migration + meaning: URIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background-why-these-two-changes-might-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Background: why these two changes might work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-add-meaning-uris-to-instrumentenum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Add meaning: URIs to InstrumentEnum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-change-instrument-slot-to-range-instrumentenum-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Change instrument slot to range: InstrumentEnum and test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-migrate-unit-constraints-from-slot_usage-to-postcondition-slot_conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Migrate unit constraints from slot_usage to postcondition slot_conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-add-meaning-uris-to-ucumenum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Add meaning: URIs to UCUMEnum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-change-unit-slot-to-range-ucumenum-and-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Change unit slot to range: UCUMEnum and test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success criteria
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rollback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-by-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary by Priority
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary by Priority">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-sequencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended sequencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="schema-simplification-suggestions">Schema Simplification Suggestions</h1>
+<p>This document captures suggestions for simplifying <code>clinical_microschemas.yaml</code> without losing detail or semantic precision.</p>
+<h2 id="bdc-variable-library-dependency">BDC Variable Library Dependency</h2>
+<p>The <a href="https://github.com/linkml/bdc-variable-library">BDC variable library</a> imports clinical-microschemas as a remote schema dependency (pinned to <code>v0.0.5</code>) and uses it via the <code>instantiates:</code> keyword. Each BDC <code>CompoundVariable</code> or <code>IntegratedVariable</code> points to a specific numbered Record class as a measurement recipe:</p>
+<pre><code class="language-yaml">CompoundHeight001:
+  is_a: CompoundVariable
+  instantiates:
+    - HumanBodyHeightRecord001   # encodes: height in cm, measured by stadiometer
+</code></pre>
+<p>The BDC library contains <strong>45+ direct <code>instantiates:</code> references</strong> to numbered Record variants:</p>
+<table>
+<thead>
+<tr>
+<th>Variant suffix</th>
+<th>BDC references</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>...Record001</code></td>
+<td>23</td>
+</tr>
+<tr>
+<td><code>...Record002</code></td>
+<td>15</td>
+</tr>
+<tr>
+<td><code>...Record003</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><code>...Record004</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>...Record005</code></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>BDC does <strong>not</strong> create its own Record or Quantity subclasses — it only references existing numbered classes from clinical-microschemas. This makes the numbered class structure a hard dependency.</p>
+<hr />
+<h2 id="1-collapse-numbered-quantity-subclasses">1. Collapse Numbered <code>Quantity</code> Subclasses</h2>
+<p>There are ~100+ Quantity classes of the form <code>HumanBodyHeightQuantity001</code>, <code>...002</code>, <code>...003</code>, <code>...004</code> — each differing only in min/max bounds per unit. These bounds could instead be expressed as rules on the parent Quantity class:</p>
+<pre><code class="language-yaml"># Instead of 4 separate classes (001–004), use rules on the parent:
+HumanBodyHeightQuantity:
+  is_a: Quantity
+  rules:
+    - preconditions:
+        slot_conditions:
+          unit: {equals_string: cm}
+      postconditions:
+        slot_conditions:
+          quantity_value: {minimum_value: 30, maximum_value: 273}
+    - preconditions:
+        slot_conditions:
+          unit: {equals_string: &quot;[in_i]&quot;}
+      postconditions:
+        slot_conditions:
+          quantity_value: {minimum_value: 20, maximum_value: 108}
+</code></pre>
+<p>This could eliminate ~100 classes while preserving all constraints.</p>
+<p><strong>Trade-off</strong>: The numbered Quantity classes are referenced by <code>calculated_from</code> expressions in BMI/ratio records. Collapsing them requires rethinking how those expressions reference unit-typed inputs (see suggestion 3).</p>
+<p><strong>BDC impact</strong>: None directly. BDC does not reference numbered Quantity classes — only numbered Record classes. Safe to do independently.</p>
+<hr />
+<h2 id="2-collapse-numbered-record-variants">2. Collapse Numbered <code>Record</code> Variants</h2>
+<p><code>HumanBodyHeightRecord001–004</code>, <code>AdultHumanBodyWeightRecord001–002</code>, <code>ChildHumanBodyWeightRecord001–004</code>, etc. each only pin a specific unit via <code>slot_usage.unit: equals_string</code>. These are redundant with the rules already on the parent record.</p>
+<p>If <code>calculated_from</code> expressions were written in unit-agnostic form or simplified, these numbered variants could be removed entirely. The parent record with its rules already enforces valid units.</p>
+<p><strong>BDC impact</strong>: <strong>Breaking change.</strong> All 45+ <code>instantiates:</code> references in BDC would fail. The numbered variants carry semantic meaning in BDC: <code>HumanBodyHeightRecord001</code> is a specific measurement recipe (height in cm), distinct from <code>HumanBodyHeightRecord002</code> (height in inches). Collapsing these classes removes the named targets that BDC relies on.</p>
+<p><strong>Recommended approach instead of elimination</strong>: Rename numbered classes to semantic names that encode the unit (e.g., <code>HumanBodyHeightRecord_cm</code>, <code>HumanBodyHeightRecord_inches</code>). This preserves the BDC <code>instantiates:</code> pattern while removing the opaque numbering scheme. BDC references would need a one-time update.</p>
+<hr />
+<h2 id="3-simplify-calculated_from-explosion">3. Simplify <code>calculated_from</code> Explosion</h2>
+<p>The BMI <code>AdultBodyMassIndexRecord</code> has <strong>8 expressions</strong> and <code>ChildBodyMassIndexRecord</code> has <strong>16 expressions</strong> — one per weight-unit × height-unit combination. <code>HumanAlbuminCreatinineRatioUrineRecord</code> also has 5.</p>
+<p>This combinatorial explosion is a direct consequence of unit-pinned record classes. Two options:</p>
+<ul>
+<li><strong>Option A</strong>: Normalize in the formula — reference the parent record and specify unit conversions in a single expression, or require SI-unit inputs.</li>
+<li><strong>Option B</strong>: If <code>calculated_from</code> is documentation rather than an enforceable constraint, move it to a <code>description</code> or <code>comment</code> annotation rather than a validation rule.</li>
+</ul>
+<p><strong>BDC impact</strong>: None. BDC does not use <code>calculated_from</code> or <code>equals_expression</code> itself. However, resolving this is a prerequisite for suggestion 2, so it unblocks the larger structural simplification.</p>
+<hr />
+<h2 id="4-promote-instrument-to-an-enum-blocked-owl-gen-incompatibility">4. Promote <code>instrument</code> to an Enum <em>(blocked — OWL gen incompatibility)</em></h2>
+<p>The <code>instrument</code> slot is typed as <code>string</code>, but every record enumerates valid values via inline <code>equals_string</code> rules. This is inconsistent with <code>method</code> (uses <code>MethodEnum</code>), <code>collected_by</code> (uses <code>CollectedByEnum</code>), etc.</p>
+<p>Creating an <code>InstrumentEnum</code> would:
+- Enable slot-level validation without repeating inline <code>any_of: equals_string</code> blocks
+- Shorten postcondition rules significantly
+- Remove duplicated instrument value lists across records</p>
+<p><strong>BDC impact</strong>: None. BDC does not set <code>instrument</code> values directly; it only references Record classes via <code>instantiates:</code>.</p>
+<p><strong>Blocker</strong>: Setting <code>range: InstrumentEnum</code> on the <code>instrument</code> slot causes <code>gen-owl</code> to fail with <code>AssertionError: Object None must be an rdflib term</code>. The LinkML OWL generator cannot handle <code>equals_string</code> constraints (used in postcondition <code>slot_conditions</code>) on a slot with an enum range. This is the same root cause as the item 8 blocker. The change was attempted and reverted. Until the LinkML OWL generator is fixed upstream, the <code>instrument</code> slot must remain <code>range: string</code>.</p>
+<hr />
+<h2 id="5-remove-redundant-data_type-postconditions">5. Remove Redundant <code>data_type</code> Postconditions</h2>
+<p>Nearly every record has:</p>
+<pre><code class="language-yaml">postconditions:
+  slot_conditions:
+    data_type:
+      equals_string: decimal
+</code></pre>
+<p>But <code>data_type</code> is already implied by the <code>range</code> of the Quantity class (<code>quantity_value</code> is <code>decimal</code> or <code>integer</code>). This postcondition adds no logical constraint beyond what the type system already enforces. Consider:</p>
+<ul>
+<li>Removing <code>data_type</code> from validation rules entirely, setting it as a fixed default on the Quantity parent</li>
+<li>Or making it a fixed slot annotation on each Quantity class rather than a repeated postcondition rule</li>
+</ul>
+<p><strong>BDC impact</strong>: None.</p>
+<hr />
+<h2 id="6-fix-duplicate-descriptions-on-numbered-variants">6. Fix Duplicate Descriptions on Numbered Variants</h2>
+<p>Several numbered variants have identical descriptions to their parent. For example, <code>HumanBasophilCountRecord001</code> and <code>002</code> both say "Concentration of basophil cells in whole blood" — indistinguishable from each other or from the parent.</p>
+<p>Descriptions on numbered variants should differentiate by unit:</p>
+<pre><code class="language-yaml">HumanBasophilCountRecord001:
+  description: Concentration of basophil cells in whole blood in 10*3/uL
+HumanBasophilCountRecord002:
+  description: Concentration of basophil cells in whole blood in {#}/uL
+</code></pre>
+<p><strong>BDC impact</strong>: None.</p>
+<hr />
+<h2 id="7-audit-unused-slots-skipped">7. Audit Unused Slots <em>(skipped)</em></h2>
+<p>The following slots are defined in the <code>slots:</code> section but do not appear in any class's <code>slots:</code> list:</p>
+<ul>
+<li><code>predicted_value</code></li>
+<li><code>lower_limit_normal</code> (description: "placeholder")</li>
+<li><code>upper_limit_normal</code> (description: "placeholder")</li>
+<li><code>percent_predicted_value</code></li>
+<li><code>activity_type</code></li>
+<li><code>relative_timing</code></li>
+</ul>
+<p>If these are aspirational or planned for future use, document them as such with a comment. If they are legacy, remove them to reduce schema noise.</p>
+<p><strong>BDC impact</strong>: None. BDC does not reference any of these slots.</p>
+<hr />
+<h2 id="8-typed-unit-slot-via-ucumenum-blocked-two-independent-blockers">8. Typed <code>unit</code> Slot via <code>UCUMEnum</code> <em>(blocked — two independent blockers)</em></h2>
+<p><code>UCUMEnum</code> exists and is well-maintained, but the <code>unit</code> slot is typed as <code>string</code>. Changing it to <code>range: UCUMEnum</code> would:</p>
+<ul>
+<li>Give free validation of all unit values at the slot level</li>
+<li>Reduce the need for per-record <code>equals_string</code> unit constraints in rules</li>
+</ul>
+<p>Per-measurement unit restrictions would still stay as rules to constrain which units are valid for each measurement type, but invalid UCUM strings would be caught earlier.</p>
+<p><strong>BDC impact</strong>: None.</p>
+<p><strong>Blockers</strong>:
+1. <strong>No canonical UCUM OWL/URI resource</strong>: UCUM is a character-based syntax standard (not an ontology). There is no official OWL file or per-unit canonical URIs. QUDT has <code>qudt:ucumCode</code> mappings but is not a drop-in <code>meaning:</code> source for all UCUM strings used here.
+2. <strong><code>equals_string</code> incompatible with enum range in LinkML schemaloader</strong>: Setting <code>range: UCUMEnum</code> causes <code>gen-project</code>/<code>gen-python</code> to fail with <code>ValueError: slot: ... 'equals_string' requires range 'string' and not range 'UCUMEnum'</code>. The <code>equals_string</code> constraints in <code>slot_usage.unit</code> and postcondition <code>slot_conditions.unit</code> across all Record classes are incompatible with an enum-ranged <code>unit</code> slot. This would require removing all per-record unit <code>equals_string</code> rules and replacing them with a different validation approach.
+3. <strong>OWL gen incompatibility</strong> (same root cause as item 4): enum-ranged slots with <code>equals_string</code> constraints cause <code>gen-owl</code> to fail with <code>AssertionError</code>.</p>
+<hr />
+<h2 id="9-unblock-enum-ranges-for-unit-and-instrument-via-slot_conditions-migration-meaning-uris">9. Unblock Enum Ranges for <code>unit</code> and <code>instrument</code> via <code>slot_conditions</code> Migration + <code>meaning:</code> URIs</h2>
+<p>Items 4 and 8 are both blocked by LinkML implementation limitations around <code>equals_string</code> on enum-ranged slots. This item is an investigation plan to determine whether both can be unblocked by two targeted changes:</p>
+<ol>
+<li><strong>Move unit/instrument constraints from <code>slot_usage</code> into postcondition <code>slot_conditions</code></strong></li>
+<li><strong>Add <code>meaning:</code> URIs to <code>UCUMEnum</code> and <code>InstrumentEnum</code></strong></li>
+</ol>
+<h3 id="background-why-these-two-changes-might-work">Background: why these two changes might work</h3>
+<p><strong>Schemaloader blocker (item 8)</strong>: The <code>ValueError</code> fires on <code>slot_usage</code> constraints — the schemaloader validates <code>slot_usage</code> expressions against the slot's declared range and rejects <code>equals_string</code> on enum-ranged slots. Postcondition <code>slot_conditions</code> constraints appear to follow a different validation path and did not trigger this error (as observed with <code>instrument: InstrumentEnum</code>).</p>
+<p><strong>OWL gen blocker (items 4 and 8)</strong>: The <code>AssertionError: Object None must be an rdflib term</code> fires because the OWL generator has no URI to use for enum values in a restriction expression. Adding <code>meaning:</code> URIs gives the generator concrete RDF terms to emit.</p>
+<h3 id="plan">Plan</h3>
+<h4 id="step-1-add-meaning-uris-to-instrumentenum">Step 1: Add <code>meaning:</code> URIs to <code>InstrumentEnum</code></h4>
+<p>Each permissible value in <code>InstrumentEnum</code> needs a <code>meaning:</code> URI. These can be minted as local CURIEs under the <code>cms:</code> prefix (e.g., <code>cms:stadiometer</code>) since no external ontology covers all instrument types. Alternatively, where OBO ontologies have terms (e.g., OBI for measurement instruments), use those.</p>
+<pre><code class="language-yaml">InstrumentEnum:
+  permissible_values:
+    stadiometer:
+      meaning: OBI:0002445   # example — verify actual OBI terms
+    scale:
+      meaning: OBI:0000weighing_device  # etc.
+</code></pre>
+<p>Test after this step: run <code>gen-owl</code> with <code>instrument: range: InstrumentEnum</code> and verify the AssertionError is gone.</p>
+<h4 id="step-2-change-instrument-slot-to-range-instrumentenum-and-test">Step 2: Change <code>instrument</code> slot to <code>range: InstrumentEnum</code> and test</h4>
+<p>Restore <code>range: InstrumentEnum</code> on the <code>instrument</code> slot. Run <code>gen-python</code> and <code>gen-owl</code>. If no errors, item 4 is unblocked and can be marked done.</p>
+<h4 id="step-3-migrate-unit-constraints-from-slot_usage-to-postcondition-slot_conditions">Step 3: Migrate <code>unit</code> constraints from <code>slot_usage</code> to postcondition <code>slot_conditions</code></h4>
+<p>Currently, numbered Record variants pin their unit via <code>slot_usage</code>:</p>
+<pre><code class="language-yaml">HumanBodyHeightRecord001:
+  slot_usage:
+    unit:
+      equals_string: cm
+</code></pre>
+<p>Migrate this to a postcondition rule on each variant:</p>
+<pre><code class="language-yaml">HumanBodyHeightRecord001:
+  rules:
+    - postconditions:
+        slot_conditions:
+          unit:
+            equals_string: cm
+</code></pre>
+<p>This removes the <code>slot_usage</code> constraint that triggers the schemaloader ValueError. The parent <code>HumanBodyHeightRecord</code> already has a rule with <code>any_of</code> unit constraints, so the postcondition on the numbered variant is an additional narrowing constraint — semantically equivalent.</p>
+<p><strong>Scope</strong>: ~45 numbered Record classes (matching the BDC reference count), each with one <code>slot_usage.unit</code> block to migrate.</p>
+<h4 id="step-4-add-meaning-uris-to-ucumenum">Step 4: Add <code>meaning:</code> URIs to <code>UCUMEnum</code></h4>
+<p>UCUM has no official OWL file. Use QUDT as the <code>meaning:</code> source where available — QUDT has <code>qudt:ucumCode</code> annotations that map QUDT unit URIs to UCUM strings. For example:</p>
+<pre><code class="language-yaml">UCUMEnum:
+  permissible_values:
+    cm:
+      meaning: QUDT:CentiM      # http://qudt.org/vocab/unit/CentiM
+    &quot;[in_i]&quot;:
+      meaning: QUDT:IN          # http://qudt.org/vocab/unit/IN
+    kg:
+      meaning: QUDT:KiloGM
+</code></pre>
+<p>Not all UCUM strings used in this schema will have QUDT equivalents — document gaps. Strings without a QUDT match can use a locally minted <code>cms:</code> URI as a placeholder.</p>
+<h4 id="step-5-change-unit-slot-to-range-ucumenum-and-test">Step 5: Change <code>unit</code> slot to <code>range: UCUMEnum</code> and test</h4>
+<p>Restore <code>range: UCUMEnum</code> on the <code>unit</code> slot. Run <code>gen-python</code>, <code>gen-owl</code>, and <code>just lint</code>. If all pass, items 4 and 8 are both unblocked.</p>
+<h3 id="success-criteria">Success criteria</h3>
+<ul>
+<li><code>just lint</code> passes with no <code>standard_naming</code> or other warnings</li>
+<li><code>gen-python</code> completes without <code>ValueError</code></li>
+<li><code>gen-owl</code> completes without <code>AssertionError</code></li>
+<li><code>uv run pytest tests/ -v</code> passes (6/6)</li>
+</ul>
+<h3 id="rollback">Rollback</h3>
+<p>If step 3 or 5 fails, revert:
+- <code>unit</code> slot back to <code>range: string</code>
+- <code>instrument</code> slot back to <code>range: string</code>
+- Numbered Record <code>slot_conditions</code> back to <code>slot_usage</code></p>
+<p>The <code>meaning:</code> additions to the enums are harmless and can be kept regardless.</p>
+<h3 id="risk">Risk</h3>
+<ul>
+<li>The QUDT mapping for all 47 UCUM values in <code>UCUMEnum</code> requires manual research — some may not have QUDT equivalents</li>
+<li>If the schemaloader validates postcondition <code>slot_conditions</code> the same way as <code>slot_usage</code>, step 3 will not fix the blocker and a different approach is needed</li>
+<li>Migrating <code>slot_usage</code> to postcondition rules changes validation semantics slightly (postconditions are conditional; <code>slot_usage</code> always applies) — verify that the parent record's preconditions correctly scope the postcondition</li>
+</ul>
+<p><strong>BDC impact</strong>: None. These are internal schema structural changes only.</p>
+<hr />
+<h2 id="summary-by-priority">Summary by Priority</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Suggestion</th>
+<th>Approx. Classes/Rules Removed</th>
+<th>BDC Impact</th>
+<th>Effort</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Collapse Quantity subclasses</td>
+<td>~100 classes</td>
+<td>None</td>
+<td>High</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Simplify <code>calculated_from</code></td>
+<td>~20 rules</td>
+<td>None</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>instrument</code> enum</td>
+<td>~50 rules shortened</td>
+<td>None</td>
+<td>~~Low–Medium~~ <strong>Blocked</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>unit</code> → <code>UCUMEnum</code> range</td>
+<td>0 classes</td>
+<td>None</td>
+<td>~~Low~~ <strong>Blocked</strong></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Unblock 4 + 8 via <code>slot_conditions</code> migration + <code>meaning:</code> URIs</td>
+<td>—</td>
+<td>None</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Remove <code>data_type</code> postconditions</td>
+<td>~40 rules</td>
+<td>None</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Fix duplicate descriptions</td>
+<td>0 classes</td>
+<td>None</td>
+<td>Trivial</td>
+</tr>
+<tr>
+<td>7</td>
+<td>~~Remove unused slots~~ <em>(skipped)</em></td>
+<td>6 slots</td>
+<td>None</td>
+<td>Trivial</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Collapse/rename Record variants</td>
+<td>~30 classes</td>
+<td><strong>Breaking — requires BDC coordination</strong></td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-sequencing">Recommended sequencing</h3>
+<ol>
+<li><strong>Do now</strong> (safe, no BDC impact): suggestions 1, 3–8</li>
+<li><strong>Coordinate with BDC</strong> (breaking change): suggestion 2 — rename numbered Record classes to semantic unit-based names (e.g., <code>_cm</code>, <code>_inches</code>) and update all BDC <code>instantiates:</code> references in the same release</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
