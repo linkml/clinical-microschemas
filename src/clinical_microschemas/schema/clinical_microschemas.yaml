@@ -131,6 +131,8 @@ classes:
       - dose
       - frequency
       - indication
+      - exposure_status
+      - exposure_provenance
     slot_usage:
       subject_identifier:
         required: true
@@ -154,6 +156,9 @@ classes:
       - age_at_procedure_start
       - age_at_procedure_end
       - age_at_procedure_record
+      - procedure_status
+      - procedure_provenance
+      - body_location
     slot_usage:
       subject_identifier:
         required: true
@@ -5741,6 +5746,22 @@ slots:
   condition_provenance:
     range: ProvenanceEnum
     description: A value representing the provenance of the Condition record.
+  exposure_status:
+    range: HistoricalStatusEnum
+    description: >-
+      A value indicating whether the drug exposure described in this record
+      is present, absent, historically present, or unknown for this individual patient.
+  exposure_provenance:
+    range: ProvenanceEnum
+    description: A value representing the provenance of the DrugExposure record.
+  procedure_status:
+    range: HistoricalStatusEnum
+    description: >-
+      A value indicating whether the medical procedure described in this record
+      is present, absent, historically present, or unknown for this individual patient.
+  procedure_provenance:
+    range: ProvenanceEnum
+    description: A value representing the provenance of the Procedure record.
   condition_severity:
     range: ConditionSeverityEnum
     description: A subjective assessment of the severity of the condition.
